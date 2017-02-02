@@ -19,6 +19,6 @@ And then in the other gradle file(may be your app gradle or your own module libr
           
 ## Contact
 #### Prabhakar Thota
-* Website: [myinnos.in](https://myinnos.in "Prabhakar Thota")
+* Website: [myinnos.in](http://www.myinnos.in "Prabhakar Thota")
 * e-mail: contact@myinnos.in
 * Twitter: [@myinnos](https://twitter.com/myinnos "Prabhakar Thota on twitter")         
