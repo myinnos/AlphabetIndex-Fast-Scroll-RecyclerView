@@ -1,4 +1,4 @@
-# AlphabetIndex-Fast-Scroll-RecyclerView
+# AlphabetIndex Fast Scroll RecyclerView
 
 Kindly use the following links to use this library:
 
