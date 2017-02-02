@@ -1,0 +1,2 @@
+include ':app', ':alphabetsindexfastscrollrecyclerLibrary'
+project(':alphabetsindexfastscrollrecyclerLibrary').projectDir = new File('alphabetsindexfastscrollrecycler')

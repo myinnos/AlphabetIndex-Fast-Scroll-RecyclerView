@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+final SDK_VERSION = '25.1.1'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "in.myinnos.indexfastscrollrecycler"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.android.support:appcompat-v7:${SDK_VERSION}"
+    compile "com.android.support:design:${SDK_VERSION}"
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile project(':alphabetsindexfastscrollrecyclerLibrary')
+}
