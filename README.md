@@ -117,7 +117,7 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
 License
 -------
 
-    Copyright 2015 Khuat Viet Hoa
+    Copyright 2017 MyInnos
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
