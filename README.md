@@ -107,6 +107,7 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
 ```java
  mRecyclerView.setPreviewPadding(2);
 ```
+##### Any Queries? or Feedback, please let me know by opening a [new issue](https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/issues/new)!
 
 ## Contact
 #### Prabhakar Thota
