@@ -22,7 +22,7 @@ public class IndexFastScrollRecyclerSection {
 
     private float mIndexbarWidth;
     private float mIndexbarMargin;
-    private float mPreviewPadding ;
+    private float mPreviewPadding;
     private float mDensity;
     private float mScaledDensity;
     private int mListViewWidth;
@@ -41,6 +41,7 @@ public class IndexFastScrollRecyclerSection {
     private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
     private float setIndexBarTransparentValue = IndexFastScrollRecyclerView.mIndexBarTransparentValue;
     private String indexbarBackgroudColor = IndexFastScrollRecyclerView.mIndexbarBackgroudColor;
+    private String indexbarTextColor = IndexFastScrollRecyclerView.mIndexbarTextColor;
 
     private int indexbarBackgroudAlpha = (int) (255 * setIndexBarTransparentValue);
 
@@ -93,7 +94,7 @@ public class IndexFastScrollRecyclerSection {
             }
 
             Paint indexPaint = new Paint();
-            indexPaint.setColor(indexPaintPaintColor);
+            indexPaint.setColor(Color.parseColor(indexbarTextColor));
             indexPaint.setAntiAlias(true);
             indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
 
@@ -242,6 +243,13 @@ public class IndexFastScrollRecyclerSection {
      */
     public void setIndexBarColor(String color) {
         indexbarBackgroudColor = color;
+    }
+
+    /**
+     * @param color The color for the scroll track
+     */
+    public void setIndexBarTextColor(String color) {
+        indexbarTextColor = color;
     }
 
 }

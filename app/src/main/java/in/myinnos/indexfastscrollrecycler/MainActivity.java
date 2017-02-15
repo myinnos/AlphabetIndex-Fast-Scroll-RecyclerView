@@ -62,5 +62,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setIndexbarMargin(0);
         mRecyclerView.setIndexbarWidth(40);
         mRecyclerView.setPreviewPadding(0);
+        mRecyclerView.setIndexBarTextColor("#FFFFFF");
     }
 }

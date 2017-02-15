@@ -8,5 +8,6 @@
         <attr name="setIndexBarCornerRadius" format="integer" />
         <attr name="setIndexBarTransparentValue" format="float" />
         <attr name="setIndexBarColor" format="string" />
+        <attr name="setIndexBarTextColor" format="string" />
     </declare-styleable>
 </resources>

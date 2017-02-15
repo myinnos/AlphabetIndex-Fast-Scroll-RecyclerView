@@ -24,6 +24,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     public static int mIndexBarCornerRadius = 5;
     public static float mIndexBarTransparentValue = (float) 0.6;
     public static String mIndexbarBackgroudColor = "#000000";
+    public static String mIndexbarTextColor = "#FFFFFF";
 
     public IndexFastScrollRecyclerView(Context context) {
         super(context);
@@ -57,6 +58,10 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
                     if (typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor) != null) {
                         mIndexbarBackgroudColor = typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor);
+                    }
+
+                    if (typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor) != null) {
+                        mIndexbarTextColor = typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor);
                     }
 
                 } finally {
@@ -168,6 +173,13 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
      */
     public void setIndexBarColor(String color) {
         mScroller.setIndexBarColor(color);
+    }
+
+    /**
+     * @param color The color for the text in scroll track
+     */
+    public void setIndexBarTextColor(String color) {
+        mScroller.setIndexBarTextColor(color);
     }
 
 }
