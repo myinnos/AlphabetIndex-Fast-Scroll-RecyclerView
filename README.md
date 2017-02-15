@@ -83,7 +83,7 @@ Feature
 ```java
  mRecyclerView.setIndexTextSize(12);
 ```
-- Change IndexTextColor:
+- Change IndexBarTextColor:
 ```java
  mRecyclerView.setIndexBarTextColor("#FFFFFF");
 ```
