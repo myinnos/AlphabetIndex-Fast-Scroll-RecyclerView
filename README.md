@@ -19,7 +19,7 @@ In build.gradle (Project)
 And then in the other gradle file(may be your app gradle or your own module library gradle, but never add in both of them to avoid conflict.)
 	
 	 dependencies {
-	        compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0'
+	        compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.1'
 	        }
           
 How to use
@@ -82,6 +82,10 @@ Feature
 - Change IndexTextSize:
 ```java
  mRecyclerView.setIndexTextSize(12);
+```
+- Change IndexTextColor:
+```java
+ mRecyclerView.setIndexBarTextColor("#FFFFFF");
 ```
 - Change IndexBarColor:
 ```java
