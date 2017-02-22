@@ -77,7 +77,7 @@ How to use
 
 #### Note: mDataArray: this is your recycler data array model.
 
-Feature
+Features
 -----
 - Change IndexTextSize:
 ```java
