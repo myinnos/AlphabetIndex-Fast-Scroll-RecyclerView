@@ -8,31 +8,31 @@ A Powerful AlphabetIndex FastScroller for Android's RecyclerView!
 #### Kindly use the following links to use this library:
 
 In build.gradle (Project)
-
+```java
 	allprojects {
 		repositories {
 			...
 			maven { url "https://jitpack.io" }
 		}
 	}
-	
+```
 And then in the other gradle file(may be your app gradle or your own module library gradle, but never add in both of them to avoid conflict.)
-	
+```java
 	 dependencies {
 	        compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.1'
 	        }
-          
+```          
 How to use
 -----
 **Step 1:** add this to your xml:
-
+```xml
     <in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
         android:id="@+id/fast_scroller_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
+```
 **Step 2:** implement SectionIndexer to RecyclerViewAdapter.
-
+```java
     public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> implements SectionIndexer {
 
      private List<String> mDataArray;
@@ -74,7 +74,7 @@ How to use
      }
     
     }
-
+```
 #### Note: mDataArray: this is your recycler data array model.
 
 Features
