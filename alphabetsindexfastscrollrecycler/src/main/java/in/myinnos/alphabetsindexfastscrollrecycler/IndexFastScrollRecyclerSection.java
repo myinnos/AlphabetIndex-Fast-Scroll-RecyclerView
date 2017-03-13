@@ -18,7 +18,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SectionIndexer;
 
-public class IndexFastScrollRecyclerSection {
+public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObserver {
 
     private float mIndexbarWidth;
     private float mIndexbarMargin;
@@ -154,9 +154,16 @@ public class IndexFastScrollRecyclerSection {
 
     public void setAdapter(RecyclerView.Adapter adapter) {
         if (adapter instanceof SectionIndexer) {
+            adapter.registerAdapterDataObserver(this);
             mIndexer = (SectionIndexer) adapter;
             mSections = (String[]) mIndexer.getSections();
         }
+    }
+
+    @Override
+    public void onChanged() {
+        super.onChanged();
+        mSections = (String[]) mIndexer.getSections();
     }
 
     public boolean contains(float x, float y) {
