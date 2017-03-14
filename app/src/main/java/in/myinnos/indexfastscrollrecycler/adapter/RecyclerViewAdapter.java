@@ -3,11 +3,11 @@ package in.myinnos.indexfastscrollrecycler.adapter;
 /**
  * Created by MyInnos on 01-02-2017.
  */
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -18,7 +18,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import in.myinnos.indexfastscrollrecycler.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements SectionIndexer {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
+        implements SectionIndexer {
 
     private List<String> mDataArray;
     private ArrayList<Integer> mSectionPositions;
@@ -36,15 +37,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_view_layout, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_recycler_view_layout, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mTextView.setText(mDataArray.get(position));
-        holder.mTextView.setOnClickListener(new View.OnClickListener() {
+        holder.mImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDataArray.remove(holder.getAdapterPosition());
@@ -77,11 +78,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mSectionPositions.get(sectionIndex);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_alphabet)
         TextView mTextView;
+        @Bind(R.id.ib_alphabet)
+        ImageButton mImageButton;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
