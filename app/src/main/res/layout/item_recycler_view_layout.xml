@@ -4,28 +4,30 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
-              android:paddingStart="20dp"
-              android:paddingEnd="30dp"
-              android:paddingTop="10dp"
+              android:orientation="horizontal"
               android:paddingBottom="10dp"
-              android:orientation="horizontal">
+              android:paddingEnd="30dp"
+              android:paddingLeft="20dp"
+              android:paddingRight="30dp"
+              android:paddingStart="20dp"
+              android:paddingTop="10dp">
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/tv_alphabet"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:orientation="vertical"
-              android:textSize="22sp"
-              tools:text="Alphabet text"/>
+    <TextView
+        android:id="@+id/tv_alphabet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:textSize="22sp"
+        tools:text="Alphabet text"/>
 
     <ImageButton
         android:id="@+id/ib_alphabet"
-        android:padding="3dp"
-        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete"
-        android:contentDescription="@string/cd_item_delete_button"/>
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/cd_item_delete_button"
+        android:padding="3dp"
+        android:src="@drawable/ic_delete"/>
 
 </LinearLayout>
