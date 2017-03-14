@@ -10,10 +10,10 @@ A Powerful AlphabetIndex FastScroller for Android's RecyclerView!
 In build.gradle (Project)
 ```java
 allprojects {
-	repositories {
-		...
-		maven { url "https://jitpack.io" }
-	}
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
 }
 ```
 And then in the other gradle file(may be your app gradle or your own module library gradle, but never add in both of them to avoid conflict.)
