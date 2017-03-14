@@ -11,18 +11,17 @@ import android.view.ViewGroup;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import in.myinnos.alphabetsindexfastscrollrecycler.utilities_fs.StringMatcher;
 import in.myinnos.indexfastscrollrecycler.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements SectionIndexer {
 
     private List<String> mDataArray;
-    private String mSections = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private ArrayList<Integer> mSectionPositions;
 
     public RecyclerViewAdapter(List<String> dataset) {
         mDataArray = dataset;
@@ -43,28 +42,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mTextView.setText(mDataArray.get(position));
-    }
-
-    @Override
-    public int getPositionForSection(int section) {
-        // If there is no item for current section, previous section will be selected
-        for (int i = section; i >= 0; i--) {
-            for (int j = 0; j < getItemCount(); j++) {
-                if (i == 0) {
-                    // For numeric section
-                    for (int k = 0; k <= 9; k++) {
-                        if (StringMatcher.match(String.valueOf(mDataArray.get(j).charAt(0)), String.valueOf(k)))
-                            return j;
-                    }
-                } else {
-                    if (StringMatcher.match(String.valueOf(mDataArray.get(j).charAt(0)), String.valueOf(mSections.charAt(i))))
-                        return j;
-                }
+        holder.mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDataArray.remove(holder.getAdapterPosition());
+                notifyDataSetChanged();
             }
-        }
-        return 0;
+        });
     }
 
     @Override
@@ -74,10 +60,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public Object[] getSections() {
-        String[] sections = new String[mSections.length()];
-        for (int i = 0; i < mSections.length(); i++)
-            sections[i] = String.valueOf(mSections.charAt(i));
-        return sections;
+        List<String> sections = new ArrayList<>(26);
+        mSectionPositions = new ArrayList<>(26);
+        for (int i = 0, size = mDataArray.size(); i < size; i++) {
+            String section = String.valueOf(mDataArray.get(i).charAt(0)).toUpperCase();
+            if (!sections.contains(section)) {
+                sections.add(section);
+                mSectionPositions.add(i);
+            }
+        }
+        return sections.toArray(new String[0]);
+    }
+
+    @Override
+    public int getPositionForSection(int sectionIndex) {
+        return mSectionPositions.get(sectionIndex);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
