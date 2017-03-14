@@ -19,58 +19,49 @@ allprojects {
 And then in the other gradle file(may be your app gradle or your own module library gradle, but never add in both of them to avoid conflict.)
 ```java
 dependencies {
-	compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.1'
-	}
+    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.1'
+}
 ```          
 How to use
 -----
 **Step 1:** add this to your xml:
 ```xml
-    <in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
-        android:id="@+id/fast_scroller_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
+    android:id="@+id/fast_scroller_recycler"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 ```
 **Step 2:** implement SectionIndexer to RecyclerViewAdapter.
 ```java
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> implements SectionIndexer {
 
 private List<String> mDataArray;
-private String mSections = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+private ArrayList<Integer> mSectionPositions;
     
 .....
     
 @Override
-public int getPositionForSection(int section) {
-// If there is no item for current section, previous section will be selected
-	for (int i = section; i >= 0; i--) {
-             for (int j = 0; j < getItemCount(); j++) {
-                 if (i == 0) {
-                     // For numeric section
-                     for (int k = 0; k <= 9; k++) {
-                         if (StringMatcher.match(String.valueOf(mDataArray.get(j).charAt(0)), String.valueOf(k)))
-                             return j;
-                     }
-                 } else {
-                     if (StringMatcher.match(String.valueOf(mDataArray.get(j).charAt(0)), String.valueOf(mSections.charAt(i))))
-                         return j;
-                 }
-             }
-         }
-         return 0;
-}
-
-@Override
 public int getSectionForPosition(int position) {
-  return 0;
+    return 0;
 }
-
+ 
 @Override
 public Object[] getSections() {
- String[] sections = new String[mSections.length()];
-	for (int i = 0; i < mSections.length(); i++)
-	sections[i] = String.valueOf(mSections.charAt(i));
-    return sections;
+    List<String> sections = new ArrayList<>(26);
+    mSectionPositions = new ArrayList<>(26);
+    for (int i = 0, size = mDataArray.size(); i < size; i++) {
+        String section = String.valueOf(mDataArray.get(i).charAt(0)).toUpperCase();
+        if (!sections.contains(section)) {
+            sections.add(section);
+            mSectionPositions.add(i);
+        }
+    }
+    return sections.toArray(new String[0]);
+}
+ 
+@Override
+public int getPositionForSection(int sectionIndex) {
+    return mSectionPositions.get(sectionIndex);
 }
     
 }
