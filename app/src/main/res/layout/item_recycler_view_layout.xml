@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_alphabet"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:textSize="22sp"
-    android:text="Alphabet text"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingBottom="10dp"
+              android:paddingEnd="30dp"
+              android:paddingLeft="20dp"
+              android:paddingRight="30dp"
+              android:paddingStart="20dp"
+              android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/tv_alphabet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:textSize="22sp"
+        tools:text="Alphabet text"/>
+
+    <ImageButton
+        android:id="@+id/ib_alphabet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/cd_item_delete_button"
+        android:padding="3dp"
+        android:src="@drawable/ic_delete"/>
+
+</LinearLayout>

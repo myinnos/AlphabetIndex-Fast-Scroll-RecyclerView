@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Index Fast Scroll Recycler</string>
+    <string name="cd_item_delete_button">Delete item</string>
 </resources>
