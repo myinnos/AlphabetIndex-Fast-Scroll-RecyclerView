@@ -39,11 +39,11 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private float setIndexbarMargin = IndexFastScrollRecyclerView.mIndexbarMargin;
     private int setPreviewPadding = IndexFastScrollRecyclerView.mPreviewPadding;
     private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
-    private float setIndexBarTransparentValue = IndexFastScrollRecyclerView.mIndexBarTransparentValue;
     private String indexbarBackgroudColor = IndexFastScrollRecyclerView.mIndexbarBackgroudColor;
     private String indexbarTextColor = IndexFastScrollRecyclerView.mIndexbarTextColor;
 
-    private int indexbarBackgroudAlpha = (int) (255 * setIndexBarTransparentValue);
+    private int indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(
+            IndexFastScrollRecyclerView.mIndexBarTransparentValue);
 
     private int indexPaintPaintColor = Color.WHITE;
     AttributeSet attrs;
@@ -202,6 +202,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
     };
 
+    private int convertTransparentValueToBackgroundAlpha(float value) {
+        return (int) (255 * value);
+    }
+
     /**
      * @param value int to set size of index text
      */
@@ -242,7 +246,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
      * @param value float to set size of index text
      */
     public void setIndexBarTransparentValue(float value) {
-        setIndexBarTransparentValue = value;
+        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value);
     }
 
     /**
