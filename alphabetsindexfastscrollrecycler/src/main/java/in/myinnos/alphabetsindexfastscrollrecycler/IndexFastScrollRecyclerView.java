@@ -174,7 +174,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     public void setTypeface(Typeface typeface) {
         mScroller.setTypeface(typeface);
     }
-    
+
     /**
      * @param color The color for the scroll track
      */
