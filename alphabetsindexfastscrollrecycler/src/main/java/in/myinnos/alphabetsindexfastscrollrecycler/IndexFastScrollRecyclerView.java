@@ -125,58 +125,56 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     }
 
     /**
-     * @param value int to set size of index text
+     * @param value int to set the text size of the index bar
      */
     public void setIndexTextSize(int value) {
         mScroller.setIndexTextSize(value);
     }
 
     /**
-     * @param value float to set size of index text
+     * @param value float to set the width of the index bar
      */
     public void setIndexbarWidth(float value) {
         mScroller.setIndexbarWidth(value);
     }
 
     /**
-     * @param value float to set size of index text
+     * @param value float to set the margin of the index bar
      */
     public void setIndexbarMargin(float value) {
         mScroller.setIndexbarMargin(value);
     }
 
-
     /**
-     * @param value int to set size of index text
+     * @param value int to set the preview padding
      */
     public void setPreviewPadding(int value) {
         mScroller.setPreviewPadding(value);
     }
 
     /**
-     * @param value int to set size of index text
+     * @param value int to set the corner radius of the index bar
      */
     public void setIndexBarCornerRadius(int value) {
         mScroller.setIndexBarCornerRadius(value);
     }
 
     /**
-     * @param value float to set size of index text
+     * @param value float to set the transparency value of the index bar
      */
     public void setIndexBarTransparentValue(float value) {
         mScroller.setIndexBarTransparentValue(value);
     }
 
-
     /**
-     * @param color The color for the scroll track
+     * @param color The color for the index bar
      */
     public void setIndexBarColor(String color) {
         mScroller.setIndexBarColor(color);
     }
 
     /**
-     * @param color The color for the text in scroll track
+     * @param color The text color for the index bar
      */
     public void setIndexBarTextColor(String color) {
         mScroller.setIndexBarTextColor(color);
