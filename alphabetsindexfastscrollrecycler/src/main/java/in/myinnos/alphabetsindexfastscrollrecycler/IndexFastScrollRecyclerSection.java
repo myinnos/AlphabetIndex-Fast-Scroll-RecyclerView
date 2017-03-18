@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -40,6 +41,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private int setPreviewPadding = IndexFastScrollRecyclerView.mPreviewPadding;
     private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
     private float setIndexBarTransparentValue = IndexFastScrollRecyclerView.mIndexBarTransparentValue;
+    private Typeface setTypeface = null;
     private String indexbarBackgroudColor = IndexFastScrollRecyclerView.mIndexbarBackgroudColor;
     private String indexbarTextColor = IndexFastScrollRecyclerView.mIndexbarTextColor;
 
@@ -79,6 +81,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 previewTextPaint.setColor(Color.WHITE);
                 previewTextPaint.setAntiAlias(true);
                 previewTextPaint.setTextSize(50 * mScaledDensity);
+                previewTextPaint.setTypeface(setTypeface);
 
                 float previewTextWidth = previewTextPaint.measureText(mSections[mCurrentSection]);
                 float previewSize = 2 * mPreviewPadding + previewTextPaint.descent() - previewTextPaint.ascent();
@@ -97,6 +100,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
             indexPaint.setColor(Color.parseColor(indexbarTextColor));
             indexPaint.setAntiAlias(true);
             indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
+            indexPaint.setTypeface(setTypeface);
 
             float sectionHeight = (mIndexbarRect.height() - 2 * mIndexbarMargin) / mSections.length;
             float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
@@ -243,6 +247,13 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
      */
     public void setIndexBarTransparentValue(float value) {
         setIndexBarTransparentValue = value;
+    }
+
+    /**
+     * @param typeface Typeface to set the typeface of the preview & the index bar
+     */
+    public void setTypeface(Typeface typeface) {
+        setTypeface = typeface;
     }
 
     /**
