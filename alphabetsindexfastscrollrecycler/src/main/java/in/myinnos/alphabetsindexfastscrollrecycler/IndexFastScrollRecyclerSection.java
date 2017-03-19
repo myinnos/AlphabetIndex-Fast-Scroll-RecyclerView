@@ -40,7 +40,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private float setIndexbarMargin = IndexFastScrollRecyclerView.mIndexbarMargin;
     private int setPreviewPadding = IndexFastScrollRecyclerView.mPreviewPadding;
     private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
-
+    private Typeface setTypeface = null;
     private String indexbarBackgroudColor = IndexFastScrollRecyclerView.mIndexbarBackgroudColor;
     private String indexbarTextColor = IndexFastScrollRecyclerView.mIndexbarTextColor;
 
@@ -253,6 +253,14 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     }
 
     /**
+     * @param typeface Typeface to set the typeface of the preview & the index bar
+     */
+    public void setTypeface(Typeface typeface) {
+        setTypeface = typeface;
+    }
+
+    /**
+     * @param color The color for the scroll track
      */
     public void setIndexBarColor(String color) {
         indexbarBackgroudColor = color;
