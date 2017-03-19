@@ -40,12 +40,12 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private float setIndexbarMargin = IndexFastScrollRecyclerView.mIndexbarMargin;
     private int setPreviewPadding = IndexFastScrollRecyclerView.mPreviewPadding;
     private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
-    private float setIndexBarTransparentValue = IndexFastScrollRecyclerView.mIndexBarTransparentValue;
-    private Typeface setTypeface = null;
+
     private String indexbarBackgroudColor = IndexFastScrollRecyclerView.mIndexbarBackgroudColor;
     private String indexbarTextColor = IndexFastScrollRecyclerView.mIndexbarTextColor;
 
-    private int indexbarBackgroudAlpha = (int) (255 * setIndexBarTransparentValue);
+    private int indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(
+            IndexFastScrollRecyclerView.mIndexBarTransparentValue);
 
     private int indexPaintPaintColor = Color.WHITE;
     AttributeSet attrs;
@@ -206,65 +206,60 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
     };
 
+    private int convertTransparentValueToBackgroundAlpha(float value) {
+        return (int) (255 * value);
+    }
+
     /**
-     * @param value int to set size of index text
+     * @param value int to set the text size of the index bar
      */
     public void setIndexTextSize(int value) {
         setIndexTextSize = value;
     }
 
     /**
-     * @param value float to set size of index text
+     * @param value float to set the width of the index bar
      */
     public void setIndexbarWidth(float value) {
         mIndexbarWidth = value;
     }
 
     /**
-     * @param value float to set size of index text
+     * @param value float to set the margin of the index bar
      */
     public void setIndexbarMargin(float value) {
         mIndexbarMargin = value;
     }
 
-
     /**
-     * @param value int to set size of index text
+     * @param value int to set preview padding
      */
     public void setPreviewPadding(int value) {
         setPreviewPadding = value;
     }
 
     /**
-     * @param value int to set size of index text
+     * @param value int to set the radius of the index bar
      */
     public void setIndexBarCornerRadius(int value) {
         setIndexBarCornerRadius = value;
     }
 
     /**
-     * @param value float to set size of index text
+     * @param value float to set the transparency of the color for index bar
      */
     public void setIndexBarTransparentValue(float value) {
-        setIndexBarTransparentValue = value;
+        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value);
     }
 
     /**
-     * @param typeface Typeface to set the typeface of the preview & the index bar
-     */
-    public void setTypeface(Typeface typeface) {
-        setTypeface = typeface;
-    }
-
-    /**
-     * @param color The color for the scroll track
      */
     public void setIndexBarColor(String color) {
         indexbarBackgroudColor = color;
     }
 
     /**
-     * @param color The color for the scroll track
+     * @param color The text color for the index bar
      */
     public void setIndexBarTextColor(String color) {
         indexbarTextColor = color;
