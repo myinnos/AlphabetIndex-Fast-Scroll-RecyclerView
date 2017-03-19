@@ -7,6 +7,7 @@ package in.myinnos.alphabetsindexfastscrollrecycler;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -167,6 +168,12 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
         mScroller.setIndexBarTransparentValue(value);
     }
 
+    /**
+     * @param typeface Typeface to set the typeface of the preview & the index bar
+     */
+    public void setTypeface(Typeface typeface) {
+        mScroller.setTypeface(typeface);
+    }
 
     /**
      * @param color The color for the scroll track
