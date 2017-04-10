@@ -122,7 +122,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                     mIsIndexing = true;
                     // Determine which section the point is in, and move the list to that section
                     mCurrentSection = getSectionByPoint(ev.getY());
-                    ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(mIndexer.getPositionForSection(mCurrentSection), 0);
+                    scrollToPosition();
                     return true;
                 }
                 break;
@@ -132,7 +132,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                     if (contains(ev.getX(), ev.getY())) {
                         // Determine which section the point is in, and move the list to that section
                         mCurrentSection = getSectionByPoint(ev.getY());
-                        ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(mIndexer.getPositionForSection(mCurrentSection), 0);
+                        scrollToPosition();
                     }
                     return true;
                 }
@@ -145,6 +145,16 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 break;
         }
         return false;
+    }
+
+    private void scrollToPosition() {
+        int position = mIndexer.getPositionForSection(mCurrentSection);
+        RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+        if (layoutManager instanceof LinearLayoutManager) {
+            ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(position, 0);
+        } else {
+            layoutManager.scrollToPosition(position);
+        }
     }
 
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
