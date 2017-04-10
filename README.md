@@ -116,6 +116,9 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
 * :mag_right: LinkedIn: [PrabhakarThota](https://www.linkedin.com/in/prabhakarthota "Prabhakar Thota on LinkedIn")
 * :thumbsup: Twitter: [@myinnos](https://twitter.com/myinnos "Prabhakar Thota on twitter")   
 
+### Special Contributer
+[@jonas-arkulpa](https://github.com/jonas-arkulpa "jonas-arkulpa")   
+
 License
 -------
 
