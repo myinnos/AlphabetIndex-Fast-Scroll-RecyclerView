@@ -107,6 +107,10 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
  Typeface typeface = Typeface.createFromAsset(context.getAssets(), "Custom-Font.ttf");
  mRecyclerView.setTypeface(typeface);
 ```
+Compatibility
+-----
+This library works with any layout manager but is optimized for the use with a LinearLayoutManager.
+
 ##### Any Queries? or Feedback, please let me know by opening a [new issue](https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/issues/new)!
 
 ## Contact
