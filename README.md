@@ -19,7 +19,7 @@ allprojects {
 And then in the other gradle file(may be your app gradle or your own module library gradle, but never add in both of them to avoid conflict.)
 ```java
 dependencies {
-    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.4'
+    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.5'
 }
 ```          
 How to use
@@ -106,6 +106,10 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
 ```java
  Typeface typeface = Typeface.createFromAsset(context.getAssets(), "Custom-Font.ttf");
  mRecyclerView.setTypeface(typeface);
+```
+- To hide and show IndexBar:
+```java
+mRecyclerView.setIndexBarVisibility(true);
 ```
 Compatibility
 -----
