@@ -175,6 +175,13 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     }
 
     /**
+     * @param status Typeface to set the typeface of the preview & the index bar
+     */
+    public void setIndexBarVisibility(Boolean status) {
+        mScroller.setIndexBarVisibility(status);
+    }
+
+    /**
      * @param color The color for the index bar
      */
     public void setIndexBarColor(String color) {
