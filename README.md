@@ -107,7 +107,7 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
  Typeface typeface = Typeface.createFromAsset(context.getAssets(), "Custom-Font.ttf");
  mRecyclerView.setTypeface(typeface);
 ```
-- To hide and show IndexBar:
+- To hide/show IndexBar:
 ```java
 mRecyclerView.setIndexBarVisibility(true);
 ```
