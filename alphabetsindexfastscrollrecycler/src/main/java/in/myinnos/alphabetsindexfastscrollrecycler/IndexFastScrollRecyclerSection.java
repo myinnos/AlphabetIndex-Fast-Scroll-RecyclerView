@@ -16,6 +16,7 @@ import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.SectionIndexer;
 
@@ -154,12 +155,16 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     }
 
     private void scrollToPosition() {
-        int position = mIndexer.getPositionForSection(mCurrentSection);
-        RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-        if (layoutManager instanceof LinearLayoutManager) {
-            ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(position, 0);
-        } else {
-            layoutManager.scrollToPosition(position);
+        try {
+            int position = mIndexer.getPositionForSection(mCurrentSection);
+            RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+            if (layoutManager instanceof LinearLayoutManager) {
+                ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(position, 0);
+            } else {
+                layoutManager.scrollToPosition(position);
+            }
+        } catch (Exception e) {
+            Log.d("INDEX_BAR", "Data size returns null");
         }
     }
 
