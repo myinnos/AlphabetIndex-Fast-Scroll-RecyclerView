@@ -102,6 +102,10 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
 ```java
  mRecyclerView.setPreviewPadding(2);
 ```
+- Change PreviewVisibility:
+```java
+ mRecyclerView.setPreviewVisibility(false);
+```
 - Change Typeface:
 ```java
  Typeface typeface = Typeface.createFromAsset(context.getAssets(), "Custom-Font.ttf");
