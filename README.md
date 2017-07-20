@@ -4,7 +4,9 @@ A Powerful AlphabetIndex FastScroller for Android's RecyclerView!
  ![AlphabetIndex-Fast-Scroll-RecyclerView - Example1](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/0d6c4f2f0b9f3b573a4f2abf2c87b62237081286/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_1.gif)
  `` `` `` `` `` `` `` ``
   ![AlphabetIndex-Fast-Scroll-RecyclerView - Example2](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/0d6c4f2f0b9f3b573a4f2abf2c87b62237081286/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_2.gif)
- 
+  `` `` `` `` `` `` `` ``
+  ![AlphabetIndex-Fast-Scroll-RecyclerView - Example3](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/master/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_3.gif)
+  
 #### Kindly use the following links to use this library:
 
 In build.gradle (Project)
@@ -114,6 +116,14 @@ mRecyclerView.setIndexBarTransparentValue((float) 0.4);
 - To hide/show Fast Scroll IndexBar:
 ```java
 mRecyclerView.setIndexBarVisibility(true);
+```
+- Change IndexBarHighLateTextColor:
+```java
+mRecyclerView.setIndexbarHighLateTextColor("#33334c);
+```
+- To hide/show IndexBarHighLateText:
+```java
+mRecyclerView.setIndexBarHighLateTextVisibility(true);
 ```
 Compatibility
 -----
