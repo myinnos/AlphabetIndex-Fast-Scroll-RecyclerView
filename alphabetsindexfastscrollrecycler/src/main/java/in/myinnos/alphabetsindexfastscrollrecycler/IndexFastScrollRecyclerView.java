@@ -175,10 +175,17 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     }
 
     /**
-     * @param status Typeface to set the typeface of the preview & the index bar
+     * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarVisibility(Boolean status) {
-        mScroller.setIndexBarVisibility(status);
+    public void setIndexBarVisibility(boolean shown) {
+        mScroller.setIndexBarVisibility(shown);
+    }
+
+    /**
+     * @param shown boolean to show or hide the preview
+     */
+    public void setPreviewVisibility(boolean shown) {
+        mScroller.setPreviewVisibility(shown);
     }
 
     /**

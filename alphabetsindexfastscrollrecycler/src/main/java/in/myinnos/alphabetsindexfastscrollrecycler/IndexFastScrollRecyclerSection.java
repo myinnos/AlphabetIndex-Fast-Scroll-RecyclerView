@@ -40,6 +40,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private float setIndexbarWidth = IndexFastScrollRecyclerView.mIndexbarWidth;
     private float setIndexbarMargin = IndexFastScrollRecyclerView.mIndexbarMargin;
     private int setPreviewPadding = IndexFastScrollRecyclerView.mPreviewPadding;
+    private boolean previewVisibility = true;
     private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
@@ -75,7 +76,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
             if (mSections != null && mSections.length > 0) {
                 // Preview is shown when mCurrentSection is set
-                if (mCurrentSection >= 0) {
+                if (previewVisibility && mCurrentSection >= 0 && mSections[mCurrentSection] != "") {
                     Paint previewPaint = new Paint();
                     previewPaint.setColor(Color.BLACK);
                     previewPaint.setAlpha(96);
@@ -281,10 +282,17 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     }
 
     /**
-     * @param status to hide or visibility index bar
+     * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarVisibility(Boolean status) {
-        setIndexBarVisibility = status;
+    public void setIndexBarVisibility(boolean shown) {
+        setIndexBarVisibility = shown;
+    }
+
+    /**
+     * @param shown boolean to show or hide the preview box
+     */
+    public void setPreviewVisibility(boolean shown) {
+        previewVisibility = shown;
     }
 
     /**
