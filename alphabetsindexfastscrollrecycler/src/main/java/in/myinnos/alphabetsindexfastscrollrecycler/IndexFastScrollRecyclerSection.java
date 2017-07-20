@@ -44,8 +44,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
+    private Boolean setSetIndexBarHighLateTextVisibility = false;
     private String indexbarBackgroudColor = IndexFastScrollRecyclerView.mIndexbarBackgroudColor;
     private String indexbarTextColor = IndexFastScrollRecyclerView.mIndexbarTextColor;
+    private String indexbarHighLateTextColor = IndexFastScrollRecyclerView.mIndexbarHighLateTextColor;
 
     private int indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(
             IndexFastScrollRecyclerView.mIndexBarTransparentValue);
@@ -111,9 +113,29 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 float sectionHeight = (mIndexbarRect.height() - 2 * mIndexbarMargin) / mSections.length;
                 float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
                 for (int i = 0; i < mSections.length; i++) {
-                    float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
-                    canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
-                            , mIndexbarRect.top + mIndexbarMargin + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
+
+                    if (setSetIndexBarHighLateTextVisibility) {
+
+                        if (mCurrentSection > -1 && i == mCurrentSection) {
+                            indexPaint.setTypeface(Typeface.create(setTypeface, Typeface.BOLD));
+                            indexPaint.setTextSize((setIndexTextSize + 3) * mScaledDensity);
+                            indexPaint.setColor(Color.parseColor(indexbarHighLateTextColor));
+                        } else {
+                            indexPaint.setTypeface(setTypeface);
+                            indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
+                            indexPaint.setColor(Color.parseColor(indexbarTextColor));
+                        }
+                        float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
+                        canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
+                                , mIndexbarRect.top + mIndexbarMargin + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
+
+
+                    } else {
+                        float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
+                        canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
+                                , mIndexbarRect.top + mIndexbarMargin + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
+                    }
+
                 }
             }
         }
@@ -307,6 +329,20 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
      */
     public void setIndexBarTextColor(String color) {
         indexbarTextColor = color;
+    }
+
+    /**
+     * @param color The text color for the index bar
+     */
+    public void setIndexBarHighLateTextColor(String color) {
+        indexbarHighLateTextColor = color;
+    }
+
+    /**
+     * @param shown boolean to show or hide the index bar
+     */
+    public void setIndexBarHighLateTextVisibility(boolean shown) {
+        setSetIndexBarHighLateTextVisibility = shown;
     }
 
 }

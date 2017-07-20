@@ -9,5 +9,6 @@
         <attr name="setIndexBarTransparentValue" format="float" />
         <attr name="setIndexBarColor" format="string" />
         <attr name="setIndexBarTextColor" format="string" />
+        <attr name="setIndexBarHighlightTextColor" format="string" />
     </declare-styleable>
 </resources>

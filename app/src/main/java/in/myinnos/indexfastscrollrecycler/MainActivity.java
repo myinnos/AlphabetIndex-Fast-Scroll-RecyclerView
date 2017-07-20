@@ -65,5 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setPreviewPadding(0);
         mRecyclerView.setIndexBarTextColor("#FFFFFF");
         mRecyclerView.setIndexBarVisibility(true);
+        mRecyclerView.setIndexbarHighLateTextColor("#33334c");
+        mRecyclerView.setIndexBarHighLateTextVisibility(true);
     }
 }

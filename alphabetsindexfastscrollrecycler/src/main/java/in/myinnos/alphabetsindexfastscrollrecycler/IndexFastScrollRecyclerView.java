@@ -26,6 +26,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     public static float mIndexBarTransparentValue = (float) 0.6;
     public static String mIndexbarBackgroudColor = "#000000";
     public static String mIndexbarTextColor = "#FFFFFF";
+    public static String mIndexbarHighLateTextColor = "#000000";
 
     public IndexFastScrollRecyclerView(Context context) {
         super(context);
@@ -63,6 +64,10 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
                     if (typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor) != null) {
                         mIndexbarTextColor = typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor);
+                    }
+
+                    if (typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor) != null) {
+                        mIndexbarHighLateTextColor = typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor);
                     }
 
                 } finally {
@@ -202,4 +207,17 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
         mScroller.setIndexBarTextColor(color);
     }
 
+    /**
+     * @param color The text color for the index bar
+     */
+    public void setIndexbarHighLateTextColor(String color) {
+        mScroller.setIndexBarHighLateTextColor(color);
+    }
+
+    /**
+     * @param shown boolean to show or hide the index bar
+     */
+    public void setIndexBarHighLateTextVisibility(boolean shown) {
+        mScroller.setIndexBarHighLateTextVisibility(shown);
+    }
 }
