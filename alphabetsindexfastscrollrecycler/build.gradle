@@ -27,8 +27,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:${SDK_VERSION}"
     compile "com.android.support:design:${SDK_VERSION}"
 
-    androidTestCompile 'junit:junit:4.12'
-    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test:runner:1.0.0'
 }
 
 // build a jar with source files
