@@ -36,26 +36,37 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private String[] mSections = null;
     private RectF mIndexbarRect;
 
-    private int setIndexTextSize = IndexFastScrollRecyclerView.setIndexTextSize;
-    private float setIndexbarWidth = IndexFastScrollRecyclerView.mIndexbarWidth;
-    private float setIndexbarMargin = IndexFastScrollRecyclerView.mIndexbarMargin;
-    private int setPreviewPadding = IndexFastScrollRecyclerView.mPreviewPadding;
+    private int setIndexTextSize;
+    private float setIndexbarWidth;
+    private float setIndexbarMargin;
+    private int setPreviewPadding;
     private boolean previewVisibility = true;
-    private int setIndexBarCornerRadius = IndexFastScrollRecyclerView.mIndexBarCornerRadius;
+    private int setIndexBarCornerRadius;
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
     private Boolean setSetIndexBarHighLateTextVisibility = false;
-    private String indexbarBackgroudColor = IndexFastScrollRecyclerView.mIndexbarBackgroudColor;
-    private String indexbarTextColor = IndexFastScrollRecyclerView.mIndexbarTextColor;
-    private String indexbarHighLateTextColor = IndexFastScrollRecyclerView.mIndexbarHighLateTextColor;
+    private String indexbarBackgroudColor;
+    private String indexbarTextColor;
+    private String indexbarHighLateTextColor;
 
-    private int indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(
-            IndexFastScrollRecyclerView.mIndexBarTransparentValue);
+    private int indexbarBackgroudAlpha;
 
     private int indexPaintPaintColor = Color.WHITE;
     AttributeSet attrs;
 
-    public IndexFastScrollRecyclerSection(Context context, RecyclerView rv) {
+    public IndexFastScrollRecyclerSection(Context context, IndexFastScrollRecyclerView rv) {
+
+        setIndexTextSize = rv.setIndexTextSize;
+        setIndexbarWidth = rv.mIndexbarWidth;
+        setIndexbarMargin = rv.mIndexbarMargin;
+        setPreviewPadding = rv.mPreviewPadding;
+        setIndexBarCornerRadius = rv.mIndexBarCornerRadius;
+        indexbarBackgroudColor = rv.mIndexbarBackgroudColor;
+        indexbarTextColor = rv.mIndexbarTextColor;
+        indexbarHighLateTextColor = rv.mIndexbarHighLateTextColor;
+
+        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(rv.mIndexBarTransparentValue);
+
         mDensity = context.getResources().getDisplayMetrics().density;
         mScaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
         mRecyclerView = rv;

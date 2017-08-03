@@ -18,15 +18,17 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     private IndexFastScrollRecyclerSection mScroller = null;
     private GestureDetector mGestureDetector = null;
 
-    public static int setIndexTextSize = 12;
-    public static float mIndexbarWidth = 20;
-    public static float mIndexbarMargin = 5;
-    public static int mPreviewPadding = 5;
-    public static int mIndexBarCornerRadius = 5;
-    public static float mIndexBarTransparentValue = (float) 0.6;
-    public static String mIndexbarBackgroudColor = "#000000";
-    public static String mIndexbarTextColor = "#FFFFFF";
-    public static String mIndexbarHighLateTextColor = "#000000";
+    private boolean mEnabled = true;
+
+    public int setIndexTextSize = 12;
+    public float mIndexbarWidth = 20;
+    public float mIndexbarMargin = 5;
+    public int mPreviewPadding = 5;
+    public int mIndexBarCornerRadius = 5;
+    public float mIndexBarTransparentValue = (float) 0.6;
+    public String mIndexbarBackgroudColor = "#000000";
+    public String mIndexbarTextColor = "#FFFFFF";
+    public String mIndexbarHighLateTextColor = "#000000";
 
     public IndexFastScrollRecyclerView(Context context) {
         super(context);
@@ -88,29 +90,31 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        // Intercept ListView's touch event
-        if (mScroller != null && mScroller.onTouchEvent(ev))
-            return true;
+        if (mEnabled) {
+            // Intercept ListView's touch event
+            if (mScroller != null && mScroller.onTouchEvent(ev))
+                return true;
 
-        if (mGestureDetector == null) {
-            mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+            if (mGestureDetector == null) {
+                mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
-                @Override
-                public boolean onFling(MotionEvent e1, MotionEvent e2,
-                                       float velocityX, float velocityY) {
-                    return super.onFling(e1, e2, velocityX, velocityY);
-                }
+                    @Override
+                    public boolean onFling(MotionEvent e1, MotionEvent e2,
+                            float velocityX, float velocityY) {
+                        return super.onFling(e1, e2, velocityX, velocityY);
+                    }
 
-            });
+                });
+            }
+            mGestureDetector.onTouchEvent(ev);
         }
-        mGestureDetector.onTouchEvent(ev);
 
         return super.onTouchEvent(ev);
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (mScroller.contains(ev.getX(), ev.getY()))
+        if (mEnabled && mScroller != null && mScroller.contains(ev.getX(), ev.getY()))
             return true;
 
         return super.onInterceptTouchEvent(ev);
@@ -184,6 +188,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
      */
     public void setIndexBarVisibility(boolean shown) {
         mScroller.setIndexBarVisibility(shown);
+        mEnabled = shown;
     }
 
     /**
