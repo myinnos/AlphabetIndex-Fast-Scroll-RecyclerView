@@ -4,6 +4,7 @@ package in.myinnos.alphabetsindexfastscrollrecycler;
  * Created by MyInnos on 31-01-2017.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -45,9 +47,9 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
     private Boolean setSetIndexBarHighLateTextVisibility = false;
-    private String indexbarBackgroudColor;
-    private String indexbarTextColor;
-    private String indexbarHighLateTextColor;
+    private @ColorInt int indexbarBackgroudColor;
+    private @ColorInt int indexbarTextColor;
+    private @ColorInt int indexbarHighLateTextColor;
 
     private int indexbarBackgroudAlpha;
 
@@ -82,7 +84,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         if (setIndexBarVisibility) {
 
             Paint indexbarPaint = new Paint();
-            indexbarPaint.setColor(Color.parseColor(indexbarBackgroudColor));
+            indexbarPaint.setColor(indexbarBackgroudColor);
             indexbarPaint.setAlpha(indexbarBackgroudAlpha);
             indexbarPaint.setAntiAlias(true);
             canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity, setIndexBarCornerRadius * mDensity, indexbarPaint);
@@ -116,7 +118,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 }
 
                 Paint indexPaint = new Paint();
-                indexPaint.setColor(Color.parseColor(indexbarTextColor));
+                indexPaint.setColor(indexbarTextColor);
                 indexPaint.setAntiAlias(true);
                 indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
                 indexPaint.setTypeface(setTypeface);
@@ -130,11 +132,11 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                         if (mCurrentSection > -1 && i == mCurrentSection) {
                             indexPaint.setTypeface(Typeface.create(setTypeface, Typeface.BOLD));
                             indexPaint.setTextSize((setIndexTextSize + 3) * mScaledDensity);
-                            indexPaint.setColor(Color.parseColor(indexbarHighLateTextColor));
+                            indexPaint.setColor(indexbarHighLateTextColor);
                         } else {
                             indexPaint.setTypeface(setTypeface);
                             indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
-                            indexPaint.setColor(Color.parseColor(indexbarTextColor));
+                            indexPaint.setColor(indexbarTextColor);
                         }
                         float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
                         canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
@@ -247,6 +249,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         mHandler.sendEmptyMessageAtTime(WHAT_FADE_PREVIEW, SystemClock.uptimeMillis() + delay);
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
 
         @Override
@@ -331,21 +334,21 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     /**
      * @param color The color for the scroll track
      */
-    public void setIndexBarColor(String color) {
+    public void setIndexBarColor(@ColorInt int color) {
         indexbarBackgroudColor = color;
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarTextColor(String color) {
+    public void setIndexBarTextColor(@ColorInt int color) {
         indexbarTextColor = color;
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarHighLateTextColor(String color) {
+    public void setIndexBarHighLateTextColor(@ColorInt int color) {
         indexbarHighLateTextColor = color;
     }
 

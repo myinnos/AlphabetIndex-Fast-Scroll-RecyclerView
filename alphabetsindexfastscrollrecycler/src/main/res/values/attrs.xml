@@ -10,5 +10,8 @@
         <attr name="setIndexBarColor" format="string" />
         <attr name="setIndexBarTextColor" format="string" />
         <attr name="setIndexBarHighlightTextColor" format="string" />
+        <attr name="setIndexBarColorRes" format="color" />
+        <attr name="setIndexBarTextColorRes" format="color" />
+        <attr name="setIndexBarHighlightTextColorRes" format="color" />
     </declare-styleable>
 </resources>

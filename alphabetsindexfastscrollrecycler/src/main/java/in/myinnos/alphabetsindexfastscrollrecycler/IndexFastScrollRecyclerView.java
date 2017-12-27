@@ -7,7 +7,10 @@ package in.myinnos.alphabetsindexfastscrollrecycler;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -26,9 +29,12 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     public int mPreviewPadding = 5;
     public int mIndexBarCornerRadius = 5;
     public float mIndexBarTransparentValue = (float) 0.6;
-    public String mIndexbarBackgroudColor = "#000000";
-    public String mIndexbarTextColor = "#FFFFFF";
-    public String mIndexbarHighLateTextColor = "#000000";
+    public @ColorInt
+    int mIndexbarBackgroudColor = Color.BLACK;
+    public @ColorInt
+    int mIndexbarTextColor = Color.WHITE;
+    public @ColorInt
+    int mIndexbarHighLateTextColor = Color.BLACK;
 
     public IndexFastScrollRecyclerView(Context context) {
         super(context);
@@ -46,8 +52,6 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
 
     private void init(Context context, AttributeSet attrs) {
-        mScroller = new IndexFastScrollRecyclerSection(context, this);
-
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.IndexFastScrollRecyclerView, 0, 0);
 
@@ -60,16 +64,28 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                     mIndexBarCornerRadius = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexBarCornerRadius, mIndexBarCornerRadius);
                     mIndexBarTransparentValue = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexBarTransparentValue, mIndexBarTransparentValue);
 
-                    if (typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor) != null) {
-                        mIndexbarBackgroudColor = typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor);
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor)) {
+                        mIndexbarBackgroudColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor));
                     }
 
-                    if (typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor) != null) {
-                        mIndexbarTextColor = typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor);
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor)) {
+                        mIndexbarTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor));
                     }
 
-                    if (typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor) != null) {
-                        mIndexbarHighLateTextColor = typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor);
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor)) {
+                        mIndexbarHighLateTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor));
+                    }
+
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColorRes)) {
+                        mIndexbarBackgroudColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarColorRes, mIndexbarBackgroudColor);
+                    }
+
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColorRes)) {
+                        mIndexbarTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColorRes, mIndexbarTextColor);
+                    }
+
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColorRes)) {
+                        mIndexbarHighLateTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor, mIndexbarHighLateTextColor);
                     }
 
                 } finally {
@@ -77,6 +93,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                 }
             }
         }
+        mScroller = new IndexFastScrollRecyclerSection(context, this);
     }
 
     @Override
@@ -100,7 +117,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
                     @Override
                     public boolean onFling(MotionEvent e1, MotionEvent e2,
-                            float velocityX, float velocityY) {
+                                           float velocityX, float velocityY) {
                         return super.onFling(e1, e2, velocityX, velocityY);
                     }
 
@@ -202,21 +219,46 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
      * @param color The color for the index bar
      */
     public void setIndexBarColor(String color) {
-        mScroller.setIndexBarColor(color);
+        mScroller.setIndexBarColor(Color.parseColor(color));
     }
+
+    /**
+     * @param color The color for the index bar
+     */
+    public void setIndexBarColor(@ColorRes int color) {
+        int colorValue = getContext().getResources().getColor(color);
+        mScroller.setIndexBarColor(colorValue);
+    }
+
 
     /**
      * @param color The text color for the index bar
      */
     public void setIndexBarTextColor(String color) {
-        mScroller.setIndexBarTextColor(color);
+        mScroller.setIndexBarTextColor(Color.parseColor(color));
+    }
+
+    /**
+     * @param color The text color for the index bar
+     */
+    public void setIndexBarTextColor(@ColorRes int color) {
+        int colorValue = getContext().getResources().getColor(color);
+        mScroller.setIndexBarTextColor(colorValue);
     }
 
     /**
      * @param color The text color for the index bar
      */
     public void setIndexbarHighLateTextColor(String color) {
-        mScroller.setIndexBarHighLateTextColor(color);
+        mScroller.setIndexBarHighLateTextColor(Color.parseColor(color));
+    }
+
+    /**
+     * @param color The text color for the index bar
+     */
+    public void setIndexbarHighLateTextColor(@ColorRes int color) {
+        int colorValue = getContext().getResources().getColor(color);
+        mScroller.setIndexBarHighLateTextColor(colorValue);
     }
 
     /**
