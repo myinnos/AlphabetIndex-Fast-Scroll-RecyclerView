@@ -240,26 +240,40 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         return (int) ((y - mIndexbarRect.top - mIndexbarMargin) / ((mIndexbarRect.height() - 2 * mIndexbarMargin) / mSections.length));
     }
 
-    private static final int WHAT_FADE_PREVIEW = 1;
+//    private static final int WHAT_FADE_PREVIEW = 1;
+
+    private Runnable mLastFadeRunnable = null;
 
     private void fade(long delay) {
-        mHandler.removeMessages(0);
-        mHandler.sendEmptyMessageAtTime(WHAT_FADE_PREVIEW, SystemClock.uptimeMillis() + delay);
+        if (mRecyclerView != null) {
+            if (mLastFadeRunnable != null) {
+                mRecyclerView.removeCallbacks(mLastFadeRunnable);
+            }
+            mLastFadeRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerView.invalidate();
+                }
+            };
+            mRecyclerView.postDelayed(mLastFadeRunnable, delay);
+        }
+//        mHandler.removeMessages(0);
+//        mHandler.sendEmptyMessageAtTime(WHAT_FADE_PREVIEW, SystemClock.uptimeMillis() + delay);
     }
 
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            if (msg.what == WHAT_FADE_PREVIEW) {
-                mRecyclerView.invalidate();
-            }
-
-        }
-
-    };
+//    private Handler mHandler = new Handler() {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//
+//            if (msg.what == WHAT_FADE_PREVIEW) {
+//                mRecyclerView.invalidate();
+//            }
+//
+//        }
+//
+//    };
 
     private int convertTransparentValueToBackgroundAlpha(float value) {
         return (int) (255 * value);
