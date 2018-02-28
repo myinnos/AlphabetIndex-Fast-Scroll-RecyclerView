@@ -5,6 +5,10 @@
         <attr name="setIndexbarWidth" format="float" />
         <attr name="setIndexbarMargin" format="float" />
         <attr name="setPreviewPadding" format="integer" />
+        <attr name="setPreviewTextSize" format="integer" />
+        <attr name="setPreviewColor" format="color" />
+        <attr name="setPreviewTextColor" format="color" />
+        <attr name="setPreviewTransparentValue" format="float" />
         <attr name="setIndexBarCornerRadius" format="integer" />
         <attr name="setIndexBarTransparentValue" format="float" />
         <attr name="setIndexBarColor" format="string" />

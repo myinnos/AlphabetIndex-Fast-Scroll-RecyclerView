@@ -47,10 +47,19 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
     private Boolean setSetIndexBarHighLateTextVisibility = false;
-    private @ColorInt int indexbarBackgroudColor;
-    private @ColorInt int indexbarTextColor;
-    private @ColorInt int indexbarHighLateTextColor;
+    private @ColorInt
+    int indexbarBackgroudColor;
+    private @ColorInt
+    int indexbarTextColor;
+    private @ColorInt
+    int indexbarHighLateTextColor;
 
+    private int setPreviewTextSize;
+    private @ColorInt
+    int previewBackgroundColor;
+    private @ColorInt
+    int previewTextColor;
+    private int previewBackgroudAlpha;
     private int indexbarBackgroudAlpha;
 
     private int indexPaintPaintColor = Color.WHITE;
@@ -62,6 +71,11 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         setIndexbarWidth = rv.mIndexbarWidth;
         setIndexbarMargin = rv.mIndexbarMargin;
         setPreviewPadding = rv.mPreviewPadding;
+        setPreviewTextSize = rv.mPreviewTextSize;
+        previewBackgroundColor = rv.mPreviewBackgroudColor;
+        previewTextColor = rv.mPreviewTextColor;
+        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(rv.mPreviewTransparentValue);
+
         setIndexBarCornerRadius = rv.mIndexBarCornerRadius;
         indexbarBackgroudColor = rv.mIndexbarBackgroudColor;
         indexbarTextColor = rv.mIndexbarTextColor;
@@ -93,19 +107,20 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 // Preview is shown when mCurrentSection is set
                 if (previewVisibility && mCurrentSection >= 0 && mSections[mCurrentSection] != "") {
                     Paint previewPaint = new Paint();
-                    previewPaint.setColor(Color.BLACK);
-                    previewPaint.setAlpha(96);
+                    previewPaint.setColor(previewBackgroundColor);
+                    previewPaint.setAlpha(previewBackgroudAlpha);
                     previewPaint.setAntiAlias(true);
                     previewPaint.setShadowLayer(3, 0, 0, Color.argb(64, 0, 0, 0));
 
                     Paint previewTextPaint = new Paint();
-                    previewTextPaint.setColor(Color.WHITE);
+                    previewTextPaint.setColor(previewTextColor);
                     previewTextPaint.setAntiAlias(true);
-                    previewTextPaint.setTextSize(50 * mScaledDensity);
+                    previewTextPaint.setTextSize(setPreviewTextSize * mScaledDensity);
                     previewTextPaint.setTypeface(setTypeface);
 
                     float previewTextWidth = previewTextPaint.measureText(mSections[mCurrentSection]);
                     float previewSize = 2 * mPreviewPadding + previewTextPaint.descent() - previewTextPaint.ascent();
+                    previewSize = Math.max(previewSize, previewTextWidth + 2 * mPreviewPadding);
                     RectF previewRect = new RectF((mListViewWidth - previewSize) / 2
                             , (mListViewHeight - previewSize) / 2
                             , (mListViewWidth - previewSize) / 2 + previewSize
@@ -113,7 +128,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
                     canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint);
                     canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
-                            , previewRect.top + mPreviewPadding - previewTextPaint.ascent() + 1, previewTextPaint);
+                            , previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(), previewTextPaint);
                     fade(300);
                 }
 
@@ -329,6 +344,34 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
      */
     public void setPreviewVisibility(boolean shown) {
         previewVisibility = shown;
+    }
+
+    /**
+     * @param value int to set the text size of the preview box
+     */
+    public void setPreviewTextSize(int value) {
+        setPreviewTextSize = value;
+    }
+
+    /**
+     * @param color The color for the preview box
+     */
+    public void setPreviewColor(@ColorInt int color) {
+        previewBackgroundColor = color;
+    }
+
+    /**
+     * @param color The text color for the preview box
+     */
+    public void setPreviewTextColor(@ColorInt int color) {
+        previewTextColor = color;
+    }
+
+    /**
+     * @param value float to set the transparency value of the preview box
+     */
+    public void setPreviewTransparentValue(float value) {
+        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value);
     }
 
     /**

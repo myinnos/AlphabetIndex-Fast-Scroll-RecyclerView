@@ -36,6 +36,13 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     public @ColorInt
     int mIndexbarHighLateTextColor = Color.BLACK;
 
+    public int mPreviewTextSize = 50;
+    public @ColorInt
+    int mPreviewBackgroudColor = Color.BLACK;
+    public @ColorInt
+    int mPreviewTextColor = Color.WHITE;
+    public float mPreviewTransparentValue = (float) 0.4;
+
     public IndexFastScrollRecyclerView(Context context) {
         super(context);
     }
@@ -88,6 +95,17 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                         mIndexbarHighLateTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor, mIndexbarHighLateTextColor);
                     }
 
+                    mPreviewTextSize = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setPreviewTextSize, mPreviewTextSize);
+                    mPreviewTransparentValue = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setPreviewTransparentValue, mPreviewTransparentValue);
+
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setPreviewColor)) {
+                        mPreviewBackgroudColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setPreviewColor));
+                    }
+
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor)) {
+                        mPreviewTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor));
+                    }
+                    
                 } finally {
                     typedArray.recycle();
                 }
@@ -213,6 +231,50 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
      */
     public void setPreviewVisibility(boolean shown) {
         mScroller.setPreviewVisibility(shown);
+    }
+
+    /**
+     * @param value int to set the text size of the preview box
+     */
+    public void setPreviewTextSize(int value) {
+        mScroller.setPreviewTextSize(value);
+    }
+
+    /**
+     * @param color The color for the preview box
+     */
+    public void setPreviewColor(@ColorRes int color) {
+        int colorValue = getContext().getResources().getColor(color);
+        mScroller.setPreviewColor(colorValue);
+    }
+
+    /**
+     * @param color The color for the preview box
+     */
+    public void setPreviewColor(String color) {
+        mScroller.setPreviewColor(Color.parseColor(color));
+    }
+
+    /**
+     * @param color The text color for the preview box
+     */
+    public void setPreviewTextColor(@ColorRes int color) {
+        int colorValue = getContext().getResources().getColor(color);
+        mScroller.setPreviewTextColor(colorValue);
+    }
+
+    /**
+     * @param value float to set the transparency value of the preview box
+     */
+    public void setPreviewTransparentValue(float value) {
+        mScroller.setPreviewTransparentValue(value);
+    }
+
+    /**
+     * @param color The text color for the preview box
+     */
+    public void setPreviewTextColor(String color) {
+        mScroller.setPreviewTextColor(Color.parseColor(color));
     }
 
     /**
