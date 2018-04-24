@@ -1,2 +1,4 @@
-include ':app', ':alphabetsindexfastscrollrecyclerLibrary'
+include ':alphabetsindexfastscrollrecyclerLibrary'
 project(':alphabetsindexfastscrollrecyclerLibrary').projectDir = new File('alphabetsindexfastscrollrecycler')
+if (!System.env.JITPACK)
+    include ':app'
