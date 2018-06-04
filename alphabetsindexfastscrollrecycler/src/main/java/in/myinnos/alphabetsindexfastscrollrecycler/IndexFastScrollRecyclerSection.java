@@ -257,9 +257,14 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         return (int) ((y - mIndexbarRect.top - mIndexbarMargin) / ((mIndexbarRect.height() - 2 * mIndexbarMargin) / mSections.length));
     }
 
-    private static final int WHAT_FADE_PREVIEW = 1;
+    private Runnable mLastFadeRunnable = null;
 
     private void fade(long delay) {
+        if (mRecyclerView != null) {
+            if (mLastFadeRunnable != null) {
+                mRecyclerView.removeCallbacks(mLastFadeRunnable);
+            }
+        }
         mHandler.removeMessages(0);
         mHandler.sendEmptyMessageAtTime(WHAT_FADE_PREVIEW, SystemClock.uptimeMillis() + delay);
     }
@@ -274,10 +279,15 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
             if (msg.what == WHAT_FADE_PREVIEW) {
                 mRecyclerView.invalidate();
             }
-
+            mLastFadeRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerView.invalidate();
+                }
+            };
+            mRecyclerView.postDelayed(mLastFadeRunnable, delay);
         }
-
-    };
+    }
 
     private int convertTransparentValueToBackgroundAlpha(float value) {
         return (int) (255 * value);
