@@ -10,11 +10,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -222,6 +220,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     @Override
     public void onChanged() {
         super.onChanged();
+        updateSections();
+    }
+
+    public void updateSections() {
         mSections = (String[]) mIndexer.getSections();
     }
 
