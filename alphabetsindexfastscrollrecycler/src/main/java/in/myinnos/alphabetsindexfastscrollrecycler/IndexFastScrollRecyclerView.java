@@ -9,13 +9,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
-<<<<<<< HEAD
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.recyclerview.widget.RecyclerView;
-=======
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.v7.widget.RecyclerView;
->>>>>>> 818eda35794468c95154c3addcaf88ac0258c789
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -63,6 +60,8 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
 
     private void init(Context context, AttributeSet attrs) {
+        mScroller = new IndexFastScrollRecyclerSection(context, this);
+
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.IndexFastScrollRecyclerView, 0, 0);
 
@@ -115,7 +114,6 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                 }
             }
         }
-        mScroller = new IndexFastScrollRecyclerSection(context, this);
     }
 
     @Override
