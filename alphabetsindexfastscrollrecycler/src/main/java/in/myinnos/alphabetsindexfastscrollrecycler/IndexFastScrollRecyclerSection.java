@@ -4,15 +4,25 @@ package in.myinnos.alphabetsindexfastscrollrecycler;
  * Created by MyInnos on 31-01-2017.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+<<<<<<< HEAD
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+=======
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
+import android.support.annotation.ColorInt;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+>>>>>>> 818eda35794468c95154c3addcaf88ac0258c789
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -43,10 +53,19 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
     private Boolean setSetIndexBarHighLateTextVisibility = false;
-    private String indexbarBackgroudColor;
-    private String indexbarTextColor;
-    private String indexbarHighLateTextColor;
+    private @ColorInt
+    int indexbarBackgroudColor;
+    private @ColorInt
+    int indexbarTextColor;
+    private @ColorInt
+    int indexbarHighLateTextColor;
 
+    private int setPreviewTextSize;
+    private @ColorInt
+    int previewBackgroundColor;
+    private @ColorInt
+    int previewTextColor;
+    private int previewBackgroudAlpha;
     private int indexbarBackgroudAlpha;
 
     private int indexPaintPaintColor = Color.WHITE;
@@ -58,6 +77,11 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         setIndexbarWidth = rv.mIndexbarWidth;
         setIndexbarMargin = rv.mIndexbarMargin;
         setPreviewPadding = rv.mPreviewPadding;
+        setPreviewTextSize = rv.mPreviewTextSize;
+        previewBackgroundColor = rv.mPreviewBackgroudColor;
+        previewTextColor = rv.mPreviewTextColor;
+        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(rv.mPreviewTransparentValue);
+
         setIndexBarCornerRadius = rv.mIndexBarCornerRadius;
         indexbarBackgroudColor = rv.mIndexbarBackgroudColor;
         indexbarTextColor = rv.mIndexbarTextColor;
@@ -80,7 +104,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         if (setIndexBarVisibility) {
 
             Paint indexbarPaint = new Paint();
-            indexbarPaint.setColor(Color.parseColor(indexbarBackgroudColor));
+            indexbarPaint.setColor(indexbarBackgroudColor);
             indexbarPaint.setAlpha(indexbarBackgroudAlpha);
             indexbarPaint.setAntiAlias(true);
             canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity, setIndexBarCornerRadius * mDensity, indexbarPaint);
@@ -89,19 +113,20 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 // Preview is shown when mCurrentSection is set
                 if (previewVisibility && mCurrentSection >= 0 && mSections[mCurrentSection] != "") {
                     Paint previewPaint = new Paint();
-                    previewPaint.setColor(Color.BLACK);
-                    previewPaint.setAlpha(96);
+                    previewPaint.setColor(previewBackgroundColor);
+                    previewPaint.setAlpha(previewBackgroudAlpha);
                     previewPaint.setAntiAlias(true);
                     previewPaint.setShadowLayer(3, 0, 0, Color.argb(64, 0, 0, 0));
 
                     Paint previewTextPaint = new Paint();
-                    previewTextPaint.setColor(Color.WHITE);
+                    previewTextPaint.setColor(previewTextColor);
                     previewTextPaint.setAntiAlias(true);
-                    previewTextPaint.setTextSize(50 * mScaledDensity);
+                    previewTextPaint.setTextSize(setPreviewTextSize * mScaledDensity);
                     previewTextPaint.setTypeface(setTypeface);
 
                     float previewTextWidth = previewTextPaint.measureText(mSections[mCurrentSection]);
                     float previewSize = 2 * mPreviewPadding + previewTextPaint.descent() - previewTextPaint.ascent();
+                    previewSize = Math.max(previewSize, previewTextWidth + 2 * mPreviewPadding);
                     RectF previewRect = new RectF((mListViewWidth - previewSize) / 2
                             , (mListViewHeight - previewSize) / 2
                             , (mListViewWidth - previewSize) / 2 + previewSize
@@ -109,12 +134,12 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
                     canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint);
                     canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
-                            , previewRect.top + mPreviewPadding - previewTextPaint.ascent() + 1, previewTextPaint);
+                            , previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(), previewTextPaint);
                     fade(300);
                 }
 
                 Paint indexPaint = new Paint();
-                indexPaint.setColor(Color.parseColor(indexbarTextColor));
+                indexPaint.setColor(indexbarTextColor);
                 indexPaint.setAntiAlias(true);
                 indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
                 indexPaint.setTypeface(setTypeface);
@@ -128,11 +153,11 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                         if (mCurrentSection > -1 && i == mCurrentSection) {
                             indexPaint.setTypeface(Typeface.create(setTypeface, Typeface.BOLD));
                             indexPaint.setTextSize((setIndexTextSize + 3) * mScaledDensity);
-                            indexPaint.setColor(Color.parseColor(indexbarHighLateTextColor));
+                            indexPaint.setColor(indexbarHighLateTextColor);
                         } else {
                             indexPaint.setTypeface(setTypeface);
                             indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
-                            indexPaint.setColor(Color.parseColor(indexbarTextColor));
+                            indexPaint.setColor(indexbarTextColor);
                         }
                         float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
                         canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
@@ -249,6 +274,21 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
             if (mLastFadeRunnable != null) {
                 mRecyclerView.removeCallbacks(mLastFadeRunnable);
             }
+        }
+        mHandler.removeMessages(0);
+        mHandler.sendEmptyMessageAtTime(WHAT_FADE_PREVIEW, SystemClock.uptimeMillis() + delay);
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (msg.what == WHAT_FADE_PREVIEW) {
+                mRecyclerView.invalidate();
+            }
             mLastFadeRunnable = new Runnable() {
                 @Override
                 public void run() {
@@ -327,23 +367,51 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     }
 
     /**
+     * @param value int to set the text size of the preview box
+     */
+    public void setPreviewTextSize(int value) {
+        setPreviewTextSize = value;
+    }
+
+    /**
+     * @param color The color for the preview box
+     */
+    public void setPreviewColor(@ColorInt int color) {
+        previewBackgroundColor = color;
+    }
+
+    /**
+     * @param color The text color for the preview box
+     */
+    public void setPreviewTextColor(@ColorInt int color) {
+        previewTextColor = color;
+    }
+
+    /**
+     * @param value float to set the transparency value of the preview box
+     */
+    public void setPreviewTransparentValue(float value) {
+        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value);
+    }
+
+    /**
      * @param color The color for the scroll track
      */
-    public void setIndexBarColor(String color) {
+    public void setIndexBarColor(@ColorInt int color) {
         indexbarBackgroudColor = color;
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarTextColor(String color) {
+    public void setIndexBarTextColor(@ColorInt int color) {
         indexbarTextColor = color;
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarHighLateTextColor(String color) {
+    public void setIndexBarHighLateTextColor(@ColorInt int color) {
         indexbarHighLateTextColor = color;
     }
 

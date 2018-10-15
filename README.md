@@ -21,7 +21,7 @@ allprojects {
 And then in the other gradle file(may be your app gradle or your own module library gradle, but never add in both of them to avoid conflict.)
 ```java
 dependencies {
-    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.8'
+    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.92'
 }
 ```          
 How to use
@@ -79,10 +79,14 @@ Features
 - Change IndexBarTextColor:
 ```java
  mRecyclerView.setIndexBarTextColor("#FFFFFF");
+
+ mRecyclerView.setIndexBarTextColor(R.color.index_bar_text_color);
 ```
 - Change IndexBarColor:
 ```java
  mRecyclerView.setIndexBarColor("#33334c");
+
+ mRecyclerView.setIndexBarColor(R.color.index_bar_color);
 ```
 - Change IndexBarCornerRadius:
 ```java
@@ -120,6 +124,8 @@ mRecyclerView.setIndexBarVisibility(true);
 - Change IndexBarHighLateTextColor:
 ```java
 mRecyclerView.setIndexbarHighLateTextColor("#33334c);
+
+mRecyclerView.setIndexbarHighLateTextColor(R.color.index_bar_highlight_text_color);
 ```
 - To hide/show IndexBarHighLateText:
 ```java
