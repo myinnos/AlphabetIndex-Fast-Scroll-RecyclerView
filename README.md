@@ -21,7 +21,11 @@ allprojects {
 And then in the other gradle file(may be your app gradle or your own module library gradle, but never add in both of them to avoid conflict.)
 ```java
 dependencies {
-    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.92'
+    // AppCompat version
+    // compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.92'
+	
+	// AndroidX version
+	compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.94'
 }
 ```          
 How to use
