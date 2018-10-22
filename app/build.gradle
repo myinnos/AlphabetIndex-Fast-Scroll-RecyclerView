@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
-final SDK_VERSION = '25.3.1'
+final ANDROIDX = '1.0.0'
+final BUTTERKNIFE = '9.0.0-rc1'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+
     defaultConfig {
         applicationId "in.myinnos.indexfastscrollrecycler"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -20,9 +21,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile "com.android.support:appcompat-v7:${SDK_VERSION}"
-    compile "com.android.support:design:${SDK_VERSION}"
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile project(':alphabetsindexfastscrollrecyclerLibrary')
+    implementation "androidx.appcompat:appcompat:${ANDROIDX}"
+    implementation "com.google.android.material:material:${ANDROIDX}"
+    implementation "com.jakewharton:butterknife:${BUTTERKNIFE}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE}"
+    implementation project(':alphabetsindexfastscrollrecyclerLibrary')
 }
