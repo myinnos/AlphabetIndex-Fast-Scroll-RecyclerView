@@ -148,8 +148,12 @@ This library works with any layout manager but is optimized for the use with a L
 * :mag_right: LinkedIn: [PrabhakarThota](https://www.linkedin.com/in/prabhakarthota "Prabhakar Thota on LinkedIn")
 * :thumbsup: Twitter: [@myinnos](https://twitter.com/myinnos "Prabhakar Thota on twitter")   
 
-### Special Contributor
+### Special Contributors
 [@jonas-arkulpa](https://github.com/jonas-arkulpa "jonas-arkulpa")   
+[@MFlisar](https://github.com/MFlisar "MFlisar")   
+[@RaphaelMarion](https://github.com/RaphaelMarion "RaphaelMarion")   
+[@appspell](https://github.com/appspell "appspell")   
+[@Libernys](https://github.com/Libernys "Libernys")   
 
 License
 -------
