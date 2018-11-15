@@ -22,10 +22,10 @@ And then in the other gradle file(may be your app gradle or your own module libr
 ```java
 dependencies {
     // AppCompat version
-    // compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.92'
-	
-	// AndroidX version
-	compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.94'
+       implementation 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.92'
+	or
+    // AndroidX version
+       implementation 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.94'
 }
 ```          
 How to use
