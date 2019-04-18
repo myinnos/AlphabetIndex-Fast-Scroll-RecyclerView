@@ -12,17 +12,22 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import in.myinnos.indexfastscrollrecycler.Helpers;
 import in.myinnos.indexfastscrollrecycler.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
         implements SectionIndexer {
 
     private List<String> mDataArray;
+
+    private String mSections = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";
+    private HashMap<Integer, Integer> sectionsTranslator = new HashMap<>();
     private ArrayList<Integer> mSectionPositions;
 
     public RecyclerViewAdapter(List<String> dataset) {
@@ -62,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public Object[] getSections() {
-        List<String> sections = new ArrayList<>(26);
+       /* List<String> sections = new ArrayList<>(26);
         mSectionPositions = new ArrayList<>(26);
         for (int i = 0, size = mDataArray.size(); i < size; i++) {
             String section = String.valueOf(mDataArray.get(i).charAt(0)).toUpperCase();
@@ -70,24 +75,46 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 sections.add(section);
                 mSectionPositions.add(i);
             }
+        } */
+
+        List<String> sections = new ArrayList<>(27);
+        ArrayList<String> alphabetFull = new ArrayList<>();
+
+        mSectionPositions = new ArrayList<>();
+        for (int i = 0, size = mDataArray.size(); i < size; i++) {
+            String section = String.valueOf(mDataArray.get(i).charAt(0)).toUpperCase();
+            if (!sections.contains(section)) {
+                sections.add(section);
+                mSectionPositions.add(i);
+            }
         }
-        return sections.toArray(new String[0]);
+        for (int i = 0; i < mSections.length(); i++) {
+            alphabetFull.add(String.valueOf(mSections.charAt(i)));
+        }
+
+        sectionsTranslator = Helpers.Companion.sectionsHelper(sections, alphabetFull);
+
+
+
+        return alphabetFull.toArray(new String[0]);
     }
 
     @Override
     public int getPositionForSection(int sectionIndex) {
-        return mSectionPositions.get(sectionIndex);
+        return mSectionPositions.get(sectionsTranslator.get(sectionIndex));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_alphabet)
+        //@BindView(R.id.tv_alphabet)
         TextView mTextView;
-        @BindView(R.id.ib_alphabet)
+        //@BindView(R.id.ib_alphabet)
         ImageButton mImageButton;
 
         ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            //ButterKnife.bind(this, itemView);
+            mTextView = itemView.findViewById(R.id.tv_alphabet);
+            mImageButton = itemView.findViewById(R.id.ib_alphabet);
         }
     }
 
