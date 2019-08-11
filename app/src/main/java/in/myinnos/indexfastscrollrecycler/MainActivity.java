@@ -12,12 +12,13 @@ import butterknife.ButterKnife;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import in.myinnos.indexfastscrollrecycler.adapter.RecyclerViewAdapter;
 import in.myinnos.indexfastscrollrecycler.helper.DataHelper;
+import in.myinnos.indexfastscrollrecycler.helper.NotFullDataHelper;
 import in.myinnos.indexfastscrollrecycler.utility.AlphabetItem;
 
 public class MainActivity extends AppCompatActivity
 {
 
-    @BindView(R.id.fast_scroller_recycler)
+    //@BindView(R.id.fast_scroller_recycler)
     IndexFastScrollRecyclerView mRecyclerView;
 
     private List<String> mDataArray;
@@ -27,16 +28,24 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
+
+        mRecyclerView = findViewById(R.id.fast_scroller_recycler);
 
         initialiseData();
         initialiseUI();
     }
 
     protected void initialiseData() {
-        //Recycler view data
-        mDataArray = DataHelper.getAlphabetData();
 
+        //Recycler view full data
+        //mDataArray = DataHelper.getAlphabetData();
+
+        //Recycler view not full data
+        mDataArray = NotFullDataHelper.getAlphabetNotFullData();
+
+
+       // 123
         //Alphabet fast scroller data
         mAlphabetItems = new ArrayList<>();
         List<String> strAlphabets = new ArrayList<>();

@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
 final ANDROIDX = '1.0.0'
-final BUTTERKNIFE = '9.0.0-rc1'
+final BUTTERKNIFE = '10.1.0'
 
 android {
     compileSdkVersion 28
@@ -18,6 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -26,4 +36,8 @@ dependencies {
     implementation "com.jakewharton:butterknife:${BUTTERKNIFE}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE}"
     implementation project(':alphabetsindexfastscrollrecyclerLibrary')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
