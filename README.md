@@ -25,7 +25,7 @@ dependencies {
        implementation 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.92'
 	or
     // AndroidX version
-       implementation 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.94'
+       implementation 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.95'
 }
 ```          
 How to use
@@ -127,14 +127,27 @@ mRecyclerView.setIndexBarVisibility(true);
 ```
 - Change IndexBarHighLateTextColor:
 ```java
-mRecyclerView.setIndexbarHighLateTextColor("#33334c);
+mRecyclerView.setIndexbarHighLightTextColor("#33334c);
 
-mRecyclerView.setIndexbarHighLateTextColor(R.color.index_bar_highlight_text_color);
+mRecyclerView.setIndexbarHighLightTextColor(R.color.index_bar_highlight_text_color);
 ```
-- To hide/show IndexBarHighLateText:
+- To hide/show IndexBarHighLightText:
 ```java
-mRecyclerView.setIndexBarHighLateTextVisibility(true);
+mRecyclerView.setIndexBarHighLightTextVisibility(true);
 ```
+- To hide/show IndexBarStroke:
+```java
+mRecyclerView.setIndexBarStrokeVisibility(true);
+```
+- Change IndexBarStrokeWidth:
+```java
+mRecyclerView.setIndexBarStrokeWidth(1);
+```
+- Change IndexBarStrokeColor:
+```java
+mRecyclerView.setIndexBarStrokeColor("#000000");
+```
+
 Compatibility
 -----
 This library works with any layout manager but is optimized for the use with a LinearLayoutManager.
@@ -147,6 +160,7 @@ This library works with any layout manager but is optimized for the use with a L
 * :email: e-mail: contact@myinnos.in
 * :mag_right: LinkedIn: [PrabhakarThota](https://www.linkedin.com/in/prabhakarthota "Prabhakar Thota on LinkedIn")
 * :thumbsup: Twitter: [@myinnos](https://twitter.com/myinnos "Prabhakar Thota on twitter")   
+* :camera: Instagram: [@prabhakar_t_](https://www.instagram.com/prabhakar_t_/ "Prabhakar Thota on Instagram")   
 
 ### Special Contributors
 [@jonas-arkulpa](https://github.com/jonas-arkulpa "jonas-arkulpa")   
@@ -154,11 +168,12 @@ This library works with any layout manager but is optimized for the use with a L
 [@RaphaelMarion](https://github.com/RaphaelMarion "RaphaelMarion")   
 [@appspell](https://github.com/appspell "appspell")   
 [@Libernys](https://github.com/Libernys "Libernys")   
+[@IvanAbacumov](https://github.com/IvanAbacumov "IvanAbacumov")   
 
 License
 -------
 
-    Copyright 2017 MyInnos
+    Copyright 2017 - 2019 MyInnos
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
