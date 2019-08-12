@@ -4,24 +4,20 @@ package in.myinnos.alphabetsindexfastscrollrecycler;
  * Created by MyInnos on 31-01-2017.
  */
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-
-import androidx.annotation.ColorInt;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.SectionIndexer;
+
+import androidx.annotation.ColorInt;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObserver {
 
@@ -53,7 +49,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private @ColorInt
     int indexbarTextColor;
     private @ColorInt
-    int indexbarHighLateTextColor;
+    int indexbarHighLightTextColor;
 
     private int setPreviewTextSize;
     private @ColorInt
@@ -80,7 +76,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         setIndexBarCornerRadius = rv.mIndexBarCornerRadius;
         indexbarBackgroudColor = rv.mIndexbarBackgroudColor;
         indexbarTextColor = rv.mIndexbarTextColor;
-        indexbarHighLateTextColor = rv.mIndexbarHighLateTextColor;
+        indexbarHighLightTextColor = rv.indexbarHighLightTextColor;
 
         indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(rv.mIndexBarTransparentValue);
 
@@ -148,7 +144,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                         if (mCurrentSection > -1 && i == mCurrentSection) {
                             indexPaint.setTypeface(Typeface.create(setTypeface, Typeface.BOLD));
                             indexPaint.setTextSize((setIndexTextSize + 3) * mScaledDensity);
-                            indexPaint.setColor(indexbarHighLateTextColor);
+                            indexPaint.setColor(indexbarHighLightTextColor);
                         } else {
                             indexPaint.setTypeface(setTypeface);
                             indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
@@ -392,7 +388,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
      * @param color The text color for the index bar
      */
     public void setIndexBarHighlightTextColor(@ColorInt int color) {
-        indexbarHighLateTextColor = color;
+        indexbarHighLightTextColor = color;
     }
 
     /**

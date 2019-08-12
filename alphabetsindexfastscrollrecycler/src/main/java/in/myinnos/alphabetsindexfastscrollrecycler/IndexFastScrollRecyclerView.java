@@ -35,7 +35,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     public @ColorInt
     int mIndexbarTextColor = Color.WHITE;
     public @ColorInt
-    int mIndexbarHighLateTextColor = Color.BLACK;
+    int indexbarHighLightTextColor = Color.BLACK;
 
     public int mPreviewTextSize = 50;
     public @ColorInt
@@ -83,7 +83,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                     }
 
                     if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor)) {
-                        mIndexbarHighLateTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor));
+                        indexbarHighLightTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor));
                     }
 
                     if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColorRes)) {
@@ -95,7 +95,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                     }
 
                     if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColorRes)) {
-                        mIndexbarHighLateTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor, mIndexbarHighLateTextColor);
+                        indexbarHighLightTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor, indexbarHighLightTextColor);
                     }
 
                     mPreviewTextSize = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setPreviewTextSize, mPreviewTextSize);
