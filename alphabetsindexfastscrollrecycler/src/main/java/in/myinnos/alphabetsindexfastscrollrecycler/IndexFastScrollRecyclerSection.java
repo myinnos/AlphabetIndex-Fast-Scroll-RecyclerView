@@ -43,7 +43,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private int setIndexBarCornerRadius;
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
-    private Boolean setSetIndexBarHighLateTextVisibility = false;
+    private Boolean setSetIndexBarHighLightTextVisibility = false;
     private Boolean setIndexBarStrokeVisibility = true;
     public int mIndexBarStrokeWidth = 2;
     private @ColorInt
@@ -154,7 +154,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
                 for (int i = 0; i < mSections.length; i++) {
 
-                    if (setSetIndexBarHighLateTextVisibility) {
+                    if (setSetIndexBarHighLightTextVisibility) {
 
                         if (mCurrentSection > -1 && i == mCurrentSection) {
                             indexPaint.setTypeface(Typeface.create(setTypeface, Typeface.BOLD));
@@ -425,15 +425,15 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarHighlightTextColor(@ColorInt int color) {
+    public void setIndexbarHighLightTextColor(@ColorInt int color) {
         indexbarHighLightTextColor = color;
     }
 
     /**
      * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarHighLateTextVisibility(boolean shown) {
-        setSetIndexBarHighLateTextVisibility = shown;
+    public void setIndexBarHighLightTextVisibility(boolean shown) {
+        setSetIndexBarHighLightTextVisibility = shown;
     }
 
 }
