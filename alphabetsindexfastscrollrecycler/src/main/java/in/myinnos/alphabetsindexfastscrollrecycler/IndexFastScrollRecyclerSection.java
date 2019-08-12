@@ -62,27 +62,27 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private int indexPaintPaintColor = Color.WHITE;
     AttributeSet attrs;
 
-    public IndexFastScrollRecyclerSection(Context context, IndexFastScrollRecyclerView rv) {
+    public IndexFastScrollRecyclerSection(Context context, IndexFastScrollRecyclerView recyclerView) {
 
-        setIndexTextSize = rv.setIndexTextSize;
-        setIndexbarWidth = rv.mIndexbarWidth;
-        setIndexbarMargin = rv.mIndexbarMargin;
-        setPreviewPadding = rv.mPreviewPadding;
-        setPreviewTextSize = rv.mPreviewTextSize;
-        previewBackgroundColor = rv.mPreviewBackgroudColor;
-        previewTextColor = rv.mPreviewTextColor;
-        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(rv.mPreviewTransparentValue);
+        setIndexTextSize = recyclerView.setIndexTextSize;
+        setIndexbarWidth = recyclerView.mIndexbarWidth;
+        setIndexbarMargin = recyclerView.mIndexbarMargin;
+        setPreviewPadding = recyclerView.mPreviewPadding;
+        setPreviewTextSize = recyclerView.mPreviewTextSize;
+        previewBackgroundColor = recyclerView.mPreviewBackgroudColor;
+        previewTextColor = recyclerView.mPreviewTextColor;
+        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(recyclerView.mPreviewTransparentValue);
 
-        setIndexBarCornerRadius = rv.mIndexBarCornerRadius;
-        indexbarBackgroudColor = rv.mIndexbarBackgroudColor;
-        indexbarTextColor = rv.mIndexbarTextColor;
-        indexbarHighLightTextColor = rv.indexbarHighLightTextColor;
+        setIndexBarCornerRadius = recyclerView.mIndexBarCornerRadius;
+        indexbarBackgroudColor = recyclerView.mIndexbarBackgroudColor;
+        indexbarTextColor = recyclerView.mIndexbarTextColor;
+        indexbarHighLightTextColor = recyclerView.indexbarHighLightTextColor;
 
-        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(rv.mIndexBarTransparentValue);
+        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(recyclerView.mIndexBarTransparentValue);
 
         mDensity = context.getResources().getDisplayMetrics().density;
         mScaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
-        mRecyclerView = rv;
+        mRecyclerView = recyclerView;
         setAdapter(mRecyclerView.getAdapter());
 
         mIndexbarWidth = setIndexbarWidth * mDensity;
@@ -164,7 +164,6 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 }
             }
         }
-
     }
 
     public boolean onTouchEvent(MotionEvent ev) {

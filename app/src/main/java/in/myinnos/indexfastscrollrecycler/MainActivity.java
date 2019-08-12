@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -83,5 +84,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setIndexBarVisibility(true);
         mRecyclerView.setIndexbarHighlightTextColor("#33334c");
         mRecyclerView.setIndexBarHighLateTextVisibility(true);
+
+        Objects.requireNonNull(mRecyclerView.getLayoutManager()).scrollToPosition(0);
     }
 }
