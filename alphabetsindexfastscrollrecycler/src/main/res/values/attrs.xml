@@ -17,5 +17,7 @@
         <attr name="setIndexBarColorRes" format="color" />
         <attr name="setIndexBarTextColorRes" format="color" />
         <attr name="setIndexBarHighlightTextColorRes" format="color" />
+        <attr name="setIndexBarStrokeWidth" format="integer" />
+        <attr name="setIndexBarStrokeColor" format="color" />
     </declare-styleable>
 </resources>

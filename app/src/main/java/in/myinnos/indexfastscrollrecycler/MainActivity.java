@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setPreviewTransparentValue(0.6f);
 
         mRecyclerView.setIndexBarVisibility(true);
+
+        mRecyclerView.setIndexBarStrokeVisibility(true);
+        mRecyclerView.setIndexBarStrokeWidth(1);
+        mRecyclerView.setIndexBarStrokeColor("#000000");
+
         mRecyclerView.setIndexbarHighlightTextColor("#33334c");
         mRecyclerView.setIndexBarHighLateTextVisibility(true);
 

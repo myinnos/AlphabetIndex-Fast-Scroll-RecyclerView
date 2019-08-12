@@ -44,6 +44,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private Typeface setTypeface = null;
     private Boolean setIndexBarVisibility = true;
     private Boolean setSetIndexBarHighLateTextVisibility = false;
+    private Boolean setIndexBarStrokeVisibility = true;
+    public int mIndexBarStrokeWidth = 2;
+    private @ColorInt
+    int mIndexBarStrokeColor;
     private @ColorInt
     int indexbarBackgroudColor;
     private @ColorInt
@@ -73,6 +77,9 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         previewTextColor = recyclerView.mPreviewTextColor;
         previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(recyclerView.mPreviewTransparentValue);
 
+        mIndexBarStrokeColor = recyclerView.mSetIndexBarStrokeColor;
+        mIndexBarStrokeWidth = recyclerView.mIndexBarStrokeWidth;
+
         setIndexBarCornerRadius = recyclerView.mIndexBarCornerRadius;
         indexbarBackgroudColor = recyclerView.mIndexbarBackgroudColor;
         indexbarTextColor = recyclerView.mIndexbarTextColor;
@@ -95,10 +102,18 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         if (setIndexBarVisibility) {
 
             Paint indexbarPaint = new Paint();
+
             indexbarPaint.setColor(indexbarBackgroudColor);
             indexbarPaint.setAlpha(indexbarBackgroudAlpha);
             indexbarPaint.setAntiAlias(true);
             canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity, setIndexBarCornerRadius * mDensity, indexbarPaint);
+
+            if (setIndexBarStrokeVisibility) {
+                indexbarPaint.setStyle(Paint.Style.STROKE);
+                indexbarPaint.setColor(mIndexBarStrokeColor);
+                indexbarPaint.setStrokeWidth(mIndexBarStrokeWidth); // set stroke width
+                canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity, setIndexBarCornerRadius * mDensity, indexbarPaint);
+            }
 
             if (mSections != null && mSections.length > 0) {
                 // Preview is shown when mCurrentSection is set
@@ -334,12 +349,28 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         setIndexBarVisibility = shown;
     }
 
+
+    /**
+     * @param shown boolean to show or hide the index bar
+     */
+    public void setIndexBarStrokeVisibility(boolean shown) {
+        setIndexBarStrokeVisibility = shown;
+    }
+
     /**
      * @param shown boolean to show or hide the preview box
      */
     public void setPreviewVisibility(boolean shown) {
         previewVisibility = shown;
     }
+
+    /**
+     * @param value int to set the text size of the preview box
+     */
+    public void setIndexBarStrokeWidth(int value) {
+        mIndexBarStrokeWidth = value;
+    }
+
 
     /**
      * @param value int to set the text size of the preview box
@@ -382,6 +413,14 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     public void setIndexBarTextColor(@ColorInt int color) {
         indexbarTextColor = color;
     }
+
+    /**
+     * @param color The text color for the index bar
+     */
+    public void setIndexBarStrokeColor(@ColorInt int color) {
+        mIndexBarStrokeColor = color;
+    }
+
 
     /**
      * @param color The text color for the index bar

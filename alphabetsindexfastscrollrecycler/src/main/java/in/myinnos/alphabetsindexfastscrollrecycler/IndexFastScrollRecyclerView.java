@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -30,6 +31,9 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     public int mPreviewPadding = 5;
     public int mIndexBarCornerRadius = 5;
     public float mIndexBarTransparentValue = (float) 0.6;
+    public int mIndexBarStrokeWidth = 2;
+    public @ColorInt
+    int mSetIndexBarStrokeColor = Color.BLACK;
     public @ColorInt
     int mIndexbarBackgroudColor = Color.BLACK;
     public @ColorInt
@@ -108,7 +112,15 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                     if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor)) {
                         mPreviewTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor));
                     }
-                    
+
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeWidth)) {
+                        mIndexBarStrokeWidth = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeWidth, mIndexBarStrokeWidth);
+                    }
+
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor)) {
+                        mSetIndexBarStrokeColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor));
+                    }
+
                 } finally {
                     typedArray.recycle();
                 }
@@ -227,6 +239,28 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
         mScroller.setIndexBarVisibility(shown);
         mEnabled = shown;
     }
+
+    /**
+     * @param shown boolean to show or hide the index bar
+     */
+    public void setIndexBarStrokeVisibility(boolean shown) {
+        mScroller.setIndexBarStrokeVisibility(shown);
+    }
+
+    /**
+     * @param color The color for the index bar
+     */
+    public void setIndexBarStrokeColor(String color) {
+        mScroller.setIndexBarStrokeColor(Color.parseColor(color));
+    }
+
+    /**
+     * @param value int to set the text size of the preview box
+     */
+    public void setIndexBarStrokeWidth(int value) {
+        mScroller.setIndexBarStrokeWidth(value);
+    }
+
 
     /**
      * @param shown boolean to show or hide the preview
