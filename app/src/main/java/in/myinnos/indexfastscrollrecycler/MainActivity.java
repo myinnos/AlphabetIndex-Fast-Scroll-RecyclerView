@@ -7,6 +7,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
@@ -15,8 +16,7 @@ import in.myinnos.indexfastscrollrecycler.helper.DataHelper;
 import in.myinnos.indexfastscrollrecycler.helper.NotFullDataHelper;
 import in.myinnos.indexfastscrollrecycler.utility.AlphabetItem;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
 
     //@BindView(R.id.fast_scroller_recycler)
     IndexFastScrollRecyclerView mRecyclerView;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         mDataArray = NotFullDataHelper.getAlphabetNotFullData();
 
 
-       // 123
+        // 123
         //Alphabet fast scroller data
         mAlphabetItems = new ArrayList<>();
         List<String> strAlphabets = new ArrayList<>();
