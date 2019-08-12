@@ -313,16 +313,16 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexbarHighLateTextColor(String color) {
-        mScroller.setIndexBarHighLateTextColor(Color.parseColor(color));
+    public void setIndexbarHighlightTextColor(String color) {
+        mScroller.setIndexBarHighlightTextColor(Color.parseColor(color));
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexbarHighLateTextColor(@ColorRes int color) {
+    public void setIndexbarHighlightTextColor(@ColorRes int color) {
         int colorValue = getContext().getResources().getColor(color);
-        mScroller.setIndexBarHighLateTextColor(colorValue);
+        mScroller.setIndexBarHighlightTextColor(colorValue);
     }
 
     /**

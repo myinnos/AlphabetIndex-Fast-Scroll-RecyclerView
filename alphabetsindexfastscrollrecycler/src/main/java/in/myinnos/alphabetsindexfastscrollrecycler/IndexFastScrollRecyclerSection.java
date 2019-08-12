@@ -391,7 +391,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarHighLateTextColor(@ColorInt int color) {
+    public void setIndexBarHighlightTextColor(@ColorInt int color) {
         indexbarHighLateTextColor = color;
     }
 
