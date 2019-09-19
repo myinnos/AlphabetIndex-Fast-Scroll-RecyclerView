@@ -22,7 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObserver {
 
     private float mIndexbarWidth;
-    private float mIndexbarMargin;
+    private float mIndexbarMarginLeft;
+    private float mIndexbarMarginRight;
+    private float mIndexbarMarginTop;
+    private float mIndexbarMarginBottom;
     private float mPreviewPadding;
     private float mDensity;
     private float mScaledDensity;
@@ -37,7 +40,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
     private int setIndexTextSize;
     private float setIndexbarWidth;
-    private float setIndexbarMargin;
+    private float setIndexbarMarginLeft;
+    private float setIndexbarMarginRight;
+    private float setIndexbarMarginTop;
+    private float setIndexbarMarginBottom;
     private int setPreviewPadding;
     private boolean previewVisibility = true;
     private int setIndexBarCornerRadius;
@@ -70,7 +76,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
         setIndexTextSize = recyclerView.setIndexTextSize;
         setIndexbarWidth = recyclerView.mIndexbarWidth;
-        setIndexbarMargin = recyclerView.mIndexbarMargin;
+        setIndexbarMarginLeft = recyclerView.mIndexbarMarginLeft;
+        setIndexbarMarginRight = recyclerView.mIndexbarMarginRight;
+        setIndexbarMarginTop = recyclerView.mIndexbarMarginTop;
+        setIndexbarMarginBottom = recyclerView.mIndexbarMarginBottom;
         setPreviewPadding = recyclerView.mPreviewPadding;
         setPreviewTextSize = recyclerView.mPreviewTextSize;
         previewBackgroundColor = recyclerView.mPreviewBackgroudColor;
@@ -93,7 +102,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         setAdapter(mRecyclerView.getAdapter());
 
         mIndexbarWidth = setIndexbarWidth * mDensity;
-        mIndexbarMargin = setIndexbarMargin * mDensity;
+        mIndexbarMarginLeft = setIndexbarMarginLeft * mDensity;
+        mIndexbarMarginRight = setIndexbarMarginRight * mDensity;
+        mIndexbarMarginTop = setIndexbarMarginTop * mDensity;
+        mIndexbarMarginBottom = setIndexbarMarginBottom * mDensity;
         mPreviewPadding = setPreviewPadding * mDensity;
     }
 
@@ -150,7 +162,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
                 indexPaint.setTypeface(setTypeface);
 
-                float sectionHeight = (mIndexbarRect.height() - 2 * mIndexbarMargin) / mSections.length;
+                float sectionHeight = (mIndexbarRect.height() - mIndexbarMarginTop - mIndexbarMarginBottom) / mSections.length;
                 float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
                 for (int i = 0; i < mSections.length; i++) {
 
@@ -167,13 +179,13 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                         }
                         float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
                         canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
-                                , mIndexbarRect.top + mIndexbarMargin + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
+                                , mIndexbarRect.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
 
 
                     } else {
                         float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
                         canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
-                                , mIndexbarRect.top + mIndexbarMargin + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
+                                , mIndexbarRect.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
                     }
 
                 }
@@ -233,10 +245,10 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
         mListViewWidth = w;
         mListViewHeight = h;
-        mIndexbarRect = new RectF(w - mIndexbarMargin - mIndexbarWidth
-                , mIndexbarMargin
-                , w - mIndexbarMargin
-                , h - mIndexbarMargin);
+        mIndexbarRect = new RectF(w - mIndexbarMarginLeft - mIndexbarWidth
+                , mIndexbarMarginTop
+                , w - mIndexbarMarginRight
+                , h - mIndexbarMarginBottom);
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
@@ -265,11 +277,11 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private int getSectionByPoint(float y) {
         if (mSections == null || mSections.length == 0)
             return 0;
-        if (y < mIndexbarRect.top + mIndexbarMargin)
+        if (y < mIndexbarRect.top + mIndexbarMarginTop)
             return 0;
-        if (y >= mIndexbarRect.top + mIndexbarRect.height() - mIndexbarMargin)
+        if (y >= mIndexbarRect.top + mIndexbarRect.height() - mIndexbarMarginTop)
             return mSections.length - 1;
-        return (int) ((y - mIndexbarRect.top - mIndexbarMargin) / ((mIndexbarRect.height() - 2 * mIndexbarMargin) / mSections.length));
+        return (int) ((y - mIndexbarRect.top - mIndexbarMarginTop) / ((mIndexbarRect.height() - mIndexbarMarginBottom - mIndexbarMarginTop) / mSections.length));
     }
 
     private Runnable mLastFadeRunnable = null;
@@ -311,7 +323,40 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
      * @param value float to set the margin of the index bar
      */
     public void setIndexbarMargin(float value) {
-        mIndexbarMargin = value;
+        mIndexbarMarginLeft = value;
+        mIndexbarMarginRight = value;
+        mIndexbarMarginTop = value;
+        mIndexbarMarginBottom = value;
+    }
+
+    /**
+     * @param value float to set the top margin of the index bar
+     */
+    public void setIndexbarTopMargin(float value) {
+        mIndexbarMarginTop = value;
+    }
+
+    /**
+     * @param value float to set the bottom margin of the index bar
+     */
+    public void setIndexbarBottomMargin(float value) {
+        mIndexbarMarginBottom = value;
+    }
+
+    /**
+     * @param value float to set the left margin of the index bar
+     */
+    public void setIndexbarHorizontalMargin(float value) {
+        mIndexbarMarginLeft = value;
+        mIndexbarMarginRight = value;
+    }
+
+    /**
+     * @param value float to set the right margin of the index bar
+     */
+    public void setIndexbarVerticalMargin(float value) {
+        mIndexbarMarginTop = value;
+        mIndexbarMarginBottom = value;
     }
 
     /**

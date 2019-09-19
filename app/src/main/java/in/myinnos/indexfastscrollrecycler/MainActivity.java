@@ -71,8 +71,11 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setIndexBarColor("#33334c");
         mRecyclerView.setIndexBarCornerRadius(0);
         mRecyclerView.setIndexBarTransparentValue((float) 0.4);
-        mRecyclerView.setIndexbarMargin(0);
-        mRecyclerView.setIndexbarWidth(40);
+
+        mRecyclerView.setIndexbarTopMargin(60);
+        mRecyclerView.setIndexbarBottomMargin(100);
+        mRecyclerView.setIndexbarHorizontalMargin(20);
+
         mRecyclerView.setPreviewPadding(0);
         mRecyclerView.setIndexBarTextColor("#FFFFFF");
 
