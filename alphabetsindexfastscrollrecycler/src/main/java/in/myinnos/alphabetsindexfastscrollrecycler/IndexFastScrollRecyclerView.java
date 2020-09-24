@@ -64,12 +64,10 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
 
     private void init(Context context, AttributeSet attrs) {
-        mScroller = new IndexFastScrollRecyclerSection(context, this);
-
+        
         if (attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.IndexFastScrollRecyclerView, 0, 0);
-
-            if (typedArray != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.IndexFastScrollRecyclerView);
+            
                 try {
                     setIndexTextSize = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexTextSize, setIndexTextSize);
                     mIndexbarWidth = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarWidth, mIndexbarWidth);
@@ -124,7 +122,9 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                 } finally {
                     typedArray.recycle();
                 }
-            }
+                
+                // This line here is neccesary else the attributes won't be updated if a value is passed from XML
+                mScroller = new IndexFastScrollRecyclerSection(context, this);
         }
     }
 
