@@ -171,6 +171,7 @@ This library works with any layout manager but is optimized for the use with a L
 [@appspell](https://github.com/appspell "appspell")   
 [@Libernys](https://github.com/Libernys "Libernys")   
 [@IvanAbacumov](https://github.com/IvanAbacumov "IvanAbacumov")   
+[@benniebotha](https://github.com/benniebotha "benniebotha")   
 
 License
 -------
