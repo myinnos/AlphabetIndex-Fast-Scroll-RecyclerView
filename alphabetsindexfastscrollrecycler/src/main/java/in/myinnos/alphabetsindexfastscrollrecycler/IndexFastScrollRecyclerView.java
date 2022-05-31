@@ -27,7 +27,10 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
 
     public int setIndexTextSize = 12;
     public float mIndexbarWidth = 20;
-    public float mIndexbarMargin = 5;
+    public float mIndexbarMarginLeft = 5;
+    public float mIndexbarMarginRight = 5;
+    public float mIndexbarMarginTop = 5;
+    public float mIndexbarMarginBottom = 5;
     public int mPreviewPadding = 5;
     public int mIndexBarCornerRadius = 5;
     public float mIndexBarTransparentValue = (float) 0.6;
@@ -73,7 +76,10 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                 try {
                     setIndexTextSize = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexTextSize, setIndexTextSize);
                     mIndexbarWidth = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarWidth, mIndexbarWidth);
-                    mIndexbarMargin = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMargin);
+                    mIndexbarMarginLeft = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginLeft);
+                    mIndexbarMarginRight = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginRight);
+                    mIndexbarMarginTop = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginTop);
+                    mIndexbarMarginBottom = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginBottom);
                     mPreviewPadding = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setPreviewPadding, mPreviewPadding);
                     mIndexBarCornerRadius = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexBarCornerRadius, mIndexBarCornerRadius);
                     mIndexBarTransparentValue = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexBarTransparentValue, mIndexBarTransparentValue);
@@ -202,6 +208,34 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
      */
     public void setIndexbarMargin(float value) {
         mScroller.setIndexbarMargin(value);
+    }
+
+    /**
+     * @param value float to set the top margin of the index bar
+     */
+    public void setIndexbarTopMargin(float value) {
+        mScroller.setIndexbarTopMargin(value);
+    }
+
+    /**
+     * @param value float to set the bottom margin of the index bar
+     */
+    public void setIndexbarBottomMargin(float value) {
+        mScroller.setIndexbarBottomMargin(value);
+    }
+
+    /**
+     * @param value float to set the Horizontal margin of the index bar
+     */
+    public void setIndexbarHorizontalMargin(float value) {
+        mScroller.setIndexbarHorizontalMargin(value);
+    }
+
+    /**
+     * @param value float to set the Vertical margin of the index bar
+     */
+    public void setIndexbarVerticalMargin(float value) {
+        mScroller.setIndexbarVerticalMargin(value);
     }
 
     /**
