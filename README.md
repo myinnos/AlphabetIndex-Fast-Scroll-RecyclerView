@@ -1,5 +1,8 @@
 # AlphabetIndex Fast Scroll RecyclerView
-A Powerful AlphabetIndex FastScroller for Android's RecyclerView!
+A Powerful AlphabetIndex FastScroller for Android's RecyclerView! 
+
+[![](https://jitpack.io/v/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView.svg)](https://jitpack.io/#myinnos/AlphabetIndex-Fast-Scroll-RecyclerView) [![MyInnos website](https://img.shields.io/badge/visit-website-red.svg?logo=firefox)](https://www.myinnos.in/) [![](https://jitpack.io/v/jitpack/maven-simple/month.svg)](https://jitpack.io/#myinnos/AlphabetIndex-Fast-Scroll-RecyclerView) <a href="#"><img alt="Android Language Badge" src="https://badgen.net/badge/OS/Android?icon=https://raw.githubusercontent.com/androiddevnotes/awesome-jetpack-compose-android-apps/master/assets/android.svg&color=3ddc84"/></a>
+
 
  ![AlphabetIndex-Fast-Scroll-RecyclerView - Example1](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/0d6c4f2f0b9f3b573a4f2abf2c87b62237081286/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_1.gif)
  `` `` `` `` `` `` `` ``
@@ -164,14 +167,20 @@ This library works with any layout manager but is optimized for the use with a L
 
 >⚡ If you appreciate my work, consider buying me a cup of :coffee: to keep me recharged :metal: by [GitHub](https://github.com/sponsors/myinnos) or [PayPal](https://www.paypal.me/fansfolio)
 
-### Special Contributors
-[@jonas-arkulpa](https://github.com/jonas-arkulpa "jonas-arkulpa")   
+### Contributing
+
+Thanks to all the people who contributed to AlphabetIndex Fast Scroll RecyclerView
+
+<a href="https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=myinnos/AlphabetIndex-Fast-Scroll-RecyclerView" />
+</a>
+<!--- [@jonas-arkulpa](https://github.com/jonas-arkulpa "jonas-arkulpa")   
 [@MFlisar](https://github.com/MFlisar "MFlisar")   
 [@RaphaelMarion](https://github.com/RaphaelMarion "RaphaelMarion")   
 [@appspell](https://github.com/appspell "appspell")   
 [@Libernys](https://github.com/Libernys "Libernys")   
 [@IvanAbacumov](https://github.com/IvanAbacumov "IvanAbacumov")   
-[@benniebotha](https://github.com/benniebotha "benniebotha")   
+[@benniebotha](https://github.com/benniebotha "benniebotha")-->
 
 License
 -------
