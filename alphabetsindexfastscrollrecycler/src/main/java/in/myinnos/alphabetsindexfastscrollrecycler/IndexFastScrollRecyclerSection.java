@@ -245,10 +245,13 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
         mListViewWidth = w;
         mListViewHeight = h;
-        mIndexbarRect = new RectF(w - mIndexbarMarginLeft - mIndexbarWidth
-                , mIndexbarMarginTop
-                , w - mIndexbarMarginRight
-                , h - mIndexbarMarginBottom);
+        mIndexbarRect = new RectF(
+                w - mIndexbarMarginLeft - mIndexbarWidth,
+                mIndexbarMarginTop,
+                w - mIndexbarMarginRight,
+                h - mIndexbarMarginBottom - (mRecyclerView.getClipToPadding()
+                        ? 0 : mRecyclerView.getPaddingBottom())
+        );
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
