@@ -180,7 +180,9 @@ Thanks to all the people who contributed to AlphabetIndex Fast Scroll RecyclerVi
 [@appspell](https://github.com/appspell "appspell")   
 [@Libernys](https://github.com/Libernys "Libernys")   
 [@IvanAbacumov](https://github.com/IvanAbacumov "IvanAbacumov")   
-[@benniebotha](https://github.com/benniebotha "benniebotha")-->
+[@benniebotha](https://github.com/benniebotha "benniebotha")
+[@AbandonedCart](https://github.com/AbandonedCart "AbandonedCart")
+[@Hamza417](https://github.com/Hamza417 "Hamza417") -->
 
 License
 -------
