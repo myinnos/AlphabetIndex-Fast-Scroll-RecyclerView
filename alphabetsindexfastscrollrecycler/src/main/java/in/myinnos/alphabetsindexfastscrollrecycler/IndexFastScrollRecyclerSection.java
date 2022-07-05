@@ -1,6 +1,6 @@
 package in.myinnos.alphabetsindexfastscrollrecycler;
 
-/**
+/*
  * Created by MyInnos on 31-01-2017.
  */
 
@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.SectionIndexer;
@@ -19,6 +18,8 @@ import androidx.annotation.ColorInt;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+
 public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObserver {
 
     private float mIndexbarWidth;
@@ -26,24 +27,19 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private float mIndexbarMarginRight;
     private float mIndexbarMarginTop;
     private float mIndexbarMarginBottom;
-    private float mPreviewPadding;
-    private float mDensity;
-    private float mScaledDensity;
+    private final float mPreviewPadding;
+    private final float mDensity;
+    private final float mScaledDensity;
     private int mListViewWidth;
     private int mListViewHeight;
     private int mCurrentSection = -1;
     private boolean mIsIndexing = false;
-    private RecyclerView mRecyclerView = null;
+    private RecyclerView mRecyclerView;
     private SectionIndexer mIndexer = null;
     private String[] mSections = null;
     private RectF mIndexbarRect;
 
     private int setIndexTextSize;
-    private float setIndexbarWidth;
-    private float setIndexbarMarginLeft;
-    private float setIndexbarMarginRight;
-    private float setIndexbarMarginTop;
-    private float setIndexbarMarginBottom;
     private int setPreviewPadding;
     private boolean previewVisibility = true;
     private int setIndexBarCornerRadius;
@@ -51,7 +47,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private Boolean setIndexBarVisibility = true;
     private Boolean setSetIndexBarHighLightTextVisibility = false;
     private Boolean setIndexBarStrokeVisibility = true;
-    public int mIndexBarStrokeWidth = 2;
+    public int mIndexBarStrokeWidth;
     private @ColorInt
     int mIndexBarStrokeColor;
     private @ColorInt
@@ -69,17 +65,14 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private int previewBackgroudAlpha;
     private int indexbarBackgroudAlpha;
 
-    private int indexPaintPaintColor = Color.WHITE;
-    AttributeSet attrs;
-
     public IndexFastScrollRecyclerSection(Context context, IndexFastScrollRecyclerView recyclerView) {
 
         setIndexTextSize = recyclerView.setIndexTextSize;
-        setIndexbarWidth = recyclerView.mIndexbarWidth;
-        setIndexbarMarginLeft = recyclerView.mIndexbarMarginLeft;
-        setIndexbarMarginRight = recyclerView.mIndexbarMarginRight;
-        setIndexbarMarginTop = recyclerView.mIndexbarMarginTop;
-        setIndexbarMarginBottom = recyclerView.mIndexbarMarginBottom;
+        float setIndexbarWidth = recyclerView.mIndexbarWidth;
+        float setIndexbarMarginLeft = recyclerView.mIndexbarMarginLeft;
+        float setIndexbarMarginRight = recyclerView.mIndexbarMarginRight;
+        float setIndexbarMarginTop = recyclerView.mIndexbarMarginTop;
+        float setIndexbarMarginBottom = recyclerView.mIndexbarMarginBottom;
         setPreviewPadding = recyclerView.mPreviewPadding;
         setPreviewTextSize = recyclerView.mPreviewTextSize;
         previewBackgroundColor = recyclerView.mPreviewBackgroudColor;
@@ -124,17 +117,20 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                 indexbarPaint.setStyle(Paint.Style.STROKE);
                 indexbarPaint.setColor(mIndexBarStrokeColor);
                 indexbarPaint.setStrokeWidth(mIndexBarStrokeWidth); // set stroke width
-                canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity, setIndexBarCornerRadius * mDensity, indexbarPaint);
+                canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity,
+                        setIndexBarCornerRadius * mDensity, indexbarPaint);
             }
 
             if (mSections != null && mSections.length > 0) {
                 // Preview is shown when mCurrentSection is set
-                if (previewVisibility && mCurrentSection >= 0 && mSections[mCurrentSection] != "") {
+                if (previewVisibility && mCurrentSection >= 0
+                        && !Objects.equals(mSections[mCurrentSection], "")) {
                     Paint previewPaint = new Paint();
                     previewPaint.setColor(previewBackgroundColor);
                     previewPaint.setAlpha(previewBackgroudAlpha);
                     previewPaint.setAntiAlias(true);
-                    previewPaint.setShadowLayer(3, 0, 0, Color.argb(64, 0, 0, 0));
+                    previewPaint.setShadowLayer(3, 0, 0,
+                            Color.argb(64, 0, 0, 0));
 
                     Paint previewTextPaint = new Paint();
                     previewTextPaint.setColor(previewTextColor);
@@ -234,7 +230,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
             RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
             if (layoutManager instanceof LinearLayoutManager) {
                 ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(position, 0);
-            } else {
+            } else if (null != layoutManager) {
                 layoutManager.scrollToPosition(position);
             }
         } catch (Exception e) {
