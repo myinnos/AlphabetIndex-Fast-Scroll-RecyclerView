@@ -85,6 +85,11 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                     mIndexBarCornerRadius = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexBarCornerRadius, mIndexBarCornerRadius);
                     mIndexBarTransparentValue = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexBarTransparentValue, mIndexBarTransparentValue);
 
+                    mEnabled = true;
+                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarShown)) {
+                        mEnabled = typedArray.getBoolean(R.styleable.IndexFastScrollRecyclerView_setIndexBarShown, mEnabled);
+                    }
+
                     if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor)) {
                         TypedValue tv = new TypedValue();
                         typedArray.getValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, tv);
@@ -158,6 +163,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                 
                 // This line here is neccesary else the attributes won't be updated if a value is passed from XML
                 mScroller = new IndexFastScrollRecyclerSection(context, this);
+                mScroller.setIndexBarVisibility(mEnabled);
         }
     }
 

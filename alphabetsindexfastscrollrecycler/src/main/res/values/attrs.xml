@@ -11,6 +11,7 @@
         <attr name="setPreviewTransparentValue" format="float" />
         <attr name="setIndexBarCornerRadius" format="integer" />
         <attr name="setIndexBarTransparentValue" format="float" />
+        <attr name="setIndexBarShown" format="boolean" />
         <attr name="setIndexBarColor" format="color|string" />
         <attr name="setIndexBarTextColor" format="color|string" />
         <attr name="setIndexBarHighlightTextColor" format="color|string" />
