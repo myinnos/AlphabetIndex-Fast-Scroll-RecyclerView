@@ -238,7 +238,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         }
     }
 
-    public void onSizeChanged(int w, int h, int oldw, int oldh) {
+    public void onSizeChanged(int w, int h) {
         mListViewWidth = w;
         mListViewHeight = h;
         mIndexbarRect = new RectF(

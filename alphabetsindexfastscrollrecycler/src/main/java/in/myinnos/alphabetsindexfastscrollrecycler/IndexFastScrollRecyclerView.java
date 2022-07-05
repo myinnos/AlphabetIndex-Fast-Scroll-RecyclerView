@@ -189,7 +189,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         if (mScroller != null)
-            mScroller.onSizeChanged(w, h, oldw, oldh);
+            mScroller.onSizeChanged(w, h);
     }
 
     /**
