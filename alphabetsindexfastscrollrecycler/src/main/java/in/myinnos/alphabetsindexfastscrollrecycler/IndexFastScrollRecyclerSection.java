@@ -92,6 +92,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         mDensity = context.getResources().getDisplayMetrics().density;
         mScaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
         mRecyclerView = recyclerView;
+        //noinspection unchecked
         setAdapter(mRecyclerView.getAdapter());
 
         mIndexbarWidth = setIndexbarWidth * mDensity;
@@ -250,7 +251,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         );
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter) {
+    public void setAdapter(RecyclerView.Adapter<RecyclerView.ViewHolder> adapter) {
         if (adapter instanceof SectionIndexer) {
             adapter.registerAdapterDataObserver(this);
             mIndexer = (SectionIndexer) adapter;
