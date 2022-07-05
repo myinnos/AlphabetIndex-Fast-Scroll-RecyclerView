@@ -1,9 +1,10 @@
 package in.myinnos.alphabetsindexfastscrollrecycler;
 
-/**
+/*
  * Created by MyInnos on 31-01-2017.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -18,6 +19,7 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+@SuppressWarnings("unused")
 public class IndexFastScrollRecyclerView extends RecyclerView {
 
     private IndexFastScrollRecyclerSection mScroller = null;
@@ -143,6 +145,7 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
             mScroller.draw(canvas);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (mEnabled) {
@@ -286,6 +289,14 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
      */
     public void setIndexBarStrokeColor(String color) {
         mScroller.setIndexBarStrokeColor(Color.parseColor(color));
+    }
+
+    /**
+     * @param color The color for the preview box
+     */
+    public void setIndexBarStrokeColor(@ColorRes int color) {
+        int colorValue = getContext().getResources().getColor(color);
+        mScroller.setIndexBarStrokeColor(colorValue);
     }
 
     /**
