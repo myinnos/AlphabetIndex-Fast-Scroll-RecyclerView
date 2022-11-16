@@ -11,7 +11,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -93,10 +92,11 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
                         mEnabled = typedArray.getBoolean(R.styleable.IndexFastScrollRecyclerView_setIndexBarShown, mEnabled);
                     }
 
-                    mTransient = true;
+                    mTransient = false;
                     if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setTransientIndexBar)) {
                         mTransient = typedArray.getBoolean(R.styleable.IndexFastScrollRecyclerView_setTransientIndexBar, mTransient);
                     }
+                    if (mTransient) mEnabled = false;
                     setTransientIndexBar(mTransient);
 
                     if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor)) {
@@ -324,7 +324,10 @@ public class IndexFastScrollRecyclerView extends RecyclerView {
         }
     };
     public void setTransientIndexBar(boolean enabled) {
-        if (!enabled) removeCallbacks(scrollRunnable);
+        if (!enabled) {
+            removeCallbacks(scrollRunnable);
+            setIndexBarVisibility(true);
+        }
         //noinspection deprecation
         setOnScrollListener(enabled ? new RecyclerView.OnScrollListener() {
             @Override
