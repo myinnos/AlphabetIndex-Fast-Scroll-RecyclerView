@@ -2,6 +2,7 @@ package in.myinnos.alphabetsindexfastscrollrecycler;
 
 /*
  * Created by MyInnos on 31-01-2017.
+ * Updated by AbandonedCart 07-2022.
  */
 
 import android.content.Context;
@@ -34,7 +35,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
     private int mListViewHeight;
     private int mCurrentSection = -1;
     private boolean mIsIndexing = false;
-    private RecyclerView mRecyclerView;
+    private final RecyclerView mRecyclerView;
     private SectionIndexer mIndexer = null;
     private String[] mSections = null;
     private RectF mIndexbarRect;
@@ -92,6 +93,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
         mDensity = context.getResources().getDisplayMetrics().density;
         mScaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
         mRecyclerView = recyclerView;
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         //noinspection unchecked
         setAdapter(mRecyclerView.getAdapter());
 
@@ -112,7 +114,8 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
             indexbarPaint.setColor(indexbarBackgroudColor);
             indexbarPaint.setAlpha(indexbarBackgroudAlpha);
             indexbarPaint.setAntiAlias(true);
-            canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity, setIndexBarCornerRadius * mDensity, indexbarPaint);
+            canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity,
+                    setIndexBarCornerRadius * mDensity, indexbarPaint);
 
             if (setIndexBarStrokeVisibility) {
                 indexbarPaint.setStyle(Paint.Style.STROKE);
@@ -150,7 +153,7 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
                     canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint);
                     canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
                             , previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(), previewTextPaint);
-                    fade(300);
+                    setPreviewFadeTimeout(300);
                 }
 
                 Paint indexPaint = new Paint();
@@ -286,17 +289,12 @@ public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObse
 
     private Runnable mLastFadeRunnable = null;
 
-    private void fade(long delay) {
+    private void setPreviewFadeTimeout(long delay) {
         if (mRecyclerView != null) {
             if (mLastFadeRunnable != null) {
                 mRecyclerView.removeCallbacks(mLastFadeRunnable);
             }
-            mLastFadeRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    mRecyclerView.invalidate();
-                }
-            };
+            mLastFadeRunnable = mRecyclerView::invalidate;
             mRecyclerView.postDelayed(mLastFadeRunnable, delay);
         }
     }
