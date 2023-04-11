@@ -1,98 +1,72 @@
-package in.myinnos.indexfastscrollrecycler;
+package `in`.myinnos.indexfastscrollrecycler
 
-import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import `in`.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
+import `in`.myinnos.indexfastscrollrecycler.adapter.RecyclerViewAdapter
+import `in`.myinnos.indexfastscrollrecycler.helper.DataHelper
+import `in`.myinnos.indexfastscrollrecycler.utility.AlphabetItem
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+class MainActivity : AppCompatActivity() {
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
-import in.myinnos.indexfastscrollrecycler.adapter.RecyclerViewAdapter;
-import in.myinnos.indexfastscrollrecycler.helper.DataHelper;
-import in.myinnos.indexfastscrollrecycler.helper.NotFullDataHelper;
-import in.myinnos.indexfastscrollrecycler.utility.AlphabetItem;
+    var mRecyclerView: IndexFastScrollRecyclerView? = null
 
-public class MainActivity extends AppCompatActivity {
+    private val mAlphabetItems by lazy { ArrayList<AlphabetItem>() }
 
-    //@BindView(R.id.fast_scroller_recycler)
-    IndexFastScrollRecyclerView mRecyclerView;
+    // getAlphabetFullData() - full data, getAlphabetNotFullData() - not full data
+    private val mDataArray by lazy { DataHelper.getAlphabetFullData() }
 
-    private List<String> mDataArray;
-    private List<AlphabetItem> mAlphabetItems;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //ButterKnife.bind(this);
-
-        mRecyclerView = findViewById(R.id.fast_scroller_recycler);
-
-        initialiseData();
-        initialiseUI();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        mRecyclerView = findViewById(R.id.fast_scroller_recycler)
+        initialiseData()
+        initialiseUI()
     }
 
-    protected void initialiseData() {
-
-        //Recycler view full data
-        //mDataArray = DataHelper.getAlphabetData();
-
-        //Recycler view not full data
-        mDataArray = NotFullDataHelper.getAlphabetNotFullData();
-
-
-        // 123
+    private fun initialiseData() {
         //Alphabet fast scroller data
-        mAlphabetItems = new ArrayList<>();
-        List<String> strAlphabets = new ArrayList<>();
-        for (int i = 0; i < mDataArray.size(); i++) {
-            String name = mDataArray.get(i);
-            if (name == null || name.trim().isEmpty())
-                continue;
-
-            String word = name.substring(0, 1);
+        val strAlphabets: MutableList<String> = ArrayList()
+        for (i in mDataArray.indices) {
+            val name = mDataArray[i]
+            if (name.trim { it <= ' ' }.isEmpty()) continue
+            val word = name.substring(0, 1)
             if (!strAlphabets.contains(word)) {
-                strAlphabets.add(word);
-                mAlphabetItems.add(new AlphabetItem(i, word, false));
+                strAlphabets.add(word)
+                mAlphabetItems.add(AlphabetItem(i, word, false))
             }
         }
     }
 
-    protected void initialiseUI() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new RecyclerViewAdapter(mDataArray));
-
-        mRecyclerView.setIndexTextSize(12);
-        mRecyclerView.setIndexBarColor("#33334c");
-        mRecyclerView.setIndexBarCornerRadius(0);
-        mRecyclerView.setIndexBarTransparentValue((float) 0.4);
-
-        mRecyclerView.setIndexbarTopMargin(60);
-        mRecyclerView.setIndexbarBottomMargin(100);
-        mRecyclerView.setIndexbarHorizontalMargin(20);
-
-        mRecyclerView.setPreviewPadding(0);
-        mRecyclerView.setIndexBarTextColor("#FFFFFF");
-
-        mRecyclerView.setPreviewTextSize(60);
-        mRecyclerView.setPreviewColor("#33334c");
-        mRecyclerView.setPreviewTextColor("#FFFFFF");
-        mRecyclerView.setPreviewTransparentValue(0.6f);
-
-        mRecyclerView.setIndexBarVisibility(true);
-
-        mRecyclerView.setIndexBarStrokeVisibility(true);
-        mRecyclerView.setIndexBarStrokeWidth(1);
-        mRecyclerView.setIndexBarStrokeColor("#000000");
-
-        mRecyclerView.setIndexbarHighLightTextColor("#33334c");
-        mRecyclerView.setIndexBarHighLightTextVisibility(true);
-
-        Objects.requireNonNull(mRecyclerView.getLayoutManager()).scrollToPosition(0);
+    private fun initialiseUI() {
+        mRecyclerView?.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = RecyclerViewAdapter(mDataArray)
+            setIndexTextSize(12)
+            setIndexBarColor("#33334c")
+            setIndexBarCornerRadius(0)
+            setIndexBarTransparentValue(0.4.toFloat())
+            setIndexbarTopMargin(60f)
+            setIndexbarBottomMargin(100f)
+            setIndexbarHorizontalMargin(20f)
+            setPreviewPadding(0)
+            setIndexBarTextColor("#FFFFFF")
+            setPreviewTextSize(60)
+            setPreviewColor("#33334c")
+            setPreviewTextColor("#FFFFFF")
+            setPreviewTransparentValue(0.6f)
+            setIndexBarVisibility(true)
+            setIndexBarStrokeVisibility(true)
+            setIndexBarStrokeWidth(1)
+            setIndexBarStrokeColor("#000000")
+            setIndexbarHighLightTextColor("#33334c")
+            setIndexBarHighLightTextVisibility(true)
+        }
+        Objects.requireNonNull<RecyclerView.LayoutManager>(mRecyclerView?.layoutManager)
+            .scrollToPosition(0)
     }
 }

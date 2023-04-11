@@ -1,478 +1,529 @@
-package in.myinnos.alphabetsindexfastscrollrecycler;
+package `in`.myinnos.alphabetsindexfastscrollrecycler
+
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Typeface
+import android.util.AttributeSet
+import android.util.TypedValue
+import android.view.GestureDetector
+import android.view.GestureDetector.SimpleOnGestureListener
+import android.view.MotionEvent
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 
 /*
  * Created by MyInnos on 31-01-2017.
  * Updated by AbandonedCart 07-2022.
- */
+ */   class IndexFastScrollRecyclerView : RecyclerView {
+    private var mScroller: IndexFastScrollRecyclerSection? = null
+    private var mGestureDetector: GestureDetector? = null
+    private var mEnabled = true
+    private var mTransient = false
+    var setIndexTextSize = 12
+    var mIndexbarWidth = 20f
+    var mIndexbarMarginLeft = 2f
+    var mIndexbarMarginRight = 2f
+    var mIndexbarMarginTop = 2f
+    var mIndexbarMarginBottom = 2f
+    var mPreviewPadding = 5
+    var mIndexBarCornerRadius = 5
+    var mIndexBarTransparentValue = 0.6.toFloat()
+    var mIndexBarStrokeWidth = 2
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+    @ColorInt
+    var mSetIndexBarStrokeColor = Color.BLACK
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
+    @ColorInt
+    var mIndexbarBackgroudColor = Color.BLACK
 
-@SuppressWarnings("unused")
-public class IndexFastScrollRecyclerView extends RecyclerView {
+    @ColorInt
+    var mIndexbarTextColor = Color.WHITE
 
-    private IndexFastScrollRecyclerSection mScroller = null;
-    private GestureDetector mGestureDetector = null;
+    @ColorInt
+    var mIndexbarHighLightTextColor = Color.BLACK
 
-    private boolean mEnabled = true;
-    private boolean mTransient = false;
+    var mPreviewTextSize = 50
 
-    public int setIndexTextSize = 12;
-    public float mIndexbarWidth = 20;
-    public float mIndexbarMarginLeft = 2;
-    public float mIndexbarMarginRight = 2;
-    public float mIndexbarMarginTop = 2;
-    public float mIndexbarMarginBottom = 2;
-    public int mPreviewPadding = 5;
-    public int mIndexBarCornerRadius = 5;
-    public float mIndexBarTransparentValue = (float) 0.6;
-    public int mIndexBarStrokeWidth = 2;
-    public @ColorInt
-    int mSetIndexBarStrokeColor = Color.BLACK;
-    public @ColorInt
-    int mIndexbarBackgroudColor = Color.BLACK;
-    public @ColorInt
-    int mIndexbarTextColor = Color.WHITE;
-    public @ColorInt
-    int indexbarHighLightTextColor = Color.BLACK;
+    @ColorInt
+    var mPreviewBackgroudColor = Color.BLACK
 
-    public int mPreviewTextSize = 50;
-    public @ColorInt
-    int mPreviewBackgroudColor = Color.BLACK;
-    public @ColorInt
-    int mPreviewTextColor = Color.WHITE;
-    public float mPreviewTransparentValue = (float) 0.4;
+    @ColorInt
+    var mPreviewTextColor = Color.WHITE
+    var mPreviewTransparentValue = 0.4.toFloat()
 
-    public IndexFastScrollRecyclerView(Context context) {
-        super(context);
+    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init(context, attrs)
     }
 
-    public IndexFastScrollRecyclerView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
+        init(context, attrs)
     }
 
-    public IndexFastScrollRecyclerView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs) {
-
+    private fun init(context: Context, attrs: AttributeSet?) {
         if (attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.IndexFastScrollRecyclerView);
-
-                try {
-                    setIndexTextSize = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexTextSize, setIndexTextSize);
-                    mIndexbarWidth = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarWidth, mIndexbarWidth);
-                    mIndexbarMarginLeft = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginLeft);
-                    mIndexbarMarginRight = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginRight);
-                    mIndexbarMarginTop = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginTop);
-                    mIndexbarMarginBottom = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin, mIndexbarMarginBottom);
-                    mPreviewPadding = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setPreviewPadding, mPreviewPadding);
-                    mIndexBarCornerRadius = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexBarCornerRadius, mIndexBarCornerRadius);
-                    mIndexBarTransparentValue = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setIndexBarTransparentValue, mIndexBarTransparentValue);
-
-                    mEnabled = true;
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarShown)) {
-                        mEnabled = typedArray.getBoolean(R.styleable.IndexFastScrollRecyclerView_setIndexBarShown, mEnabled);
-                    }
-
-                    mTransient = false;
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setTransientIndexBar)) {
-                        mTransient = typedArray.getBoolean(R.styleable.IndexFastScrollRecyclerView_setTransientIndexBar, mTransient);
-                    }
-                    setTransientIndexBar(mTransient);
-
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor)) {
-                        TypedValue tv = new TypedValue();
-                        typedArray.getValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, tv);
-                        if (tv.type == TypedValue.TYPE_STRING) {
-                            mIndexbarBackgroudColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor));
-                        } else {
-                            mIndexbarBackgroudColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, mIndexbarBackgroudColor);
-                        }
-                    }
-
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor)) {
-                        TypedValue tv = new TypedValue();
-                        typedArray.getValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, tv);
-                        if (tv.type == TypedValue.TYPE_STRING) {
-                            mIndexbarTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor));
-                        } else {
-                            mIndexbarTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor, mIndexbarTextColor);
-                        }
-                    }
-
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor)) {
-                        TypedValue tv = new TypedValue();
-                        typedArray.getValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, tv);
-                        if (tv.type == TypedValue.TYPE_STRING) {
-                            indexbarHighLightTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor));
-                        } else {
-                            indexbarHighLightTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor, indexbarHighLightTextColor);
-                        }
-                    }
-
-                    mPreviewTextSize = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setPreviewTextSize, mPreviewTextSize);
-                    mPreviewTransparentValue = typedArray.getFloat(R.styleable.IndexFastScrollRecyclerView_setPreviewTransparentValue, mPreviewTransparentValue);
-
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setPreviewColor)) {
-                        TypedValue tv = new TypedValue();
-                        typedArray.getValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, tv);
-                        if (tv.type == TypedValue.TYPE_STRING) {
-                            mPreviewBackgroudColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setPreviewColor));
-                        } else {
-                            mPreviewBackgroudColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setPreviewColor, mPreviewBackgroudColor);
-                        }
-                    }
-
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor)) {
-                        TypedValue tv = new TypedValue();
-                        typedArray.getValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, tv);
-                        if (tv.type == TypedValue.TYPE_STRING) {
-                            mPreviewTextColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor));
-                        } else {
-                            mPreviewTextColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor, mPreviewTextColor);
-                        }
-                    }
-
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeWidth)) {
-                        mIndexBarStrokeWidth = typedArray.getInt(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeWidth, mIndexBarStrokeWidth);
-                    }
-
-                    if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor)) {
-                        TypedValue tv = new TypedValue();
-                        typedArray.getValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor, tv);
-                        if (tv.type == TypedValue.TYPE_STRING) {
-                            mSetIndexBarStrokeColor = Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor));
-                        } else {
-                            mSetIndexBarStrokeColor = typedArray.getColor(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor, mSetIndexBarStrokeColor);
-                        }
-                    }
-
-                } finally {
-                    typedArray.recycle();
+            val typedArray =
+                context.obtainStyledAttributes(attrs, R.styleable.IndexFastScrollRecyclerView)
+            try {
+                setIndexTextSize = typedArray.getInt(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexTextSize,
+                    setIndexTextSize
+                )
+                mIndexbarWidth = typedArray.getFloat(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexbarWidth,
+                    mIndexbarWidth
+                )
+                mIndexbarMarginLeft = typedArray.getFloat(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin,
+                    mIndexbarMarginLeft
+                )
+                mIndexbarMarginRight = typedArray.getFloat(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin,
+                    mIndexbarMarginRight
+                )
+                mIndexbarMarginTop = typedArray.getFloat(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin,
+                    mIndexbarMarginTop
+                )
+                mIndexbarMarginBottom = typedArray.getFloat(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexbarMargin,
+                    mIndexbarMarginBottom
+                )
+                mPreviewPadding = typedArray.getInt(
+                    R.styleable.IndexFastScrollRecyclerView_setPreviewPadding,
+                    mPreviewPadding
+                )
+                mIndexBarCornerRadius = typedArray.getInt(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexBarCornerRadius,
+                    mIndexBarCornerRadius
+                )
+                mIndexBarTransparentValue = typedArray.getFloat(
+                    R.styleable.IndexFastScrollRecyclerView_setIndexBarTransparentValue,
+                    mIndexBarTransparentValue
+                )
+                mEnabled = true
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarShown)) {
+                    mEnabled = typedArray.getBoolean(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarShown,
+                        mEnabled
+                    )
                 }
+                mTransient = false
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setTransientIndexBar)) {
+                    mTransient = typedArray.getBoolean(
+                        R.styleable.IndexFastScrollRecyclerView_setTransientIndexBar,
+                        mTransient
+                    )
+                }
+                setTransientIndexBar(mTransient)
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor)) {
+                    val tv = TypedValue()
+                    typedArray.getValue(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarColor,
+                        tv
+                    )
+                    mIndexbarBackgroudColor = if (tv.type == TypedValue.TYPE_STRING) {
+                        Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarColor))
+                    } else {
+                        typedArray.getColor(
+                            R.styleable.IndexFastScrollRecyclerView_setIndexBarColor,
+                            mIndexbarBackgroudColor
+                        )
+                    }
+                }
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor)) {
+                    val tv = TypedValue()
+                    typedArray.getValue(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarColor,
+                        tv
+                    )
+                    mIndexbarTextColor = if (tv.type == TypedValue.TYPE_STRING) {
+                        Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor))
+                    } else {
+                        typedArray.getColor(
+                            R.styleable.IndexFastScrollRecyclerView_setIndexBarTextColor,
+                            mIndexbarTextColor
+                        )
+                    }
+                }
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor)) {
+                    val tv = TypedValue()
+                    typedArray.getValue(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarColor,
+                        tv
+                    )
+                    mIndexbarHighLightTextColor = if (tv.type == TypedValue.TYPE_STRING) {
+                        Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor))
+                    } else {
+                        typedArray.getColor(
+                            R.styleable.IndexFastScrollRecyclerView_setIndexBarHighlightTextColor,
+                            mIndexbarHighLightTextColor
+                        )
+                    }
+                }
+                mPreviewTextSize = typedArray.getInt(
+                    R.styleable.IndexFastScrollRecyclerView_setPreviewTextSize,
+                    mPreviewTextSize
+                )
+                mPreviewTransparentValue = typedArray.getFloat(
+                    R.styleable.IndexFastScrollRecyclerView_setPreviewTransparentValue,
+                    mPreviewTransparentValue
+                )
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setPreviewColor)) {
+                    val tv = TypedValue()
+                    typedArray.getValue(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarColor,
+                        tv
+                    )
+                    mPreviewBackgroudColor = if (tv.type == TypedValue.TYPE_STRING) {
+                        Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setPreviewColor))
+                    } else {
+                        typedArray.getColor(
+                            R.styleable.IndexFastScrollRecyclerView_setPreviewColor,
+                            mPreviewBackgroudColor
+                        )
+                    }
+                }
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor)) {
+                    val tv = TypedValue()
+                    typedArray.getValue(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarColor,
+                        tv
+                    )
+                    mPreviewTextColor = if (tv.type == TypedValue.TYPE_STRING) {
+                        Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor))
+                    } else {
+                        typedArray.getColor(
+                            R.styleable.IndexFastScrollRecyclerView_setPreviewTextColor,
+                            mPreviewTextColor
+                        )
+                    }
+                }
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeWidth)) {
+                    mIndexBarStrokeWidth = typedArray.getInt(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeWidth,
+                        mIndexBarStrokeWidth
+                    )
+                }
+                if (typedArray.hasValue(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor)) {
+                    val tv = TypedValue()
+                    typedArray.getValue(
+                        R.styleable.IndexFastScrollRecyclerView_setIndexBarColor,
+                        tv
+                    )
+                    mSetIndexBarStrokeColor = if (tv.type == TypedValue.TYPE_STRING) {
+                        Color.parseColor(typedArray.getString(R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor))
+                    } else {
+                        typedArray.getColor(
+                            R.styleable.IndexFastScrollRecyclerView_setIndexBarStrokeColor,
+                            mSetIndexBarStrokeColor
+                        )
+                    }
+                }
+            } finally {
+                typedArray.recycle()
+            }
 
-                // This line here is neccesary else the attributes won't be updated if a value is passed from XML
-                mScroller = new IndexFastScrollRecyclerSection(context, this);
-                mScroller.setIndexBarVisibility(mEnabled);
+            // This line here is neccesary else the attributes won't be updated if a value is passed from XML
+            mScroller = IndexFastScrollRecyclerSection(context, this)
+            mScroller!!.setIndexBarVisibility(mEnabled)
         }
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
+    override fun draw(canvas: Canvas) {
+        super.draw(canvas)
 
         // Overlay index bar
-        if (mScroller != null)
-            mScroller.draw(canvas);
+        if (mScroller != null) mScroller!!.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    override fun onTouchEvent(ev: MotionEvent): Boolean {
         if (mEnabled) {
             // Intercept ListView's touch event
-            if (mScroller != null && mScroller.onTouchEvent(ev))
-                return true;
-
+            if (mScroller != null && mScroller!!.onTouchEvent(ev)) return true
             if (mGestureDetector == null) {
-                mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
-
-                    @Override
-                    public boolean onFling(MotionEvent e1, MotionEvent e2,
-                                           float velocityX, float velocityY) {
-                        return super.onFling(e1, e2, velocityX, velocityY);
+                mGestureDetector = GestureDetector(context, object : SimpleOnGestureListener() {
+                    override fun onFling(
+                        e1: MotionEvent, e2: MotionEvent,
+                        velocityX: Float, velocityY: Float
+                    ): Boolean {
+                        return super.onFling(e1, e2, velocityX, velocityY)
                     }
-
-                });
+                })
             }
-            mGestureDetector.onTouchEvent(ev);
+            mGestureDetector!!.onTouchEvent(ev)
         }
-
-        return super.onTouchEvent(ev);
+        return super.onTouchEvent(ev)
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (mEnabled && mScroller != null && mScroller.contains(ev.getX(), ev.getY()))
-            return true;
-
-        return super.onInterceptTouchEvent(ev);
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        return if (mEnabled && mScroller != null && mScroller!!.contains(
+                ev.x,
+                ev.y
+            )
+        ) true else super.onInterceptTouchEvent(
+            ev
+        )
     }
 
-    @Override
-    public void setAdapter(Adapter adapter) {
-        super.setAdapter(adapter);
-        if (mScroller != null)
-            //noinspection unchecked
-            mScroller.setAdapter(adapter);
+    override fun setAdapter(adapter: Adapter<*>?) {
+        super.setAdapter(adapter)
+        if (mScroller != null) mScroller?.setAdapter(adapter as Adapter<ViewHolder?>?)
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        if (mScroller != null)
-            mScroller.onSizeChanged(w, h);
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        if (mScroller != null) mScroller?.onSizeChanged(w, h)
     }
 
     /**
      * @param value int to set the text size of the index bar
      */
-    public void setIndexTextSize(int value) {
-        mScroller.setIndexTextSize(value);
+    fun setIndexTextSize(value: Int) {
+        mScroller!!.setIndexTextSize(value)
     }
 
     /**
      * @param value float to set the width of the index bar
      */
-    public void setIndexbarWidth(float value) {
-        mScroller.setIndexbarWidth(value);
+    fun setIndexbarWidth(value: Float) {
+        mScroller!!.setIndexbarWidth(value)
     }
 
     /**
      * @param value float to set the margin of the index bar
      */
-    public void setIndexbarMargin(float value) {
-        mScroller.setIndexbarMargin(value);
+    fun setIndexbarMargin(value: Float) {
+        mScroller!!.setIndexbarMargin(value)
     }
 
     /**
      * @param value float to set the top margin of the index bar
      */
-    public void setIndexbarTopMargin(float value) {
-        mScroller.setIndexbarTopMargin(value);
+    fun setIndexbarTopMargin(value: Float) {
+        mScroller!!.setIndexbarTopMargin(value)
     }
 
     /**
      * @param value float to set the bottom margin of the index bar
      */
-    public void setIndexbarBottomMargin(float value) {
-        mScroller.setIndexbarBottomMargin(value);
+    fun setIndexbarBottomMargin(value: Float) {
+        mScroller!!.setIndexbarBottomMargin(value)
     }
 
     /**
      * @param value float to set the Horizontal margin of the index bar
      */
-    public void setIndexbarHorizontalMargin(float value) {
-        mScroller.setIndexbarHorizontalMargin(value);
+    fun setIndexbarHorizontalMargin(value: Float) {
+        mScroller!!.setIndexbarHorizontalMargin(value)
     }
 
     /**
      * @param value float to set the Vertical margin of the index bar
      */
-    public void setIndexbarVerticalMargin(float value) {
-        mScroller.setIndexbarVerticalMargin(value);
+    fun setIndexbarVerticalMargin(value: Float) {
+        mScroller!!.setIndexbarVerticalMargin(value)
     }
 
     /**
      * @param value int to set the preview padding
      */
-    public void setPreviewPadding(int value) {
-        mScroller.setPreviewPadding(value);
+    fun setPreviewPadding(value: Int) {
+        mScroller!!.setPreviewPadding(value)
     }
 
     /**
      * @param value int to set the corner radius of the index bar
      */
-    public void setIndexBarCornerRadius(int value) {
-        mScroller.setIndexBarCornerRadius(value);
+    fun setIndexBarCornerRadius(value: Int) {
+        mScroller!!.setIndexBarCornerRadius(value)
     }
 
     /**
      * @param value float to set the transparency value of the index bar
      */
-    public void setIndexBarTransparentValue(float value) {
-        mScroller.setIndexBarTransparentValue(value);
+    fun setIndexBarTransparentValue(value: Float) {
+        mScroller!!.setIndexBarTransparentValue(value)
     }
 
     /**
      * @param typeface Typeface to set the typeface of the preview & the index bar
      */
-    public void setTypeface(Typeface typeface) {
-        mScroller.setTypeface(typeface);
+    fun setTypeface(typeface: Typeface?) {
+        mScroller!!.setTypeface(typeface)
     }
 
     /**
      * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarVisibility(boolean shown) {
-        mScroller.setIndexBarVisibility(shown);
-        mEnabled = shown;
+    fun setIndexBarVisibility(shown: Boolean) {
+        mScroller!!.setIndexBarVisibility(shown)
+        mEnabled = shown
     }
 
-    private final Runnable scrollRunnable = () -> {
-        mScroller.setIndexBarVisibility(false);
-        invalidate();
-    };
-    private final OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                recyclerView.removeCallbacks(scrollRunnable);
-                mScroller.setIndexBarVisibility(true);
-            } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                recyclerView.postDelayed(scrollRunnable, 1000);
+    private val scrollRunnable = Runnable {
+        mScroller!!.setIndexBarVisibility(false)
+        invalidate()
+    }
+    private val scrollListener: OnScrollListener = object : OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == SCROLL_STATE_DRAGGING) {
+                recyclerView.removeCallbacks(scrollRunnable)
+                mScroller!!.setIndexBarVisibility(true)
+            } else if (newState == SCROLL_STATE_IDLE) {
+                recyclerView.postDelayed(scrollRunnable, 1000)
             }
         }
-    };
-    public void setTransientIndexBar(boolean enabled) {
+    }
+
+    fun setTransientIndexBar(enabled: Boolean) {
         if (enabled) {
-            //noinspection deprecation
-            setOnScrollListener(scrollListener);
+            setOnScrollListener(scrollListener)
         } else {
-            removeCallbacks(scrollRunnable);
-            removeOnScrollListener(scrollListener);
+            removeCallbacks(scrollRunnable)
+            removeOnScrollListener(scrollListener)
         }
-        mTransient = enabled;
+        mTransient = enabled
     }
 
     /**
      * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarStrokeVisibility(boolean shown) {
-        mScroller.setIndexBarStrokeVisibility(shown);
+    fun setIndexBarStrokeVisibility(shown: Boolean) {
+        mScroller!!.setIndexBarStrokeVisibility(shown)
     }
 
     /**
      * @param color The color for the index bar
      */
-    public void setIndexBarStrokeColor(String color) {
-        mScroller.setIndexBarStrokeColor(Color.parseColor(color));
+    fun setIndexBarStrokeColor(color: String?) {
+        mScroller!!.setIndexBarStrokeColor(Color.parseColor(color))
     }
 
     /**
      * @param color The color for the preview box
      */
-    public void setIndexBarStrokeColor(@ColorRes int color) {
-        mScroller.setIndexBarStrokeColor(ContextCompat.getColor(getContext(), color));
+    fun setIndexBarStrokeColor(@ColorRes color: Int) {
+        mScroller!!.setIndexBarStrokeColor(ContextCompat.getColor(context, color))
     }
 
     /**
      * @param value int to set the text size of the preview box
      */
-    public void setIndexBarStrokeWidth(int value) {
-        mScroller.setIndexBarStrokeWidth(value);
+    fun setIndexBarStrokeWidth(value: Int) {
+        mScroller!!.setIndexBarStrokeWidth(value)
     }
-
 
     /**
      * @param shown boolean to show or hide the preview
      */
-    public void setPreviewVisibility(boolean shown) {
-        mScroller.setPreviewVisibility(shown);
+    fun setPreviewVisibility(shown: Boolean) {
+        mScroller!!.setPreviewVisibility(shown)
     }
 
     /**
      * @param value int to set the text size of the preview box
      */
-    public void setPreviewTextSize(int value) {
-        mScroller.setPreviewTextSize(value);
+    fun setPreviewTextSize(value: Int) {
+        mScroller!!.setPreviewTextSize(value)
     }
 
     /**
      * @param color The color for the preview box
      */
-    public void setPreviewColor(@ColorRes int color) {
-        mScroller.setPreviewColor(ContextCompat.getColor(getContext(), color));
+    fun setPreviewColor(@ColorRes color: Int) {
+        mScroller!!.setPreviewColor(ContextCompat.getColor(context, color))
     }
 
     /**
      * @param color The color for the preview box
      */
-    public void setPreviewColor(String color) {
-        mScroller.setPreviewColor(Color.parseColor(color));
+    fun setPreviewColor(color: String?) {
+        mScroller!!.setPreviewColor(Color.parseColor(color))
     }
 
     /**
      * @param color The text color for the preview box
      */
-    public void setPreviewTextColor(@ColorRes int color) {
-        mScroller.setPreviewTextColor(ContextCompat.getColor(getContext(), color));
+    fun setPreviewTextColor(@ColorRes color: Int) {
+        mScroller!!.setPreviewTextColor(ContextCompat.getColor(context, color))
     }
 
     /**
      * @param value float to set the transparency value of the preview box
      */
-    public void setPreviewTransparentValue(float value) {
-        mScroller.setPreviewTransparentValue(value);
+    fun setPreviewTransparentValue(value: Float) {
+        mScroller!!.setPreviewTransparentValue(value)
     }
 
     /**
      * @param color The text color for the preview box
      */
-    public void setPreviewTextColor(String color) {
-        mScroller.setPreviewTextColor(Color.parseColor(color));
+    fun setPreviewTextColor(color: String?) {
+        mScroller!!.setPreviewTextColor(Color.parseColor(color))
     }
 
     /**
      * @param color The color for the index bar
      */
-    public void setIndexBarColor(String color) {
-        mScroller.setIndexBarColor(Color.parseColor(color));
+    fun setIndexBarColor(color: String?) {
+        mScroller!!.setIndexBarColor(Color.parseColor(color))
     }
 
     /**
      * @param color The color for the index bar
      */
-    public void setIndexBarColor(@ColorRes int color) {
-        mScroller.setIndexBarColor(ContextCompat.getColor(getContext(), color));
-    }
-
-
-    /**
-     * @param color The text color for the index bar
-     */
-    public void setIndexBarTextColor(String color) {
-        mScroller.setIndexBarTextColor(Color.parseColor(color));
+    fun setIndexBarColor(@ColorRes color: Int) {
+        mScroller!!.setIndexBarColor(ContextCompat.getColor(context, color))
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarTextColor(@ColorRes int color) {
-        mScroller.setIndexBarTextColor(ContextCompat.getColor(getContext(), color));
+    fun setIndexBarTextColor(color: String?) {
+        mScroller!!.setIndexBarTextColor(Color.parseColor(color))
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexbarHighLightTextColor(String color) {
-        mScroller.setIndexbarHighLightTextColor(Color.parseColor(color));
+    fun setIndexBarTextColor(@ColorRes color: Int) {
+        mScroller!!.setIndexBarTextColor(ContextCompat.getColor(context, color))
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexbarHighLightTextColor(@ColorRes int color) {
-        mScroller.setIndexbarHighLightTextColor(ContextCompat.getColor(getContext(), color));
+    fun setIndexbarHighLightTextColor(color: String?) {
+        mScroller!!.setIndexbarHighLightTextColor(Color.parseColor(color))
+    }
+
+    /**
+     * @param color The text color for the index bar
+     */
+    fun setIndexbarHighLightTextColor(@ColorRes color: Int) {
+        mScroller!!.setIndexbarHighLightTextColor(ContextCompat.getColor(context, color))
     }
 
     /**
      * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarHighLightTextVisibility(boolean shown) {
-        mScroller.setIndexBarHighLightTextVisibility(shown);
+    fun setIndexBarHighLightTextVisibility(shown: Boolean) {
+        mScroller!!.setIndexBarHighLightTextVisibility(shown)
     }
 
-    public void updateSections() {
-        mScroller.updateSections();
+    fun updateSections() {
+        mScroller!!.updateSections()
     }
 }

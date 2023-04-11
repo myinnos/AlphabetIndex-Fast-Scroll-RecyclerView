@@ -1,482 +1,466 @@
-package in.myinnos.alphabetsindexfastscrollrecycler;
+package `in`.myinnos.alphabetsindexfastscrollrecycler
+
+import android.content.Context
+import android.graphics.*
+import android.util.Log
+import android.widget.SectionIndexer
+import android.view.MotionEvent
+import androidx.annotation.ColorInt
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import java.lang.Exception
 
 /*
  * Created by MyInnos on 31-01-2017.
  * Updated by AbandonedCart 07-2022.
- */
+ */   class IndexFastScrollRecyclerSection(
+    context: Context,
+    recyclerView: IndexFastScrollRecyclerView
+) : RecyclerView.AdapterDataObserver() {
+    private var mIndexbarWidth: Float
+    private var mIndexbarMarginLeft: Float
+    private var mIndexbarMarginRight: Float
+    private var mIndexbarMarginTop: Float
+    private var mIndexbarMarginBottom: Float
+    private val mPreviewPadding: Float
+    private val mDensity: Float
+    private val mScaledDensity: Float
+    private var mListViewWidth = 0
+    private var mListViewHeight = 0
+    private var mCurrentSection = -1
+    private var mIsIndexing = false
+    private val mRecyclerView: RecyclerView?
+    private var mIndexer: SectionIndexer? = null
+    private var mSections: Array<String>? = null
+    private var mIndexbarRect: RectF? = null
+    private var setIndexTextSize: Int
+    private var setPreviewPadding: Int
+    private var previewVisibility = true
+    private var setIndexBarCornerRadius: Int
+    private var setTypeface: Typeface? = null
+    private var setIndexBarVisibility = true
+    private var setSetIndexBarHighLightTextVisibility = false
+    private var setIndexBarStrokeVisibility = true
+    var mIndexBarStrokeWidth: Int
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Typeface;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.SectionIndexer;
+    @ColorInt
+    private var mIndexBarStrokeColor: Int
 
-import androidx.annotation.ColorInt;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+    @ColorInt
+    private var indexbarBackgroudColor: Int
 
-import java.util.Objects;
+    @ColorInt
+    private var indexbarTextColor: Int
 
-public class IndexFastScrollRecyclerSection extends RecyclerView.AdapterDataObserver {
+    @ColorInt
+    private var indexbarHighLightTextColor: Int
+    private var setPreviewTextSize: Int
 
-    private float mIndexbarWidth;
-    private float mIndexbarMarginLeft;
-    private float mIndexbarMarginRight;
-    private float mIndexbarMarginTop;
-    private float mIndexbarMarginBottom;
-    private final float mPreviewPadding;
-    private final float mDensity;
-    private final float mScaledDensity;
-    private int mListViewWidth;
-    private int mListViewHeight;
-    private int mCurrentSection = -1;
-    private boolean mIsIndexing = false;
-    private final RecyclerView mRecyclerView;
-    private SectionIndexer mIndexer = null;
-    private String[] mSections = null;
-    private RectF mIndexbarRect;
+    @ColorInt
+    private var previewBackgroundColor: Int
 
-    private int setIndexTextSize;
-    private int setPreviewPadding;
-    private boolean previewVisibility = true;
-    private int setIndexBarCornerRadius;
-    private Typeface setTypeface = null;
-    private Boolean setIndexBarVisibility = true;
-    private Boolean setSetIndexBarHighLightTextVisibility = false;
-    private Boolean setIndexBarStrokeVisibility = true;
-    public int mIndexBarStrokeWidth;
-    private @ColorInt
-    int mIndexBarStrokeColor;
-    private @ColorInt
-    int indexbarBackgroudColor;
-    private @ColorInt
-    int indexbarTextColor;
-    private @ColorInt
-    int indexbarHighLightTextColor;
-
-    private int setPreviewTextSize;
-    private @ColorInt
-    int previewBackgroundColor;
-    private @ColorInt
-    int previewTextColor;
-    private int previewBackgroudAlpha;
-    private int indexbarBackgroudAlpha;
-
-    public IndexFastScrollRecyclerSection(Context context, IndexFastScrollRecyclerView recyclerView) {
-
-        setIndexTextSize = recyclerView.setIndexTextSize;
-        float setIndexbarWidth = recyclerView.mIndexbarWidth;
-        float setIndexbarMarginLeft = recyclerView.mIndexbarMarginLeft;
-        float setIndexbarMarginRight = recyclerView.mIndexbarMarginRight;
-        float setIndexbarMarginTop = recyclerView.mIndexbarMarginTop;
-        float setIndexbarMarginBottom = recyclerView.mIndexbarMarginBottom;
-        setPreviewPadding = recyclerView.mPreviewPadding;
-        setPreviewTextSize = recyclerView.mPreviewTextSize;
-        previewBackgroundColor = recyclerView.mPreviewBackgroudColor;
-        previewTextColor = recyclerView.mPreviewTextColor;
-        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(recyclerView.mPreviewTransparentValue);
-
-        mIndexBarStrokeColor = recyclerView.mSetIndexBarStrokeColor;
-        mIndexBarStrokeWidth = recyclerView.mIndexBarStrokeWidth;
-
-        setIndexBarCornerRadius = recyclerView.mIndexBarCornerRadius;
-        indexbarBackgroudColor = recyclerView.mIndexbarBackgroudColor;
-        indexbarTextColor = recyclerView.mIndexbarTextColor;
-        indexbarHighLightTextColor = recyclerView.indexbarHighLightTextColor;
-
-        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(recyclerView.mIndexBarTransparentValue);
-
-        mDensity = context.getResources().getDisplayMetrics().density;
-        mScaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
-        mRecyclerView = recyclerView;
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        //noinspection unchecked
-        setAdapter(mRecyclerView.getAdapter());
-
-        mIndexbarWidth = setIndexbarWidth * mDensity;
-        mIndexbarMarginLeft = setIndexbarMarginLeft * mDensity;
-        mIndexbarMarginRight = setIndexbarMarginRight * mDensity;
-        mIndexbarMarginTop = setIndexbarMarginTop * mDensity;
-        mIndexbarMarginBottom = setIndexbarMarginBottom * mDensity;
-        mPreviewPadding = setPreviewPadding * mDensity;
-    }
-
-    public void draw(Canvas canvas) {
-
+    @ColorInt
+    private var previewTextColor: Int
+    private var previewBackgroudAlpha: Int
+    private var indexbarBackgroudAlpha: Int
+    fun draw(canvas: Canvas) {
         if (setIndexBarVisibility) {
-
-            Paint indexbarPaint = new Paint();
-
-            indexbarPaint.setColor(indexbarBackgroudColor);
-            indexbarPaint.setAlpha(indexbarBackgroudAlpha);
-            indexbarPaint.setAntiAlias(true);
-            canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity,
-                    setIndexBarCornerRadius * mDensity, indexbarPaint);
-
+            val indexbarPaint = Paint()
+            indexbarPaint.color = indexbarBackgroudColor
+            indexbarPaint.alpha = indexbarBackgroudAlpha
+            indexbarPaint.isAntiAlias = true
+            canvas.drawRoundRect(
+                mIndexbarRect!!, setIndexBarCornerRadius * mDensity,
+                setIndexBarCornerRadius * mDensity, indexbarPaint
+            )
             if (setIndexBarStrokeVisibility) {
-                indexbarPaint.setStyle(Paint.Style.STROKE);
-                indexbarPaint.setColor(mIndexBarStrokeColor);
-                indexbarPaint.setStrokeWidth(mIndexBarStrokeWidth); // set stroke width
-                canvas.drawRoundRect(mIndexbarRect, setIndexBarCornerRadius * mDensity,
-                        setIndexBarCornerRadius * mDensity, indexbarPaint);
+                indexbarPaint.style = Paint.Style.STROKE
+                indexbarPaint.color = mIndexBarStrokeColor
+                indexbarPaint.strokeWidth = mIndexBarStrokeWidth.toFloat() // set stroke width
+                canvas.drawRoundRect(
+                    mIndexbarRect!!, setIndexBarCornerRadius * mDensity,
+                    setIndexBarCornerRadius * mDensity, indexbarPaint
+                )
             }
-
-            if (mSections != null && mSections.length > 0) {
+            if (mSections != null && mSections!!.size > 0) {
                 // Preview is shown when mCurrentSection is set
-                if (previewVisibility && mCurrentSection >= 0
-                        && !Objects.equals(mSections[mCurrentSection], "")) {
-                    Paint previewPaint = new Paint();
-                    previewPaint.setColor(previewBackgroundColor);
-                    previewPaint.setAlpha(previewBackgroudAlpha);
-                    previewPaint.setAntiAlias(true);
-                    previewPaint.setShadowLayer(3, 0, 0,
-                            Color.argb(64, 0, 0, 0));
-
-                    Paint previewTextPaint = new Paint();
-                    previewTextPaint.setColor(previewTextColor);
-                    previewTextPaint.setAntiAlias(true);
-                    previewTextPaint.setTextSize(setPreviewTextSize * mScaledDensity);
-                    previewTextPaint.setTypeface(setTypeface);
-
-                    float previewTextWidth = previewTextPaint.measureText(mSections[mCurrentSection]);
-                    float previewSize = 2 * mPreviewPadding + previewTextPaint.descent() - previewTextPaint.ascent();
-                    previewSize = Math.max(previewSize, previewTextWidth + 2 * mPreviewPadding);
-                    RectF previewRect = new RectF((mListViewWidth - previewSize) / 2
-                            , (mListViewHeight - previewSize) / 2
-                            , (mListViewWidth - previewSize) / 2 + previewSize
-                            , (mListViewHeight - previewSize) / 2 + previewSize);
-
-                    canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint);
-                    canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
-                            , previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(), previewTextPaint);
-                    setPreviewFadeTimeout(300);
+                if (previewVisibility && mCurrentSection >= 0 && mSections!![mCurrentSection] != "") {
+                    val previewPaint = Paint()
+                    previewPaint.color = previewBackgroundColor
+                    previewPaint.alpha = previewBackgroudAlpha
+                    previewPaint.isAntiAlias = true
+                    previewPaint.setShadowLayer(
+                        3f, 0f, 0f,
+                        Color.argb(64, 0, 0, 0)
+                    )
+                    val previewTextPaint = Paint()
+                    previewTextPaint.color = previewTextColor
+                    previewTextPaint.isAntiAlias = true
+                    previewTextPaint.textSize = setPreviewTextSize * mScaledDensity
+                    previewTextPaint.typeface = setTypeface
+                    val previewTextWidth =
+                        previewTextPaint.measureText(mSections!![mCurrentSection])
+                    var previewSize =
+                        2 * mPreviewPadding + previewTextPaint.descent() - previewTextPaint.ascent()
+                    previewSize = Math.max(previewSize, previewTextWidth + 2 * mPreviewPadding)
+                    val previewRect = RectF(
+                        (mListViewWidth - previewSize) / 2,
+                        (mListViewHeight - previewSize) / 2,
+                        (mListViewWidth - previewSize) / 2 + previewSize,
+                        (mListViewHeight - previewSize) / 2 + previewSize
+                    )
+                    canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint)
+                    canvas.drawText(
+                        mSections!![mCurrentSection],
+                        previewRect.left + (previewSize - previewTextWidth) / 2 - 1,
+                        previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(),
+                        previewTextPaint
+                    )
+                    setPreviewFadeTimeout(300)
                 }
-
-                Paint indexPaint = new Paint();
-                indexPaint.setColor(indexbarTextColor);
-                indexPaint.setAntiAlias(true);
-                indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
-                indexPaint.setTypeface(setTypeface);
-
-                float sectionHeight = (mIndexbarRect.height() - mIndexbarMarginTop - mIndexbarMarginBottom) / mSections.length;
-                float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
-                for (int i = 0; i < mSections.length; i++) {
-
+                val indexPaint = Paint()
+                indexPaint.color = indexbarTextColor
+                indexPaint.isAntiAlias = true
+                indexPaint.textSize = setIndexTextSize * mScaledDensity
+                indexPaint.typeface = setTypeface
+                val sectionHeight =
+                    (mIndexbarRect!!.height() - mIndexbarMarginTop - mIndexbarMarginBottom) / mSections!!.size
+                val paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2
+                for (i in mSections!!.indices) {
                     if (setSetIndexBarHighLightTextVisibility) {
-
                         if (mCurrentSection > -1 && i == mCurrentSection) {
-                            indexPaint.setTypeface(Typeface.create(setTypeface, Typeface.BOLD));
-                            indexPaint.setTextSize((setIndexTextSize + 3) * mScaledDensity);
-                            indexPaint.setColor(indexbarHighLightTextColor);
+                            indexPaint.typeface = Typeface.create(setTypeface, Typeface.BOLD)
+                            indexPaint.textSize = (setIndexTextSize + 3) * mScaledDensity
+                            indexPaint.color = indexbarHighLightTextColor
                         } else {
-                            indexPaint.setTypeface(setTypeface);
-                            indexPaint.setTextSize(setIndexTextSize * mScaledDensity);
-                            indexPaint.setColor(indexbarTextColor);
+                            indexPaint.typeface = setTypeface
+                            indexPaint.textSize = setIndexTextSize * mScaledDensity
+                            indexPaint.color = indexbarTextColor
                         }
-                        float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
-                        canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
-                                , mIndexbarRect.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
-
-
+                        val paddingLeft = (mIndexbarWidth - indexPaint.measureText(
+                            mSections!![i]
+                        )) / 2
+                        canvas.drawText(
+                            mSections!![i],
+                            mIndexbarRect!!.left + paddingLeft,
+                            mIndexbarRect!!.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(),
+                            indexPaint
+                        )
                     } else {
-                        float paddingLeft = (mIndexbarWidth - indexPaint.measureText(mSections[i])) / 2;
-                        canvas.drawText(mSections[i], mIndexbarRect.left + paddingLeft
-                                , mIndexbarRect.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
+                        val paddingLeft = (mIndexbarWidth - indexPaint.measureText(
+                            mSections!![i]
+                        )) / 2
+                        canvas.drawText(
+                            mSections!![i],
+                            mIndexbarRect!!.left + paddingLeft,
+                            mIndexbarRect!!.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(),
+                            indexPaint
+                        )
                     }
-
                 }
             }
         }
     }
 
-    public boolean onTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // If down event occurs inside index bar region, start indexing
-                if (contains(ev.getX(), ev.getY())) {
+    fun onTouchEvent(ev: MotionEvent): Boolean {
+        when (ev.action) {
+            MotionEvent.ACTION_DOWN ->                 // If down event occurs inside index bar region, start indexing
+                if (contains(ev.x, ev.y)) {
 
                     // It demonstrates that the motion event started from index bar
-                    mIsIndexing = true;
+                    mIsIndexing = true
                     // Determine which section the point is in, and move the list to that section
-                    mCurrentSection = getSectionByPoint(ev.getY());
-                    scrollToPosition();
-                    return true;
+                    mCurrentSection = getSectionByPoint(ev.y)
+                    scrollToPosition()
+                    return true
                 }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (mIsIndexing) {
-                    // If this event moves inside index bar
-                    if (contains(ev.getX(), ev.getY())) {
-                        // Determine which section the point is in, and move the list to that section
-                        mCurrentSection = getSectionByPoint(ev.getY());
-                        scrollToPosition();
-                    }
-                    return true;
+            MotionEvent.ACTION_MOVE -> if (mIsIndexing) {
+                // If this event moves inside index bar
+                if (contains(ev.x, ev.y)) {
+                    // Determine which section the point is in, and move the list to that section
+                    mCurrentSection = getSectionByPoint(ev.y)
+                    scrollToPosition()
                 }
-                break;
-            case MotionEvent.ACTION_UP:
-                if (mIsIndexing) {
-                    mIsIndexing = false;
-                    mCurrentSection = -1;
-                }
-                break;
-        }
-        return false;
-    }
-
-    private void scrollToPosition() {
-        try {
-            int position = mIndexer.getPositionForSection(mCurrentSection);
-            RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager) {
-                ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(position, 0);
-            } else if (null != layoutManager) {
-                layoutManager.scrollToPosition(position);
+                return true
             }
-        } catch (Exception e) {
-            Log.d("INDEX_BAR", "Data size returns null");
+            MotionEvent.ACTION_UP -> if (mIsIndexing) {
+                mIsIndexing = false
+                mCurrentSection = -1
+            }
+        }
+        return false
+    }
+
+    private fun scrollToPosition() {
+        try {
+            val position = mIndexer?.getPositionForSection(mCurrentSection)
+            val layoutManager = mRecyclerView!!.layoutManager
+            if (layoutManager is LinearLayoutManager) {
+                position?.let { layoutManager.scrollToPositionWithOffset(it, 0) }
+            } else position?.let { layoutManager?.scrollToPosition(it) }
+        } catch (e: Exception) {
+            Log.d("INDEX_BAR", "Data size returns null")
         }
     }
 
-    public void onSizeChanged(int w, int h) {
-        mListViewWidth = w;
-        mListViewHeight = h;
-        mIndexbarRect = new RectF(
-                w - mIndexbarMarginLeft - mIndexbarWidth,
-                mIndexbarMarginTop,
-                w - mIndexbarMarginRight,
-                h - mIndexbarMarginBottom - (mRecyclerView.getClipToPadding()
-                        ? 0 : mRecyclerView.getPaddingBottom())
-        );
+    fun onSizeChanged(w: Int, h: Int) {
+        mListViewWidth = w
+        mListViewHeight = h
+        mIndexbarRect = RectF(
+            w - mIndexbarMarginLeft - mIndexbarWidth,
+            mIndexbarMarginTop,
+            w - mIndexbarMarginRight,
+            h - mIndexbarMarginBottom - if (mRecyclerView!!.clipToPadding) 0 else mRecyclerView.paddingBottom
+        )
     }
 
-    public void setAdapter(RecyclerView.Adapter<RecyclerView.ViewHolder> adapter) {
-        if (adapter instanceof SectionIndexer) {
-            adapter.registerAdapterDataObserver(this);
-            mIndexer = (SectionIndexer) adapter;
-            mSections = (String[]) mIndexer.getSections();
+    fun setAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder?>?) {
+        if (adapter is SectionIndexer) {
+            adapter.registerAdapterDataObserver(this)
+            mIndexer = adapter
+            mSections = mIndexer?.sections as Array<String>
         }
     }
 
-    @Override
-    public void onChanged() {
-        super.onChanged();
-        updateSections();
+    override fun onChanged() {
+        super.onChanged()
+        updateSections()
     }
 
-    public void updateSections() {
-        mSections = (String[]) mIndexer.getSections();
+    fun updateSections() {
+        mSections = mIndexer?.sections as Array<String>
     }
 
-    public boolean contains(float x, float y) {
+    fun contains(x: Float, y: Float): Boolean {
         // Determine if the point is in index bar region, which includes the right margin of the bar
-        return (x >= mIndexbarRect.left && y >= mIndexbarRect.top && y <= mIndexbarRect.top + mIndexbarRect.height());
+        return x >= mIndexbarRect!!.left && y >= mIndexbarRect!!.top && y <= mIndexbarRect!!.top + mIndexbarRect!!.height()
     }
 
-    private int getSectionByPoint(float y) {
-        if (mSections == null || mSections.length == 0)
-            return 0;
-        if (y < mIndexbarRect.top + mIndexbarMarginTop)
-            return 0;
-        if (y >= mIndexbarRect.top + mIndexbarRect.height() - mIndexbarMarginTop)
-            return mSections.length - 1;
-        return (int) ((y - mIndexbarRect.top - mIndexbarMarginTop) / ((mIndexbarRect.height() - mIndexbarMarginBottom - mIndexbarMarginTop) / mSections.length));
+    private fun getSectionByPoint(y: Float): Int {
+        if (mSections == null || mSections?.isEmpty() == true) return 0
+        if (y < mIndexbarRect!!.top + mIndexbarMarginTop) return 0
+        return if (y >= mIndexbarRect!!.top + mIndexbarRect!!.height() - mIndexbarMarginTop) mSections!!.size - 1 else ((y - mIndexbarRect!!.top - mIndexbarMarginTop) / ((mIndexbarRect!!.height() - mIndexbarMarginBottom - mIndexbarMarginTop) / mSections!!.size)).toInt()
     }
 
-    private Runnable mLastFadeRunnable = null;
-
-    private void setPreviewFadeTimeout(long delay) {
+    private var mLastFadeRunnable: Runnable? = null
+    private fun setPreviewFadeTimeout(delay: Long) {
         if (mRecyclerView != null) {
             if (mLastFadeRunnable != null) {
-                mRecyclerView.removeCallbacks(mLastFadeRunnable);
+                mRecyclerView.removeCallbacks(mLastFadeRunnable)
             }
-            mLastFadeRunnable = mRecyclerView::invalidate;
-            mRecyclerView.postDelayed(mLastFadeRunnable, delay);
+            mLastFadeRunnable = Runnable { mRecyclerView.invalidate() }
+            mRecyclerView.postDelayed(mLastFadeRunnable, delay)
         }
     }
 
-    private int convertTransparentValueToBackgroundAlpha(float value) {
-        return (int) (255 * value);
+    private fun convertTransparentValueToBackgroundAlpha(value: Float): Int {
+        return (255 * value).toInt()
     }
 
     /**
      * @param value int to set the text size of the index bar
      */
-    public void setIndexTextSize(int value) {
-        setIndexTextSize = value;
+    fun setIndexTextSize(value: Int) {
+        setIndexTextSize = value
     }
 
     /**
      * @param value float to set the width of the index bar
      */
-    public void setIndexbarWidth(float value) {
-        mIndexbarWidth = value;
+    fun setIndexbarWidth(value: Float) {
+        mIndexbarWidth = value
     }
 
     /**
      * @param value float to set the margin of the index bar
      */
-    public void setIndexbarMargin(float value) {
-        mIndexbarMarginLeft = value;
-        mIndexbarMarginRight = value;
-        mIndexbarMarginTop = value;
-        mIndexbarMarginBottom = value;
+    fun setIndexbarMargin(value: Float) {
+        mIndexbarMarginLeft = value
+        mIndexbarMarginRight = value
+        mIndexbarMarginTop = value
+        mIndexbarMarginBottom = value
     }
 
     /**
      * @param value float to set the top margin of the index bar
      */
-    public void setIndexbarTopMargin(float value) {
-        mIndexbarMarginTop = value;
+    fun setIndexbarTopMargin(value: Float) {
+        mIndexbarMarginTop = value
     }
 
     /**
      * @param value float to set the bottom margin of the index bar
      */
-    public void setIndexbarBottomMargin(float value) {
-        mIndexbarMarginBottom = value;
+    fun setIndexbarBottomMargin(value: Float) {
+        mIndexbarMarginBottom = value
     }
 
     /**
      * @param value float to set the left margin of the index bar
      */
-    public void setIndexbarHorizontalMargin(float value) {
-        mIndexbarMarginLeft = value;
-        mIndexbarMarginRight = value;
+    fun setIndexbarHorizontalMargin(value: Float) {
+        mIndexbarMarginLeft = value
+        mIndexbarMarginRight = value
     }
 
     /**
      * @param value float to set the right margin of the index bar
      */
-    public void setIndexbarVerticalMargin(float value) {
-        mIndexbarMarginTop = value;
-        mIndexbarMarginBottom = value;
+    fun setIndexbarVerticalMargin(value: Float) {
+        mIndexbarMarginTop = value
+        mIndexbarMarginBottom = value
     }
 
     /**
      * @param value int to set preview padding
      */
-    public void setPreviewPadding(int value) {
-        setPreviewPadding = value;
+    fun setPreviewPadding(value: Int) {
+        setPreviewPadding = value
     }
 
     /**
      * @param value int to set the radius of the index bar
      */
-    public void setIndexBarCornerRadius(int value) {
-        setIndexBarCornerRadius = value;
+    fun setIndexBarCornerRadius(value: Int) {
+        setIndexBarCornerRadius = value
     }
 
     /**
      * @param value float to set the transparency of the color for index bar
      */
-    public void setIndexBarTransparentValue(float value) {
-        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value);
+    fun setIndexBarTransparentValue(value: Float) {
+        indexbarBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value)
     }
 
     /**
      * @param typeface Typeface to set the typeface of the preview & the index bar
      */
-    public void setTypeface(Typeface typeface) {
-        setTypeface = typeface;
+    fun setTypeface(typeface: Typeface?) {
+        setTypeface = typeface
     }
 
     /**
      * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarVisibility(boolean shown) {
-        setIndexBarVisibility = shown;
+    fun setIndexBarVisibility(shown: Boolean) {
+        setIndexBarVisibility = shown
     }
-
 
     /**
      * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarStrokeVisibility(boolean shown) {
-        setIndexBarStrokeVisibility = shown;
+    fun setIndexBarStrokeVisibility(shown: Boolean) {
+        setIndexBarStrokeVisibility = shown
     }
 
     /**
      * @param shown boolean to show or hide the preview box
      */
-    public void setPreviewVisibility(boolean shown) {
-        previewVisibility = shown;
+    fun setPreviewVisibility(shown: Boolean) {
+        previewVisibility = shown
     }
 
     /**
      * @param value int to set the text size of the preview box
      */
-    public void setIndexBarStrokeWidth(int value) {
-        mIndexBarStrokeWidth = value;
+    fun setIndexBarStrokeWidth(value: Int) {
+        mIndexBarStrokeWidth = value
     }
-
 
     /**
      * @param value int to set the text size of the preview box
      */
-    public void setPreviewTextSize(int value) {
-        setPreviewTextSize = value;
+    fun setPreviewTextSize(value: Int) {
+        setPreviewTextSize = value
     }
 
     /**
      * @param color The color for the preview box
      */
-    public void setPreviewColor(@ColorInt int color) {
-        previewBackgroundColor = color;
+    fun setPreviewColor(@ColorInt color: Int) {
+        previewBackgroundColor = color
     }
 
     /**
      * @param color The text color for the preview box
      */
-    public void setPreviewTextColor(@ColorInt int color) {
-        previewTextColor = color;
+    fun setPreviewTextColor(@ColorInt color: Int) {
+        previewTextColor = color
     }
 
     /**
      * @param value float to set the transparency value of the preview box
      */
-    public void setPreviewTransparentValue(float value) {
-        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value);
+    fun setPreviewTransparentValue(value: Float) {
+        previewBackgroudAlpha = convertTransparentValueToBackgroundAlpha(value)
     }
 
     /**
      * @param color The color for the scroll track
      */
-    public void setIndexBarColor(@ColorInt int color) {
-        indexbarBackgroudColor = color;
+    fun setIndexBarColor(@ColorInt color: Int) {
+        indexbarBackgroudColor = color
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarTextColor(@ColorInt int color) {
-        indexbarTextColor = color;
+    fun setIndexBarTextColor(@ColorInt color: Int) {
+        indexbarTextColor = color
     }
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexBarStrokeColor(@ColorInt int color) {
-        mIndexBarStrokeColor = color;
+    fun setIndexBarStrokeColor(@ColorInt color: Int) {
+        mIndexBarStrokeColor = color
     }
-
 
     /**
      * @param color The text color for the index bar
      */
-    public void setIndexbarHighLightTextColor(@ColorInt int color) {
-        indexbarHighLightTextColor = color;
+    fun setIndexbarHighLightTextColor(@ColorInt color: Int) {
+        indexbarHighLightTextColor = color
     }
 
     /**
      * @param shown boolean to show or hide the index bar
      */
-    public void setIndexBarHighLightTextVisibility(boolean shown) {
-        setSetIndexBarHighLightTextVisibility = shown;
+    fun setIndexBarHighLightTextVisibility(shown: Boolean) {
+        setSetIndexBarHighLightTextVisibility = shown
     }
 
+    init {
+        setIndexTextSize = recyclerView.setIndexTextSize
+        val setIndexbarWidth = recyclerView.mIndexbarWidth
+        val setIndexbarMarginLeft = recyclerView.mIndexbarMarginLeft
+        val setIndexbarMarginRight = recyclerView.mIndexbarMarginRight
+        val setIndexbarMarginTop = recyclerView.mIndexbarMarginTop
+        val setIndexbarMarginBottom = recyclerView.mIndexbarMarginBottom
+        setPreviewPadding = recyclerView.mPreviewPadding
+        setPreviewTextSize = recyclerView.mPreviewTextSize
+        previewBackgroundColor = recyclerView.mPreviewBackgroudColor
+        previewTextColor = recyclerView.mPreviewTextColor
+        previewBackgroudAlpha =
+            convertTransparentValueToBackgroundAlpha(recyclerView.mPreviewTransparentValue)
+        mIndexBarStrokeColor = recyclerView.mSetIndexBarStrokeColor
+        mIndexBarStrokeWidth = recyclerView.mIndexBarStrokeWidth
+        setIndexBarCornerRadius = recyclerView.mIndexBarCornerRadius
+        indexbarBackgroudColor = recyclerView.mIndexbarBackgroudColor
+        indexbarTextColor = recyclerView.mIndexbarTextColor
+        indexbarHighLightTextColor = recyclerView.mIndexbarHighLightTextColor
+        indexbarBackgroudAlpha =
+            convertTransparentValueToBackgroundAlpha(recyclerView.mIndexBarTransparentValue)
+        mDensity = context.resources.displayMetrics.density
+        mScaledDensity = context.resources.displayMetrics.scaledDensity
+        mRecyclerView = recyclerView
+        mRecyclerView.setLayoutManager(LinearLayoutManager(context))
+        setAdapter(mRecyclerView.getAdapter())
+        mIndexbarWidth = setIndexbarWidth * mDensity
+        mIndexbarMarginLeft = setIndexbarMarginLeft * mDensity
+        mIndexbarMarginRight = setIndexbarMarginRight * mDensity
+        mIndexbarMarginTop = setIndexbarMarginTop * mDensity
+        mIndexbarMarginBottom = setIndexbarMarginBottom * mDensity
+        mPreviewPadding = setPreviewPadding * mDensity
+    }
 }

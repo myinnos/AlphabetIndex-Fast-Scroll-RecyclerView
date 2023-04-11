@@ -1,73 +1,51 @@
-package in.myinnos.indexfastscrollrecycler.adapter;
+package `in`.myinnos.indexfastscrollrecycler.adapter
+
+import `in`.myinnos.indexfastscrollrecycler.Helpers.Companion.sectionsHelper
+import `in`.myinnos.indexfastscrollrecycler.R
+import android.widget.SectionIndexer
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import android.widget.ImageButton
+import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by MyInnos on 01-02-2017.
  */
+class RecyclerViewAdapter(private val mDataArray: ArrayList<String>?) :
+    RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(), SectionIndexer {
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.SectionIndexer;
-import android.widget.TextView;
+    private val mSections = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
+    private var sectionsTranslator = HashMap<Int, Int>()
+    private var mSectionPositions: ArrayList<Int>? = null
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import in.myinnos.indexfastscrollrecycler.Helpers;
-import in.myinnos.indexfastscrollrecycler.R;
-
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
-        implements SectionIndexer {
-
-    private List<String> mDataArray;
-
-    private String mSections = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";
-    private HashMap<Integer, Integer> sectionsTranslator = new HashMap<>();
-    private ArrayList<Integer> mSectionPositions;
-
-    public RecyclerViewAdapter(List<String> dataset) {
-        mDataArray = dataset;
+    override fun getItemCount(): Int {
+        return mDataArray?.size ?: 0
     }
 
-    @Override
-    public int getItemCount() {
-        if (mDataArray == null)
-            return 0;
-        return mDataArray.size();
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v: View = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_recycler_view_layout, parent, false)
+        return ViewHolder(v)
     }
 
-    @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recycler_view_layout, parent, false);
-        return new ViewHolder(v);
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.mTextView.text = mDataArray!![position]
+        holder.mImageButton.setOnClickListener {
+            mDataArray.removeAt(holder.adapterPosition)
+            notifyDataSetChanged()
+        }
     }
 
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mTextView.setText(mDataArray.get(position));
-        holder.mImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDataArray.remove(holder.getAdapterPosition());
-                notifyDataSetChanged();
-            }
-        });
+    override fun getSectionForPosition(position: Int): Int {
+        return 0
     }
 
-    @Override
-    public int getSectionForPosition(int position) {
-        return 0;
-    }
-
-    @Override
-    public Object[] getSections() {
-       /* List<String> sections = new ArrayList<>(26);
+    override fun getSections(): Array<String> {
+        /* List<String> sections = new ArrayList<>(26);
         mSectionPositions = new ArrayList<>(26);
         for (int i = 0, size = mDataArray.size(); i < size; i++) {
             String section = String.valueOf(mDataArray.get(i).charAt(0)).toUpperCase();
@@ -76,46 +54,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 mSectionPositions.add(i);
             }
         } */
-
-        List<String> sections = new ArrayList<>(27);
-        ArrayList<String> alphabetFull = new ArrayList<>();
-
-        mSectionPositions = new ArrayList<>();
-        for (int i = 0, size = mDataArray.size(); i < size; i++) {
-            String section = String.valueOf(mDataArray.get(i).charAt(0)).toUpperCase();
-            if (!sections.contains(section)) {
-                sections.add(section);
-                mSectionPositions.add(i);
+        val sections: MutableList<String> = ArrayList(27)
+        val alphabetFull = ArrayList<String>()
+        mSectionPositions = ArrayList()
+        run {
+            var i = 0
+            val size = mDataArray!!.size
+            while (i < size) {
+                val section = mDataArray[i][0].toString().uppercase(Locale.getDefault())
+                if (!sections.contains(section)) {
+                    sections.add(section)
+                    mSectionPositions?.add(i)
+                }
+                i++
             }
         }
-        for (int i = 0; i < mSections.length(); i++) {
-            alphabetFull.add(String.valueOf(mSections.charAt(i)));
+        for (element in mSections) {
+            alphabetFull.add(element.toString())
         }
-
-        sectionsTranslator = Helpers.Companion.sectionsHelper(sections, alphabetFull);
-
-
-
-        return alphabetFull.toArray(new String[0]);
+        sectionsTranslator = sectionsHelper(sections, alphabetFull)
+        return alphabetFull.toTypedArray()
     }
 
-    @Override
-    public int getPositionForSection(int sectionIndex) {
-        return mSectionPositions.get(sectionsTranslator.get(sectionIndex));
+    override fun getPositionForSection(sectionIndex: Int): Int {
+        return mSectionPositions!![sectionsTranslator[sectionIndex]!!]
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        //@BindView(R.id.tv_alphabet)
-        TextView mTextView;
-        //@BindView(R.id.ib_alphabet)
-        ImageButton mImageButton;
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var mTextView: TextView
+        var mImageButton: ImageButton
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            //ButterKnife.bind(this, itemView);
-            mTextView = itemView.findViewById(R.id.tv_alphabet);
-            mImageButton = itemView.findViewById(R.id.ib_alphabet);
+        init {
+            mTextView = itemView.findViewById(R.id.tv_alphabet)
+            mImageButton = itemView.findViewById(R.id.ib_alphabet)
         }
     }
-
 }
