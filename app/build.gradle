@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 
@@ -40,8 +39,8 @@ dependencies {
     implementation "com.jakewharton:butterknife:${BUTTERKNIFE}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE}"
     implementation project(':alphabetsindexfastscrollrecyclerLibrary')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.21"
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.10.0'
 
     // reflection-based flavor
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-full:1.5.8'
