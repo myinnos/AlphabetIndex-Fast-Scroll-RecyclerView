@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="color_setIndexBarColor">#33334c</color>
+    <color name="color_setIndexBarTextColor">#FFFFFF</color>
+    <color name="color_setPreviewColor">#33334c</color>
+    <color name="color_setPreviewTextColor">#FFFFFF</color>
+    <color name="color_setIndexBarStrokeColor">#000000</color>
+    <color name="color_setIndexBarHighLightTextColor">#33334c</color>
 </resources>

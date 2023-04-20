@@ -103,13 +103,13 @@ Features
 ```java
 mRecyclerView.setIndexBarTransparentValue((float) 0.4);
 ```
-- Change IndexbarMargin:
+- Change IndexBarMargin:
 ```java
- mRecyclerView.setIndexbarMargin(4);
+ mRecyclerView.setIndexBarMargin(4);
 ```
-- Change IndexbarWidth:
+- Change IndexBarWidth:
 ```java
- mRecyclerView.setIndexbarWidth(40);
+ mRecyclerView.setIndexBarWidth(40);
 ```
 - Change PreviewPadding:
 ```java
@@ -130,9 +130,9 @@ mRecyclerView.setIndexBarVisibility(true);
 ```
 - Change IndexBarHighLateTextColor:
 ```java
-mRecyclerView.setIndexbarHighLightTextColor("#33334c);
+mRecyclerView.setIndexBarHighLightTextColor("#33334c);
 
-mRecyclerView.setIndexbarHighLightTextColor(R.color.index_bar_highlight_text_color);
+mRecyclerView.setIndexBarHighLightTextColor(R.color.index_bar_highlight_text_color);
 ```
 - To hide/show IndexBarHighLightText:
 ```java
@@ -179,7 +179,7 @@ Thanks to all the people who contributed to AlphabetIndex Fast Scroll RecyclerVi
 [@RaphaelMarion](https://github.com/RaphaelMarion "RaphaelMarion")   
 [@appspell](https://github.com/appspell "appspell")   
 [@Libernys](https://github.com/Libernys "Libernys")   
-[@IvanAbacumov](https://github.com/IvanAbacumov "IvanAbacumov")   
+[@IvanAbacumov](https://github.com/IvanAbacumov "IvanAbakumov")   
 [@benniebotha](https://github.com/benniebotha "benniebotha")
 [@AbandonedCart](https://github.com/AbandonedCart "AbandonedCart")
 [@Hamza417](https://github.com/Hamza417 "Hamza417") -->

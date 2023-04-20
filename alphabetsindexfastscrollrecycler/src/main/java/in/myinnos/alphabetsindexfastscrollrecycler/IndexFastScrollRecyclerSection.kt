@@ -17,11 +17,11 @@ import java.lang.Exception
     context: Context,
     recyclerView: IndexFastScrollRecyclerView
 ) : RecyclerView.AdapterDataObserver() {
-    private var mIndexbarWidth: Float
-    private var mIndexbarMarginLeft: Float
-    private var mIndexbarMarginRight: Float
-    private var mIndexbarMarginTop: Float
-    private var mIndexbarMarginBottom: Float
+    private var mIndexBarWidth: Float
+    private var mIndexBarMarginLeft: Float
+    private var mIndexBarMarginRight: Float
+    private var mIndexBarMarginTop: Float
+    private var mIndexBarMarginBottom: Float
     private val mPreviewPadding: Float
     private val mDensity: Float
     private val mScaledDensity: Float
@@ -124,7 +124,7 @@ import java.lang.Exception
                 indexPaint.textSize = setIndexTextSize * mScaledDensity
                 indexPaint.typeface = setTypeface
                 val sectionHeight =
-                    (mIndexbarRect!!.height() - mIndexbarMarginTop - mIndexbarMarginBottom) / mSections!!.size
+                    (mIndexbarRect!!.height() - mIndexBarMarginTop - mIndexBarMarginBottom) / mSections!!.size
                 val paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2
                 for (i in mSections!!.indices) {
                     if (setSetIndexBarHighLightTextVisibility) {
@@ -137,23 +137,23 @@ import java.lang.Exception
                             indexPaint.textSize = setIndexTextSize * mScaledDensity
                             indexPaint.color = indexbarTextColor
                         }
-                        val paddingLeft = (mIndexbarWidth - indexPaint.measureText(
+                        val paddingLeft = (mIndexBarWidth - indexPaint.measureText(
                             mSections!![i]
                         )) / 2
                         canvas.drawText(
                             mSections!![i],
                             mIndexbarRect!!.left + paddingLeft,
-                            mIndexbarRect!!.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(),
+                            mIndexbarRect!!.top + mIndexBarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(),
                             indexPaint
                         )
                     } else {
-                        val paddingLeft = (mIndexbarWidth - indexPaint.measureText(
+                        val paddingLeft = (mIndexBarWidth - indexPaint.measureText(
                             mSections!![i]
                         )) / 2
                         canvas.drawText(
                             mSections!![i],
                             mIndexbarRect!!.left + paddingLeft,
-                            mIndexbarRect!!.top + mIndexbarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(),
+                            mIndexbarRect!!.top + mIndexBarMarginTop + sectionHeight * i + paddingTop - indexPaint.ascent(),
                             indexPaint
                         )
                     }
@@ -207,10 +207,10 @@ import java.lang.Exception
         mListViewWidth = w
         mListViewHeight = h
         mIndexbarRect = RectF(
-            w - mIndexbarMarginLeft - mIndexbarWidth,
-            mIndexbarMarginTop,
-            w - mIndexbarMarginRight,
-            h - mIndexbarMarginBottom - if (mRecyclerView!!.clipToPadding) 0 else mRecyclerView.paddingBottom
+            w - mIndexBarMarginLeft - mIndexBarWidth,
+            mIndexBarMarginTop,
+            w - mIndexBarMarginRight,
+            h - mIndexBarMarginBottom - if (mRecyclerView!!.clipToPadding) 0 else mRecyclerView.paddingBottom
         )
     }
 
@@ -238,8 +238,8 @@ import java.lang.Exception
 
     private fun getSectionByPoint(y: Float): Int {
         if (mSections == null || mSections?.isEmpty() == true) return 0
-        if (y < mIndexbarRect!!.top + mIndexbarMarginTop) return 0
-        return if (y >= mIndexbarRect!!.top + mIndexbarRect!!.height() - mIndexbarMarginTop) mSections!!.size - 1 else ((y - mIndexbarRect!!.top - mIndexbarMarginTop) / ((mIndexbarRect!!.height() - mIndexbarMarginBottom - mIndexbarMarginTop) / mSections!!.size)).toInt()
+        if (y < mIndexbarRect!!.top + mIndexBarMarginTop) return 0
+        return if (y >= mIndexbarRect!!.top + mIndexbarRect!!.height() - mIndexBarMarginTop) mSections!!.size - 1 else ((y - mIndexbarRect!!.top - mIndexBarMarginTop) / ((mIndexbarRect!!.height() - mIndexBarMarginBottom - mIndexBarMarginTop) / mSections!!.size)).toInt()
     }
 
     private var mLastFadeRunnable: Runnable? = null
@@ -267,48 +267,48 @@ import java.lang.Exception
     /**
      * @param value float to set the width of the index bar
      */
-    fun setIndexbarWidth(value: Float) {
-        mIndexbarWidth = value
+    fun setIndexBarWidth(value: Float) {
+        mIndexBarWidth = value
     }
 
     /**
      * @param value float to set the margin of the index bar
      */
-    fun setIndexbarMargin(value: Float) {
-        mIndexbarMarginLeft = value
-        mIndexbarMarginRight = value
-        mIndexbarMarginTop = value
-        mIndexbarMarginBottom = value
+    fun setIndexBarMargin(value: Float) {
+        mIndexBarMarginLeft = value
+        mIndexBarMarginRight = value
+        mIndexBarMarginTop = value
+        mIndexBarMarginBottom = value
     }
 
     /**
      * @param value float to set the top margin of the index bar
      */
-    fun setIndexbarTopMargin(value: Float) {
-        mIndexbarMarginTop = value
+    fun setIndexBarTopMargin(value: Float) {
+        mIndexBarMarginTop = value
     }
 
     /**
      * @param value float to set the bottom margin of the index bar
      */
-    fun setIndexbarBottomMargin(value: Float) {
-        mIndexbarMarginBottom = value
+    fun setIndexBarBottomMargin(value: Float) {
+        mIndexBarMarginBottom = value
     }
 
     /**
      * @param value float to set the left margin of the index bar
      */
-    fun setIndexbarHorizontalMargin(value: Float) {
-        mIndexbarMarginLeft = value
-        mIndexbarMarginRight = value
+    fun setIndexBarHorizontalMargin(value: Float) {
+        mIndexBarMarginLeft = value
+        mIndexBarMarginRight = value
     }
 
     /**
      * @param value float to set the right margin of the index bar
      */
-    fun setIndexbarVerticalMargin(value: Float) {
-        mIndexbarMarginTop = value
-        mIndexbarMarginBottom = value
+    fun setIndexBarVerticalMargin(value: Float) {
+        mIndexBarMarginTop = value
+        mIndexBarMarginBottom = value
     }
 
     /**
@@ -419,7 +419,7 @@ import java.lang.Exception
     /**
      * @param color The text color for the index bar
      */
-    fun setIndexbarHighLightTextColor(@ColorInt color: Int) {
+    fun setIndexBarHighLightTextColor(@ColorInt color: Int) {
         indexbarHighLightTextColor = color
     }
 
@@ -432,23 +432,23 @@ import java.lang.Exception
 
     init {
         setIndexTextSize = recyclerView.setIndexTextSize
-        val setIndexbarWidth = recyclerView.mIndexbarWidth
-        val setIndexbarMarginLeft = recyclerView.mIndexbarMarginLeft
-        val setIndexbarMarginRight = recyclerView.mIndexbarMarginRight
-        val setIndexbarMarginTop = recyclerView.mIndexbarMarginTop
-        val setIndexbarMarginBottom = recyclerView.mIndexbarMarginBottom
+        val setIndexbarWidth = recyclerView.mIndexBarWidth
+        val setIndexbarMarginLeft = recyclerView.mIndexBarMarginLeft
+        val setIndexbarMarginRight = recyclerView.mIndexBarMarginRight
+        val setIndexbarMarginTop = recyclerView.mIndexBarMarginTop
+        val setIndexbarMarginBottom = recyclerView.mIndexBarMarginBottom
         setPreviewPadding = recyclerView.mPreviewPadding
         setPreviewTextSize = recyclerView.mPreviewTextSize
-        previewBackgroundColor = recyclerView.mPreviewBackgroudColor
+        previewBackgroundColor = recyclerView.mPreviewBackgroundColor
         previewTextColor = recyclerView.mPreviewTextColor
         previewBackgroudAlpha =
             convertTransparentValueToBackgroundAlpha(recyclerView.mPreviewTransparentValue)
         mIndexBarStrokeColor = recyclerView.mSetIndexBarStrokeColor
         mIndexBarStrokeWidth = recyclerView.mIndexBarStrokeWidth
         setIndexBarCornerRadius = recyclerView.mIndexBarCornerRadius
-        indexbarBackgroudColor = recyclerView.mIndexbarBackgroudColor
-        indexbarTextColor = recyclerView.mIndexbarTextColor
-        indexbarHighLightTextColor = recyclerView.mIndexbarHighLightTextColor
+        indexbarBackgroudColor = recyclerView.mIndexBarBackgroundColor
+        indexbarTextColor = recyclerView.mIndexBarTextColor
+        indexbarHighLightTextColor = recyclerView.mIndexBarHighLightTextColor
         indexbarBackgroudAlpha =
             convertTransparentValueToBackgroundAlpha(recyclerView.mIndexBarTransparentValue)
         mDensity = context.resources.displayMetrics.density
@@ -456,11 +456,11 @@ import java.lang.Exception
         mRecyclerView = recyclerView
         mRecyclerView.setLayoutManager(LinearLayoutManager(context))
         setAdapter(mRecyclerView.getAdapter())
-        mIndexbarWidth = setIndexbarWidth * mDensity
-        mIndexbarMarginLeft = setIndexbarMarginLeft * mDensity
-        mIndexbarMarginRight = setIndexbarMarginRight * mDensity
-        mIndexbarMarginTop = setIndexbarMarginTop * mDensity
-        mIndexbarMarginBottom = setIndexbarMarginBottom * mDensity
+        mIndexBarWidth = setIndexbarWidth * mDensity
+        mIndexBarMarginLeft = setIndexbarMarginLeft * mDensity
+        mIndexBarMarginRight = setIndexbarMarginRight * mDensity
+        mIndexBarMarginTop = setIndexbarMarginTop * mDensity
+        mIndexBarMarginBottom = setIndexbarMarginBottom * mDensity
         mPreviewPadding = setPreviewPadding * mDensity
     }
 }
