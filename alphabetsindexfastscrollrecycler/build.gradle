@@ -1,15 +1,16 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 final ANDROIDX = '1.0.0'
-apply plugin: 'com.github.dcendents.android-maven' // ADD THIS
+//apply plugin: 'com.github.dcendents.android-maven' // ADD THIS
 
 group='com.github.jitpack'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
@@ -23,7 +24,7 @@ android {
 
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             url "https://maven.google.com"
         }
@@ -31,8 +32,10 @@ allprojects {
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:${ANDROIDX}"
-    implementation "com.google.android.material:material:${ANDROIDX}"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation "com.google.android.material:material:1.8.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.10.0'
 }
 
 // build a jar with source files
@@ -45,7 +48,7 @@ task javadoc(type: Javadoc) {
     failOnError  false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
+    classpath += configurations.implementation
 }
 
 // build a jar with javadoc

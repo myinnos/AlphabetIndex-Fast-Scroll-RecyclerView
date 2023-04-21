@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 
@@ -8,12 +7,12 @@ final ANDROIDX = '1.0.0'
 final BUTTERKNIFE = '10.1.0'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "in.myinnos.indexfastscrollrecycler"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
@@ -28,6 +27,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -36,7 +39,13 @@ dependencies {
     implementation "com.jakewharton:butterknife:${BUTTERKNIFE}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE}"
     implementation project(':alphabetsindexfastscrollrecyclerLibrary')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.10.0'
+
+    // reflection-based flavor
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-full:1.5.8'
+    // reflection-free flavor
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.8'
 }
 repositories {
     mavenCentral()
