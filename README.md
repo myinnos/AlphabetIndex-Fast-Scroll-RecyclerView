@@ -4,10 +4,8 @@ A Powerful AlphabetIndex FastScroller for Android's RecyclerView!
 [![](https://jitpack.io/v/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView.svg)](https://jitpack.io/#myinnos/AlphabetIndex-Fast-Scroll-RecyclerView) [![MyInnos website](https://img.shields.io/badge/visit-website-red.svg?logo=firefox)](https://www.myinnos.in/) [![](https://jitpack.io/v/jitpack/maven-simple/month.svg)](https://jitpack.io/#myinnos/AlphabetIndex-Fast-Scroll-RecyclerView) <a href="#"><img alt="Android Language Badge" src="https://badgen.net/badge/OS/Android?icon=https://raw.githubusercontent.com/androiddevnotes/awesome-jetpack-compose-android-apps/master/assets/android.svg&color=3ddc84"/></a>
 
 
- ![AlphabetIndex-Fast-Scroll-RecyclerView - Example1](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/0d6c4f2f0b9f3b573a4f2abf2c87b62237081286/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_1.gif)
- `` `` `` `` `` `` `` ``
+  ![AlphabetIndex-Fast-Scroll-RecyclerView - Example1](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/0d6c4f2f0b9f3b573a4f2abf2c87b62237081286/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_1.gif)
   ![AlphabetIndex-Fast-Scroll-RecyclerView - Example2](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/0d6c4f2f0b9f3b573a4f2abf2c87b62237081286/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_2.gif)
-  `` `` `` `` `` `` `` ``
   ![AlphabetIndex-Fast-Scroll-RecyclerView - Example3](https://raw.githubusercontent.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView/master/images-gif/AlphabetIndex-Fast-Scroll-RecyclerView_3.gif)
   
 #### Kindly use the following links to use this library:
